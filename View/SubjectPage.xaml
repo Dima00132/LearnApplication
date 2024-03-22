@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            NavigationPage.HasNavigationBar="False"
+             xmlns:viewModel = "clr-namespace:LearnApplication.ViewModel"
+             x:Class="LearnApplication.View.SubjectPage"
+             >
+
+    <Grid x:DataType="viewModel:SubjectViewModel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout Padding="20" Grid.Row="2" >
+            <Label Text="Выучено" />
+            <Frame>
+                <ProgressBar Progress="{Binding ProgressLearn,Mode=TwoWay}" ProgressColor="Green" />
+            </Frame>
+            <Frame>
+                <Label TextColor="Gray" Text="{Binding LearnCount, StringFormat='Количество вопросов  -  {0}'}" />
+            </Frame>
+            <Frame>
+                <Label TextColor="Green" Text="{Binding KnownCount, StringFormat='Изучено вопросов  -  {0}'}" />
+            </Frame>
+            <Frame>
+                <Label TextColor="Red" Text="{Binding DointKnownCount, StringFormat='Не изучено вопросов  -  {0}'}" />
+            </Frame>
+        </StackLayout>
+
+        <Button Text="Повтор" Command="{Binding RepeatQuestionsCommand}" Grid.Row="3"  BackgroundColor="Green" TextColor="Black"/>
+    </Grid>
+</ContentPage>

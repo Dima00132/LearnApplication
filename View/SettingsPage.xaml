@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
+             x:Class="LearnApplication.View.SettingsPage" >
+    <VerticalStackLayout >
+
+
+        <Frame>
+            <Editor Text="{Binding Question}" TextColor="Black" PlaceholderColor="DarkGray" Placeholder ="Введите вопрос"/>
+        </Frame>
+        <Frame>
+            <Editor Text="{Binding Answer}" TextColor="Black" PlaceholderColor="DarkGray" Placeholder ="Введите ответ"/>
+        </Frame>
+
+        <Frame>
+            <Editor Text="{Binding Hyperlink}" Keyboard="Url" IsReadOnly="true" PlaceholderColor="DarkGray"  Placeholder ="Ссылка на дополнительнй материал"/>
+        </Frame>
+
+        <Frame>
+            <StackLayout Padding="8">
+                <Label Text="Я это помню?" FontSize="16" TextColor="Black" />
+                <Switch  IsToggled="{Binding IsKnown, Mode=TwoWay}" ThumbColor="Green"/>
+            </StackLayout>
+        </Frame>
+        <Button Text="Добавить"  Command="{Binding SaveCangeCommand}"  />
+    </VerticalStackLayout>
+</ContentPage>
