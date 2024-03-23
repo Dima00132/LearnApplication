@@ -7,19 +7,29 @@ namespace LearnApplication.Model
     {
         [ObservableProperty]
         private ObservableCollection<LearnQuestion> _reviewQuestions;
- 
+
+        [ObservableProperty]
+        private double _progress;
+
+        private readonly double _countQuestions;
+        private  double _knownQuestions;
 
         public bool IsQuestion { get => ReviewQuestions.Count >1; }
 
-        public ReviewQuestion(ObservableCollection<LearnQuestion> returnsQuestions)
+        public ReviewQuestion(ObservableCollection<LearnQuestion> returnsQuestions,bool allOrUnknown = true)
         {
             ReviewQuestions = returnsQuestions;
+            _countQuestions = returnsQuestions.Count();
+            Progress = allOrUnknown ? 0 : returnsQuestions.Count((x) => x.IsKnown) / _countQuestions;
+            _knownQuestions = allOrUnknown ? 0 : returnsQuestions.Count((x) => x.IsKnown);
+
+
         }
 
         public void MoveQuestionToEnd(LearnQuestion learnQuestion)
         {
             ////////////
-            DeleteQuestion(learnQuestion);
+            ReviewQuestions.Remove(learnQuestion);
             ReviewQuestions.Add( learnQuestion); 
         }
 
@@ -27,6 +37,8 @@ namespace LearnApplication.Model
         public void DeleteQuestion(LearnQuestion learnQuestion)
         {
             learnQuestion.IsKnown = true;
+            _knownQuestions++;
+            Progress = _knownQuestions / _countQuestions;
             ReviewQuestions.Remove(learnQuestion); 
         }
     }

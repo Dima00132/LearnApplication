@@ -20,7 +20,8 @@ namespace LearnApplication.ViewModel
     public partial class SubjectViewModel : ViewModelBase
     {
         private  LearnCategory _learnCategory;
-        public RelayCommand RepeatQuestionsCommand { get;  }
+        public RelayCommand RepeatAllQuestionsCommand { get;  }
+        public RelayCommand RepeatDontKnownQuestionsCommand { get; }
 
         [ObservableProperty]
         private double _progressLearn;
@@ -39,16 +40,21 @@ namespace LearnApplication.ViewModel
         public SubjectViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            RepeatQuestionsCommand = new RelayCommand(
-                ()=>_navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory.GetReviewQuestions()),
+            RepeatAllQuestionsCommand = new RelayCommand(
+                ()=>_navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
                 () => _learnCategory?.LearnQuestions.Count != 0);
+
+            RepeatDontKnownQuestionsCommand = new RelayCommand(()=> 
+            _navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
+            ()=> _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0);
+
         }
 
-        public void InitializesFields()
+    public void InitializesFields()
         {
             if (_learnCategory is null)
                 return;
-            ProgressLearn = _learnCategory.CountProgressLearn();
+           ProgressLearn = _learnCategory.CountProgressLearn();
             LearnCount = _learnCategory.CountQuestion();
             DointKnownCount = _learnCategory.DointKnownCountLearn();
             KnownCount = _learnCategory.KnownCountLearn();

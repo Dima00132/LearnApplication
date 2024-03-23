@@ -12,9 +12,9 @@ public partial class RepetitionOfMaterialPage : ContentPage
         
     }
 
-    private void CarouselView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
-    {
-        carouselView.ScrollTo(0,0,ScrollToPosition.Start,false);
-    }
+    //private void CarouselView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
+    //{
+    //   // carouselView.ScrollTo(0,0,ScrollToPosition.Start,false);
+    //}
 
 }

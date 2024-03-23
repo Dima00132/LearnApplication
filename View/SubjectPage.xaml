@@ -6,7 +6,7 @@
              x:Class="LearnApplication.View.SubjectPage"
              >
 
-    <Grid x:DataType="viewModel:SubjectViewModel">
+    <Grid x:DataType="viewModel:SubjectViewModel" BackgroundColor="#1f1f1f">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
@@ -14,11 +14,8 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <StackLayout Padding="20" Grid.Row="2" >
+        <StackLayout Padding="20" Grid.Row="2" BackgroundColor="#1f1f1f" >
             <Label Text="Выучено" />
-            <Frame>
-                <ProgressBar Progress="{Binding ProgressLearn,Mode=TwoWay}" ProgressColor="Green" />
-            </Frame>
             <Frame>
                 <Label TextColor="Gray" Text="{Binding LearnCount, StringFormat='Количество вопросов  -  {0}'}" />
             </Frame>
@@ -30,6 +27,16 @@
             </Frame>
         </StackLayout>
 
-        <Button Text="Повтор" Command="{Binding RepeatQuestionsCommand}" Grid.Row="3"  BackgroundColor="Green" TextColor="Black"/>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Text="Повторить все" Command="{Binding RepeatAllQuestionsCommand}" Grid.Column="0" BackgroundColor="Gray" TextColor="Black"/>
+            <Button Text="Повторить неизвестые" Command="{Binding RepeatDontKnownQuestionsCommand}" Grid.Column="1"  BackgroundColor="Gray" TextColor="Black"/>
+
+        </Grid>
+        
     </Grid>
 </ContentPage>
