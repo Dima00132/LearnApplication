@@ -45,12 +45,12 @@ namespace LearnApplication.ViewModel
                 () => _learnCategory?.LearnQuestions.Count != 0);
 
             RepeatDontKnownQuestionsCommand = new RelayCommand(()=> 
-            _navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
+            _navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
             ()=> _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0);
 
         }
 
-    public void InitializesFields()
+        public void InitializesFields()
         {
             if (_learnCategory is null)
                 return;

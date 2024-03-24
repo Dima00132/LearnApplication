@@ -7,8 +7,6 @@ namespace LearnApplication.View;
 [XamlCompilation(XamlCompilationOptions.Compile)]
 public partial class SubjectPage : ContentPage
 {
-    private readonly SubjectViewModel viewModel;
-
     public SubjectPage()
     {
         InitializeComponent();
@@ -16,7 +14,7 @@ public partial class SubjectPage : ContentPage
 
     public SubjectPage(SubjectViewModel subjectViewModel ):base()
     {
-        BindingContext = viewModel = subjectViewModel;
+        BindingContext = subjectViewModel;
     }
 
     protected override void OnAppearing()

@@ -52,10 +52,10 @@ namespace LearnApplication.Model
             LearnQuestions = new ObservableCollection<LearnQuestion>() { new LearnQuestion(test, test), new LearnQuestion("ds2", "sd") , new LearnQuestion("ds3", "sd") , new LearnQuestion("ds4", "sd") };
         }
 
-        public ReviewQuestion GetReviewQuestions()
+        public ReviewQuestion GetReviewQuestions(bool allOrUnknown = true)
         {
-            var questions = new ObservableCollection<LearnQuestion>(LearnQuestions);
-            return new ReviewQuestion(questions);
+            var questions = new List<LearnQuestion>(LearnQuestions);
+            return new ReviewQuestion(questions, allOrUnknown);
         }
 
 

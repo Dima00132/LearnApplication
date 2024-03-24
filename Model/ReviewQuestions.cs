@@ -16,9 +16,10 @@ namespace LearnApplication.Model
 
         public bool IsQuestion { get => ReviewQuestions.Count >1; }
 
-        public ReviewQuestion(ObservableCollection<LearnQuestion> returnsQuestions,bool allOrUnknown = true)
+        public ReviewQuestion(List<LearnQuestion> returnsQuestions,bool allOrUnknown = true)
         {
-            ReviewQuestions = returnsQuestions;
+            var reviewQuestions = allOrUnknown ? returnsQuestions : returnsQuestions.Where(x => !x.IsKnown).ToList();
+            ReviewQuestions = new ObservableCollection<LearnQuestion>(reviewQuestions);
             _countQuestions = returnsQuestions.Count();
             Progress = allOrUnknown ? 0 : returnsQuestions.Count((x) => x.IsKnown) / _countQuestions;
             _knownQuestions = allOrUnknown ? 0 : returnsQuestions.Count((x) => x.IsKnown);

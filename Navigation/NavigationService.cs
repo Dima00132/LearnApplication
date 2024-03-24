@@ -36,10 +36,7 @@ namespace LearnApplication.Navigation
             var toPage = ResolvePage<T>();
             if (toPage is not null)
             {
-                //Second Navigation Parameter
-
                 toPage.NavigatedTo += Page_NavigatedTo;
-
                 var toViewModel = GetPageViewModelBase(toPage);
                 SendsNavigationOptions(toViewModel, parameterFirst, parameterSecond);
                 await Navigation.PushAsync(toPage, true);
@@ -112,8 +109,6 @@ namespace LearnApplication.Navigation
           => _services.GetService<T>();
         public Task NavigateBack()
         {
-
-
             if (Navigation.NavigationStack.Count > 1)
                 return Navigation.PopAsync();
             throw new InvalidOperationException("No pages to navigate back to!");

@@ -19,78 +19,62 @@ using System.Threading.Tasks;
 namespace LearnApplication.ViewModel
 {
     public partial class RepetitionOfMaterialViewModel : ViewModelBase
-    {
-        private LearnCategory _learnCategory;
-
-        private ReviewQuestion _questionsToReview;
-
-        //[ObservableProperty]
-        //private string _question;
-
-        //[ObservableProperty]
-        //private string _answer;
-
-        //[ObservableProperty]
-        //private string _hyperlink;
+    {   
+        [ObservableProperty]
+        private ReviewQuestion _reviewQuestion; 
 
         private INavigationService _navigationService;
 
         public RepetitionOfMaterialViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-
         }
 
-        public RelayCommand<LearnQuestion> SettingsCommand => new RelayCommand<LearnQuestion>(Settings);
-        private void Settings(LearnQuestion learnQuestion)
-        {
+        public RelayCommand<LearnQuestion> SettingsCommand => new RelayCommand<LearnQuestion>((x) => _navigationService.NavigateTo<SettingsPage>(x));
+        //private void Settings(LearnQuestion learnQuestion)
+        //{
 
-
-            _navigationService.NavigateTo<SettingsPage>(learnQuestion);
+        //    _navigationService.NavigateTo<SettingsPage>(learnQuestion);
     
-        }
+        //}
 
 
-        public RelayCommand<LearnQuestion> DontKnowCommand { get => new RelayCommand<LearnQuestion>((x) => DontKnow(x)); }
+        public RelayCommand<LearnQuestion> DontKnowCommand { get => new RelayCommand<LearnQuestion>((x) => ReviewQuestion.MoveQuestionToEnd(x)); }
 
-        public void DontKnow(LearnQuestion learnQuestion)
-        {
-            ReviewQuestion.MoveQuestionToEnd(learnQuestion);
+        //public void DontKnow(LearnQuestion learnQuestion)
+        //{
+        //    ReviewQuestion.MoveQuestionToEnd(learnQuestion);
            
+        //}
+
+
+
+
+
+        public RelayCommand<LearnQuestion> KnowCommand { get => new  RelayCommand<LearnQuestion>(
+            (x)=> 
+            {
+                if (!ReviewQuestion.IsQuestion)
+                    _navigationService.NavigateBack();
+                ReviewQuestion.DeleteQuestion(x);
+            }); 
         }
 
 
-
-
-
-        public RelayCommand<LearnQuestion> KnowCommand { get => new  RelayCommand<LearnQuestion>((x)=> Know(x)); }
-
-
-        public void Know(LearnQuestion learnQuestion)
-        {
-            if (!ReviewQuestion.IsQuestion)
-                _navigationService.NavigateBack();
-            ReviewQuestion.DeleteQuestion(learnQuestion);
-        }
+        //public void Know(LearnQuestion learnQuestion)
+        //{
+        //    if (!ReviewQuestion.IsQuestion)
+        //        _navigationService.NavigateBack();
+        //    ReviewQuestion.DeleteQuestion(learnQuestion);
+        //}
         
 
 
-        [ObservableProperty]
-        private ReviewQuestion _reviewQuestion;
-
-        //private ObservableCollection<LearnQuestion> _learnQuestions = new();
 
         public override Task OnNavigatingTo(object? parameter)
         {
             ReviewQuestion = parameter as ReviewQuestion;
             return base.OnNavigatingTo(parameter);
         }
-        //public void ApplyQueryAttributes(IDictionary<string, object> query)
-        //{
-        //    _learnCategory = (LearnCategory)query[nameof(LearnCategory)];
-        //    var create = (bool)query["CreateListQuestions"];
-        //    _questionsToReview = _learnCategory.ReturnsQuestionForRepetition();
-        //    InitializesFields(_questionsToReview.GetQuestion());
-        //}
     }
 }
