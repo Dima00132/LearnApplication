@@ -21,6 +21,8 @@ namespace LearnApplication.ViewModel
         [ObservableProperty]
         private ObservableCollection<LearnCategory> _categoryUnderStudys;
 
+        private bool _subject;
+
         private readonly INavigationService _navigationService;
         public MainViewModel(ObservableCollection<LearnCategory> categoryUnderStudys, INavigationService navigationService)
         {

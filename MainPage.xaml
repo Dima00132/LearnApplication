@@ -13,14 +13,17 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Text="Добавить" Grid.Row="0"  Command="{Binding AddCommand}" 
+        <ImageButton/>
+
+        <Button Text="Добавить" Grid.Row="1"  Command="{Binding AddCommand}" 
    SemanticProperties.Hint="Counts the number of times you click" HorizontalOptions="Fill" />
 
 
-        <CollectionView    Grid.Row="1" ItemsSource="{Binding CategoryUnderStudys}" SelectionMode="None" >
+        <CollectionView    Grid.Row="2" ItemsSource="{Binding CategoryUnderStudys}" SelectionMode="None" >
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:LearnCategory}">

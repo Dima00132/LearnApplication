@@ -1,11 +1,6 @@
 ﻿using LearnApplication.ViewModel.Base;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace LearnApplication.Navigation
 {
@@ -36,23 +31,35 @@ namespace LearnApplication.Navigation
         public Task NavigateTo<T>(object parameter) where T : Page
                 => NavigateToPage<T>(parameter);
 
-        private async Task NavigateToPage<T>(object? parameter = null) where T : Page
+        private async Task NavigateToPage<T>(object? parameterFirst = null,object? parameterSecond = null) where T : Page
         {
             var toPage = ResolvePage<T>();
             if (toPage is not null)
             {
-      
+                //Second Navigation Parameter
+
                 toPage.NavigatedTo += Page_NavigatedTo;
 
                 var toViewModel = GetPageViewModelBase(toPage);
-                if (toViewModel is not null)
-                    await toViewModel.OnNavigatingTo(parameter);
+                SendsNavigationOptions(toViewModel, parameterFirst, parameterSecond);
                 await Navigation.PushAsync(toPage, true);
                 toPage.NavigatedFrom += Page_NavigatedFrom;
             }
             else
                 throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
         }
+
+       private async void SendsNavigationOptions(ViewModelBase viewModel,object? parameterFirst = null, object? parameterSecond = null)
+       {
+            if (viewModel is null)
+                return;
+            if (parameterSecond is null)
+            {
+                await viewModel.OnNavigatingTo(parameterFirst);
+                return;
+            }
+            await viewModel.OnNavigatingTo(parameterFirst, parameterSecond);
+       }
 
         private async void Page_NavigatedFrom(object? sender, NavigatedFromEventArgs e)
         {
