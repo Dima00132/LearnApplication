@@ -21,12 +21,18 @@ namespace LearnApplication.ViewModel
         [ObservableProperty]
         private ObservableCollection<LearnCategory> _categoryUnderStudys;
 
-        private bool _subject;
+        public override Task OnNavigatingTo(object? parameter)
+        {
+            CategoryUnderStudys = parameter as ObservableCollection<LearnCategory>;
+
+            return base.OnNavigatingTo(parameter);
+        }
+
 
         private readonly INavigationService _navigationService;
-        public MainViewModel(ObservableCollection<LearnCategory> categoryUnderStudys, INavigationService navigationService)
+        public MainViewModel( INavigationService navigationService)
         {
-            _categoryUnderStudys = categoryUnderStudys;
+            //_categoryUnderStudys = categoryUnderStudys;
             _navigationService = navigationService;
              
         }

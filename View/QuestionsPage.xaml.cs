@@ -21,9 +21,5 @@ public partial class QuestionsPage : ContentPage
         BindingContext = viewModel= questionsViewModel;
     }
 
-    //protected override void OnAppearing()
-    //{
-    //    collectionView.UpdateSelectedItems(collectionView.SelectedItems);
-    //    base.OnAppearing();
-    //}
+  
 }

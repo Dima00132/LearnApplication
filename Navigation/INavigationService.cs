@@ -8,9 +8,9 @@ namespace LearnApplication.Navigation
 {
     public interface INavigationService
     {
-        Task NavigateToMainPage();
+        Task NavigateToMainPage(object parameter = null);
         Task NavigateTo<T>(object parameter) where T : Page;
-        Task NavigateTo<T>() where T : Page;
+        //Task NavigateTo<T>() where T : Page;
         Task NavigateBack();
     }
 }

@@ -3,10 +3,9 @@
 
 namespace LearnApplication.Model
 {
+    [Serializable]
     public partial class ProgressLearn : ObservableObject
     {
-
-
         private readonly List<LearnQuestion> _learnQuestions;
 
         private double _countProgressLearn;
@@ -23,6 +22,10 @@ namespace LearnApplication.Model
         public ProgressLearn(List<LearnQuestion> learnQuestions)
         {
             _learnQuestions = learnQuestions;
+        }
+
+        public ProgressLearn()
+        {
         }
 
         private double CountProgress()

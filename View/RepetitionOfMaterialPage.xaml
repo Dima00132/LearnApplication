@@ -102,15 +102,19 @@
                                     </Grid.ColumnDefinitions>
 
 
-                                    <BoxView Grid.Column="0" CornerRadius="20"
+                                    <!--<BoxView Grid.Column="0" CornerRadius="20"
                                              WidthRequest="20"
                                              HeightRequest="20"
                                              VerticalOptions="Center"
                                              HorizontalOptions="StartAndExpand"
                                              Margin="20,0,0,0"
-                                             BackgroundColor="Red" />
-                                    
-                                    <Label Grid.Column="1" Margin="0,15,5,0" HorizontalOptions="Center" Text="статус вопросв"/>
+                                             BackgroundColor="Red" />-->
+
+                                        <Label Grid.Column="0" 
+                                               Margin="20,0,0,0" 
+                                               TextColor="Green"
+                                               HorizontalOptions="Center"
+                                               Text="{Binding NumberOfRepetitions, StringFormat='Повтор - {0}'}"/>
                                     
                                     <ImageButton Grid.Column="2"
                                               Margin="50,0,0,0" 

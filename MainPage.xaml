@@ -42,7 +42,7 @@
            CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
                             <StackLayout  Orientation="Vertical">
-
+                                <Label Text="{Binding TestCountDontKnown , Mode=TwoWay}" TextColor="Black" />
                                 <Label Text="{Binding  Subject , Mode=TwoWay}" TextColor="Black"/>
                             </StackLayout>
                         </Frame>

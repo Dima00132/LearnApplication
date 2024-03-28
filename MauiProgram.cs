@@ -7,6 +7,8 @@ using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using Syncfusion.Maui.Core.Hosting;
 using LearnApplication.Navigation;
+using LearnApplication.Service;
+using Microsoft.Maui.LifecycleEvents;
 
 
 
@@ -25,49 +27,21 @@ namespace LearnApplication
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            var model = new ObservableCollection<LearnCategory>();
-            model.Add(new LearnCategory("c#"));
+            builder.Services.AddSingleton<MainPage>().AddSingleton<MainViewModel>();
 
-            //builder.Services.AddSingleton<IDataService, DataService>();
-            builder.Services.AddTransient<MainPage>().AddTransient<MainViewModel>().AddTransient((x)=> model);
             builder.Services.AddSingleton<INavigationService,NavigationService>();
 
+            builder.Services.AddTransient<TabbedLearnPage>().AddTransient<TabbedLearnViewModel >();
 
-            //var model = new ObservableCollection<LearnCategory>();
-            //model.Add(new LearnCategory("c#"));
+            builder.Services.AddTransient<SubjectPage>().AddTransient<SubjectViewModel>();
 
-            //builder.Services.AddSingleton<MainPage>().AddSingleton<MainViewModel>().AddTransient((x)=> model);
+            builder.Services.AddTransient<QuestionsPage>().AddTransient<QuestionsViewModel>();
 
-            builder.Services.AddTransient<TabbedLearnPage>();
-            builder.Services.AddTransient<TabbedLearnViewModel >();
+            builder.Services.AddTransient<SettingsPage>().AddTransient<SettingsViewModel>();
 
+            builder.Services.AddTransient<AddQuestionPage>().AddTransient<AddQuestionViewModel>();
 
-            builder.Services.AddTransient<SubjectPage>();
-            builder.Services.AddTransient<SubjectViewModel>();
-
-
-            builder.Services.AddTransient<QuestionsPage>();
-            builder.Services.AddTransient<QuestionsViewModel>();
-
-
-
-            builder.Services.AddTransient<SettingsPage>();
-            builder.Services.AddTransient<SettingsViewModel>();
-
-            builder.Services.AddTransient<AddQuestionPage>();
-            builder.Services.AddTransient<AddQuestionViewModel>();
-
-            builder.Services.AddTransient<RepetitionOfMaterialPage>();
-            builder.Services.AddTransient<RepetitionOfMaterialViewModel>();
-
-
-
-            
-
-
-
-
-
+            builder.Services.AddTransient<RepetitionOfMaterialPage>().AddTransient<RepetitionOfMaterialViewModel>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

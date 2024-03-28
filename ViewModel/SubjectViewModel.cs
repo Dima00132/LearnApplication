@@ -19,9 +19,15 @@ namespace LearnApplication.ViewModel
 
     public partial class SubjectViewModel : ViewModelBase
     {
+        
         private  LearnCategory _learnCategory;
-        public RelayCommand RepeatAllQuestionsCommand { get;  }
-        public RelayCommand RepeatDontKnownQuestionsCommand { get; }
+        public RelayCommand RepeatAllQuestionsCommand 
+        { get => new RelayCommand(() => _navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
+                () => _learnCategory?.LearnQuestions.Count != 0);  }
+        public RelayCommand RepeatDontKnownQuestionsCommand 
+        { get => new RelayCommand(() =>
+            _navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
+            () => _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0); }
 
         [ObservableProperty]
         private double _progressLearn;
@@ -40,13 +46,13 @@ namespace LearnApplication.ViewModel
         public SubjectViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            RepeatAllQuestionsCommand = new RelayCommand(
-                ()=>_navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
-                () => _learnCategory?.LearnQuestions.Count != 0);
+            //RepeatAllQuestionsCommand = new RelayCommand(
+            //    ()=>_navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
+            //    () => _learnCategory?.LearnQuestions.Count != 0);
 
-            RepeatDontKnownQuestionsCommand = new RelayCommand(()=> 
-            _navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
-            ()=> _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0);
+            //RepeatDontKnownQuestionsCommand = new RelayCommand(()=> 
+            //_navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
+            //()=> _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0);
 
         }
 
@@ -56,7 +62,7 @@ namespace LearnApplication.ViewModel
                 return;
            ProgressLearn = _learnCategory.CountProgressLearn();
             LearnCount = _learnCategory.CountQuestion();
-            DointKnownCount = _learnCategory.DointKnownCountLearn();
+            DointKnownCount = _learnCategory.TestCountDontKnown;
             KnownCount = _learnCategory.KnownCountLearn();
         }
         public override Task OnNavigatingTo(object? parameter)

@@ -2,11 +2,7 @@
 using LearnApplication.Navigation;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace LearnApplication.ViewModel
 {
@@ -30,5 +26,6 @@ namespace LearnApplication.ViewModel
             _questionsViewModel.OnNavigatingTo(parameter);
             return base.OnNavigatingTo(parameter);
         }
+
     }
 }

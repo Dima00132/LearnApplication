@@ -17,7 +17,7 @@ namespace LearnApplication.ViewModel
 {
     public partial class SettingsViewModel :ViewModelBase
     {
-     
+    
         private LearnQuestion _learnQuestiong;
 
         [ObservableProperty]

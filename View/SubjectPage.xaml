@@ -33,8 +33,17 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Text="Повторить все" Command="{Binding RepeatAllQuestionsCommand}" Grid.Column="0" BackgroundColor="Gray" TextColor="Black"/>
-            <Button Text="Повторить неизвестые" Command="{Binding RepeatDontKnownQuestionsCommand}" Grid.Column="1"  BackgroundColor="Gray" TextColor="Black"/>
+            <Button Text="Повторить все" 
+                    Command="{Binding RepeatAllQuestionsCommand}" 
+                    Grid.Column="0" 
+                    BackgroundColor="Gray" 
+                    TextColor="Green"/>
+
+            <Button Text="{Binding DointKnownCount, StringFormat='На повтор  {0}'}" 
+                    Command="{Binding RepeatDontKnownQuestionsCommand}"
+                    TextColor="Green"
+                    Grid.Column="1"  
+                    BackgroundColor="Gray"/>
 
         </Grid>
         

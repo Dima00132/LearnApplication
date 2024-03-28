@@ -17,4 +17,5 @@ public partial class AddQuestionPage : ContentPage
 		BindingContext = viewModel;
 
     }
+
 }

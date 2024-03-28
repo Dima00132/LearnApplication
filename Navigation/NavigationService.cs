@@ -1,4 +1,5 @@
-﻿using LearnApplication.ViewModel.Base;
+﻿using LearnApplication.ViewModel;
+using LearnApplication.ViewModel.Base;
 using System.Diagnostics;
 
 
@@ -6,6 +7,13 @@ namespace LearnApplication.Navigation
 {
     public class NavigationService : INavigationService
     {
+
+        //private Dictionary<ViewModelBase, Page> keyValuePairs = new Dictionary<ViewModelBase, Page>()
+        //{
+
+        //};
+
+
         readonly IServiceProvider _services;
         protected INavigation Navigation
         {
@@ -16,7 +24,6 @@ namespace LearnApplication.Navigation
                     return navigation;
                 else
                 {
-                    //This is not good!
                     if (Debugger.IsAttached)
                         Debugger.Break();
                     throw new Exception();
@@ -25,9 +32,8 @@ namespace LearnApplication.Navigation
         }
         public NavigationService(IServiceProvider services)=> _services = services;
 
-
-        public Task NavigateToMainPage()
-                    => NavigateToPage<MainPage>();
+        public Task NavigateToMainPage(object parameter = null)
+                    => NavigateToPage<MainPage>(parameter);
         public Task NavigateTo<T>(object parameter) where T : Page
                 => NavigateToPage<T>(parameter);
 
@@ -45,7 +51,6 @@ namespace LearnApplication.Navigation
             else
                 throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
         }
-
        private async void SendsNavigationOptions(ViewModelBase viewModel,object? parameterFirst = null, object? parameterSecond = null)
        {
             if (viewModel is null)
@@ -57,7 +62,6 @@ namespace LearnApplication.Navigation
             }
             await viewModel.OnNavigatingTo(parameterFirst, parameterSecond);
        }
-
         private async void Page_NavigatedFrom(object? sender, NavigatedFromEventArgs e)
         {
             bool isForwardNavigation = Navigation.NavigationStack.Count > 1
@@ -72,7 +76,6 @@ namespace LearnApplication.Navigation
                 await CallNavigatedFrom(thisPage, isForwardNavigation);
             }
         }
-
         private Task CallNavigatedFrom(Page p, bool isForward)
         {
             var fromViewModel = GetPageViewModelBase(p);
@@ -80,14 +83,10 @@ namespace LearnApplication.Navigation
                 return fromViewModel.OnNavigatedFrom(isForward);
             return Task.CompletedTask;
         }
-
         private ViewModelBase GetPageViewModelBase<T>(T toPage) where T : Page
              =>toPage?.BindingContext as ViewModelBase;
-        
-
         private async void Page_NavigatedTo(object? sender, NavigatedToEventArgs e)
             => await CallNavigatedTo(sender as Page);
-
         private  Task CallNavigatedTo(Page? page)
         {
             var fromViewModel = GetPageViewModelBase(page);
@@ -96,15 +95,15 @@ namespace LearnApplication.Navigation
             return Task.CompletedTask;
         }
 
-        public Task NavigateTo<T>() where T : Page
-        => NavigateToPage<T>();
-        private Task NavigateToPage<T>() where T : Page
-        {
-            var page = ResolvePage<T>();
-            if (page is not null)
-                return Navigation.PushAsync(page, true);
-            throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
-        }
+        //public Task NavigateTo<T>() where T : Page
+        //=> NavigateToPage<T>();
+        //private async Task NavigateToPage<T>() where T : Page
+        //{
+        //    var page = ResolvePage<T>();
+        //    if (page is not null)
+        //         await Navigation.PushAsync(page, true);
+        //    throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
+        //}
         private T? ResolvePage<T>() where T : Page
           => _services.GetService<T>();
         public Task NavigateBack()
@@ -113,7 +112,5 @@ namespace LearnApplication.Navigation
                 return Navigation.PopAsync();
             throw new InvalidOperationException("No pages to navigate back to!");
         }
-
-
     }
 }

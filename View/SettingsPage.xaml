@@ -3,14 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
              x:Class="LearnApplication.View.SettingsPage" >
-    <VerticalStackLayout >
-
-
+    <StackLayout Orientation="Vertical" BackgroundColor="#1f1f1f" >
         <Frame>
-            <Editor Text="{Binding Question}" TextColor="Black" PlaceholderColor="DarkGray" Placeholder ="Введите вопрос"/>
+            <Editor Text="{Binding Question}" TextColor="White" PlaceholderColor="DarkGray" Placeholder ="Введите вопрос"/>
         </Frame>
         <Frame>
-            <Editor Text="{Binding Answer}" TextColor="Black" PlaceholderColor="DarkGray" Placeholder ="Введите ответ"/>
+            <Editor Text="{Binding Answer}" TextColor="White" PlaceholderColor="DarkGray" Placeholder ="Введите ответ"/>
         </Frame>
 
         <Frame>
@@ -23,6 +21,6 @@
                 <Switch  IsToggled="{Binding IsKnown, Mode=TwoWay}" ThumbColor="Green"/>
             </StackLayout>
         </Frame>
-        <Button Text="Добавить"  Command="{Binding SaveCangeCommand}"  />
-    </VerticalStackLayout>
+        <Button Text="Добавить" BackgroundColor="Gray" TextColor="White"  Command="{Binding SaveCangeCommand}"  />
+    </StackLayout>
 </ContentPage>

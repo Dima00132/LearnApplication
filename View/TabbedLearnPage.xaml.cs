@@ -13,10 +13,4 @@ public partial class TabbedLearnPage : TabbedPage
 		InitializeComponent();
         BindingContext = tabbedLearnViewModel= viewModel;
     }
-
-    //protected override void OnAppearing()
-    //{
-    //    tabbedLearnViewModel.OnNavigatingTo();
-    //    base.OnAppearing();
-    //}
 }
