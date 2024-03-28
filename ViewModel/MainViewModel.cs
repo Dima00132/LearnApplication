@@ -56,9 +56,9 @@ namespace LearnApplication.ViewModel
         async Task Tap(LearnCategory learnCategory)
         {
 
+            await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory);
 
-
-            await _navigationService.NavigateByPage<TabbedLearnPage>(learnCategory);
+           // await _navigationService.NavigateByPage<TabbedLearnPage>(learnCategory);
 
         }
     }

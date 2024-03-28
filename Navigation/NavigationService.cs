@@ -18,7 +18,7 @@ namespace LearnApplication.Navigation
             {typeof(RepetitionOfMaterialViewModel),typeof(RepetitionOfMaterialPage)},
             {typeof(SettingsViewModel),typeof(SettingsPage)},
             {typeof(SubjectPage),typeof(SubjectPage)},
-            {typeof(TabbedLearnViewModel),typeof(TabbedPage)}
+            {typeof(TabbedLearnViewModel),typeof(TabbedLearnPage)}
         };
 
 
@@ -60,7 +60,7 @@ namespace LearnApplication.Navigation
 
         private async Task NavigateToPage(Type typePage,object? parameter = null) 
         {
-            var toPage = ResolvePage(typePage);
+            var toPage = ResolvePage(typePage) as Page;
             await InitializecircutPage(toPage, parameter);
         }
 
@@ -122,8 +122,8 @@ namespace LearnApplication.Navigation
         private T? ResolvePage<T>() where T : Page
           => _services.GetService<T>();
 
-        private Page ResolvePage(Type type)
-            =>_services.GetService(type) as Page;
+        private object ResolvePage(Type type)
+            =>_services.GetService(type);
         
 
         public Task NavigateBack()
