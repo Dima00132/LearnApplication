@@ -40,13 +40,7 @@ namespace LearnApplication.ViewModel
         public RelayCommand AddCommand => new RelayCommand(Add);
         async private void Add()
         {
-
-            //await Shell.Current.GoToAsync($"{nameof(AddDishPage)}", true);
-            //var _newName = await Shell.Current.DisplayPromptAsync("Логин", "Введите имя:", "OK", "Отмена");
-            //var _newName = await Shell.Current.DisplayPromptAsync("Логин", "Введите имя:", "OK", "Отмена");
-            //CategoryUnderStudys.AddLearnQuestion(new Dish() { Name = $"{_newName}" });
-
-            var subject = await App.Current.MainPage.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
+            var subject = await App.Current?.MainPage?.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
             if (string.IsNullOrEmpty(subject))
                 return;
             CategoryUnderStudys.Add(new LearnCategory(subject));
@@ -64,7 +58,7 @@ namespace LearnApplication.ViewModel
 
 
 
-            await _navigationService.NavigateTo<TabbedLearnPage>(learnCategory);
+            await _navigationService.NavigateByPage<TabbedLearnPage>(learnCategory);
 
         }
     }

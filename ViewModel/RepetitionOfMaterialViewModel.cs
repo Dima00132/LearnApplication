@@ -30,11 +30,11 @@ namespace LearnApplication.ViewModel
             _navigationService = navigationService;
         }
 
-        public RelayCommand<LearnQuestion> SettingsCommand => new RelayCommand<LearnQuestion>((x) => _navigationService.NavigateTo<SettingsPage>(x));
+        public RelayCommand<LearnQuestion> SettingsCommand => new RelayCommand<LearnQuestion>((x) => _navigationService.NavigateByPage<SettingsPage>(x));
         //private void Settings(LearnQuestion learnQuestion)
         //{
 
-        //    _navigationService.NavigateTo<SettingsPage>(learnQuestion);
+        //    _navigationService.NavigateByPage<SettingsPage>(learnQuestion);
     
         //}
 

@@ -22,11 +22,11 @@ namespace LearnApplication.ViewModel
         
         private  LearnCategory _learnCategory;
         public RelayCommand RepeatAllQuestionsCommand 
-        { get => new RelayCommand(() => _navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
+        { get => new RelayCommand(() => _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
                 () => _learnCategory?.LearnQuestions.Count != 0);  }
         public RelayCommand RepeatDontKnownQuestionsCommand 
         { get => new RelayCommand(() =>
-            _navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
+            _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
             () => _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0); }
 
         [ObservableProperty]
@@ -47,11 +47,11 @@ namespace LearnApplication.ViewModel
         {
             _navigationService = navigationService;
             //RepeatAllQuestionsCommand = new RelayCommand(
-            //    ()=>_navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
+            //    ()=>_navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
             //    () => _learnCategory?.LearnQuestions.Count != 0);
 
             //RepeatDontKnownQuestionsCommand = new RelayCommand(()=> 
-            //_navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
+            //_navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
             //()=> _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0);
 
         }
@@ -76,7 +76,7 @@ namespace LearnApplication.ViewModel
         //private void Add()
         //{
 
-        //    _navigationService.NavigateTo<AddQuestionPage>(_learnCategory);
+        //    _navigationService.NavigateByPage<AddQuestionPage>(_learnCategory);
 
         //}
 
@@ -86,7 +86,7 @@ namespace LearnApplication.ViewModel
         //[RelayCommand]
         //async Task RepeatQuestions()
         //{
-        //    await _navigationService.NavigateTo<RepetitionOfMaterialPage>(_learnCategory);
+        //    await _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory);
         //}
 
        // public bool CheckCountQuestions() => _learnCategory?.LearnQuestions.Count != 0;

@@ -1,5 +1,8 @@
-﻿using LearnApplication.ViewModel;
+﻿
+using LearnApplication.View;
+using LearnApplication.ViewModel;
 using LearnApplication.ViewModel.Base;
+using Syncfusion.Maui.Core.Carousel;
 using System.Diagnostics;
 
 
@@ -8,10 +11,15 @@ namespace LearnApplication.Navigation
     public class NavigationService : INavigationService
     {
 
-        //private Dictionary<ViewModelBase, Page> keyValuePairs = new Dictionary<ViewModelBase, Page>()
-        //{
-
-        //};
+        private Dictionary<Type, Type> viewModelView = new Dictionary<Type, Type>()
+        {
+            {typeof(AddQuestionViewModel),typeof(AddQuestionPage)},
+            {typeof(QuestionsViewModel),typeof(QuestionsPage)},
+            {typeof(RepetitionOfMaterialViewModel),typeof(RepetitionOfMaterialPage)},
+            {typeof(SettingsViewModel),typeof(SettingsPage)},
+            {typeof(SubjectPage),typeof(SubjectPage)},
+            {typeof(TabbedLearnViewModel),typeof(TabbedPage)}
+        };
 
 
         readonly IServiceProvider _services;
@@ -32,36 +40,51 @@ namespace LearnApplication.Navigation
         }
         public NavigationService(IServiceProvider services)=> _services = services;
 
-        public Task NavigateToMainPage(object parameter = null)
+        public Task NavigateToMainPage(object? parameter = null)
                     => NavigateToPage<MainPage>(parameter);
-        public Task NavigateTo<T>(object parameter) where T : Page
+        public Task NavigateByPage<T>(object? parameter = null) where T : Page
                 => NavigateToPage<T>(parameter);
 
-        private async Task NavigateToPage<T>(object? parameterFirst = null,object? parameterSecond = null) where T : Page
+
+        public async Task NavigateByViewModel<T>(object? parameter = null) where T : ViewModelBase
+        {
+            
+            if (viewModelView.ContainsKey(typeof(T)))
+            {
+                var typePage = viewModelView[typeof(T)];
+                await NavigateToPage(typePage, parameter);
+            }else
+                throw new KeyNotFoundException($"Не найден тип в словаре {viewModelView}");
+        }
+
+
+        private async Task NavigateToPage(Type typePage,object? parameter = null) 
+        {
+            var toPage = ResolvePage(typePage);
+            await InitializecircutPage(toPage, parameter);
+        }
+
+        private async Task NavigateToPage<T>(object? parameter = null) where T : Page
         {
             var toPage = ResolvePage<T>();
+            await InitializecircutPage(toPage, parameter);
+        }
+
+        private async Task InitializecircutPage(Page toPage, object? parameter = null)
+        {
             if (toPage is not null)
             {
                 toPage.NavigatedTo += Page_NavigatedTo;
                 var toViewModel = GetPageViewModelBase(toPage);
-                SendsNavigationOptions(toViewModel, parameterFirst, parameterSecond);
+                if (toViewModel is not null)
+                    await toViewModel.OnNavigatingTo(parameter);
                 await Navigation.PushAsync(toPage, true);
                 toPage.NavigatedFrom += Page_NavigatedFrom;
             }
             else
-                throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
+                throw new InvalidOperationException($"Unable to resolve type");
         }
-       private async void SendsNavigationOptions(ViewModelBase viewModel,object? parameterFirst = null, object? parameterSecond = null)
-       {
-            if (viewModel is null)
-                return;
-            if (parameterSecond is null)
-            {
-                await viewModel.OnNavigatingTo(parameterFirst);
-                return;
-            }
-            await viewModel.OnNavigatingTo(parameterFirst, parameterSecond);
-       }
+
         private async void Page_NavigatedFrom(object? sender, NavigatedFromEventArgs e)
         {
             bool isForwardNavigation = Navigation.NavigationStack.Count > 1
@@ -95,17 +118,14 @@ namespace LearnApplication.Navigation
             return Task.CompletedTask;
         }
 
-        //public Task NavigateTo<T>() where T : Page
-        //=> NavigateToPage<T>();
-        //private async Task NavigateToPage<T>() where T : Page
-        //{
-        //    var page = ResolvePage<T>();
-        //    if (page is not null)
-        //         await Navigation.PushAsync(page, true);
-        //    throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
-        //}
+
         private T? ResolvePage<T>() where T : Page
           => _services.GetService<T>();
+
+        private Page ResolvePage(Type type)
+            =>_services.GetService(type) as Page;
+        
+
         public Task NavigateBack()
         {
             if (Navigation.NavigationStack.Count > 1)

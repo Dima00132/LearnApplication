@@ -19,7 +19,7 @@ namespace LearnApplication.Service
             }
             catch (Exception ex)
             {
-                App.Current.MainPage.DisplayAlert("Ошибка чтения файла сохранения!",ex.Message, "OK");
+                App.Current?.MainPage?.DisplayAlert("Ошибка чтения файла сохранения!",ex.Message, "OK");
             }
         }
         public static T DeserializeFromXml<T>(string filePath)
@@ -32,7 +32,7 @@ namespace LearnApplication.Service
             }
             catch (Exception ex)
             {
-                App.Current.MainPage.DisplayAlert("Ошибка  сохранения файла!", ex.Message, "OK");
+                _ = App.Current?.MainPage?.DisplayAlert("Ошибка  сохранения файла!", ex.Message, "OK");
             }
             return default(T);
         }

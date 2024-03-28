@@ -9,12 +9,16 @@ namespace LearnApplication
     public partial class App : Application
     {
         private readonly ObservableCollection<LearnCategory> _learnCategories;
+        private readonly string Path = string.Empty;
 
         public App(INavigationService navigationService)
         {
             InitializeComponent();
             MainPage = new NavigationPage();
-            _learnCategories = XmlSerializationService.DeserializeFromXml<ObservableCollection<LearnCategory>>("SaveLearnCategorys.xml");
+            var nameFile = "SaveLearnCategorys.xml";
+            var Path = $"D:\\{nameFile}";
+
+            _learnCategories = XmlSerializationService.DeserializeFromXml<ObservableCollection<LearnCategory>>(Path);
 
             navigationService.NavigateToMainPage(_learnCategories);
 
@@ -22,7 +26,7 @@ namespace LearnApplication
         }
         private void MainPage_Disappearing(object? sender, EventArgs e)
         {
-            XmlSerializationService.SerializeToXml("SaveLearnCategorys.xml", _learnCategories);
+            XmlSerializationService.SerializeToXml(Path, _learnCategories);
         }
     }
 }

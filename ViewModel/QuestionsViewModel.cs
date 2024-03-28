@@ -36,11 +36,11 @@ namespace LearnApplication.ViewModel
         private LearnCategory _learnCategory;
 
 
-        public RelayCommand AddCommand { get=> new RelayCommand(async () => await _navigationService.NavigateTo<AddQuestionPage>(LearnQuestions.Add)); }
+        public RelayCommand AddCommand { get=> new RelayCommand(async () => await _navigationService.NavigateByPage<AddQuestionPage>(LearnQuestions.Add)); }
         
         async private void Add()
         {
-             await _navigationService.NavigateTo<AddQuestionPage>(LearnQuestions.Add); 
+             await _navigationService.NavigateByPage<AddQuestionPage>(LearnQuestions.Add); 
         }
 
 
@@ -54,7 +54,7 @@ namespace LearnApplication.ViewModel
         [RelayCommand]
         public async Task Tap(LearnQuestion learnQuestion)
         {
-            await _navigationService.NavigateTo<SettingsPage>(learnQuestion);  
+            await _navigationService.NavigateByPage<SettingsPage>(learnQuestion);  
         }
 
 
