@@ -11,7 +11,7 @@ namespace LearnApplication.Navigation
     public class NavigationService : INavigationService
     {
 
-        private Dictionary<Type, Type> viewModelView = new Dictionary<Type, Type>()
+        private Dictionary<Type, Type> viewModelView = new()
         {
             {typeof(AddQuestionViewModel),typeof(AddQuestionPage)},
             {typeof(QuestionsViewModel),typeof(QuestionsPage)},
@@ -46,13 +46,13 @@ namespace LearnApplication.Navigation
                 => NavigateToPage<T>(parameter);
 
 
-        public async Task NavigateByViewModel<T>(object? parameter = null) where T : ViewModelBase
+        public Task NavigateByViewModel<T>(object? parameter = null) where T : ViewModelBase
         {
             
             if (viewModelView.ContainsKey(typeof(T)))
             {
                 var typePage = viewModelView[typeof(T)];
-                await NavigateToPage(typePage, parameter);
+                return NavigateToPage(typePage, parameter);
             }else
                 throw new KeyNotFoundException($"Не найден тип в словаре {viewModelView}");
         }
