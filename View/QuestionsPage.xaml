@@ -4,7 +4,8 @@
              xmlns:model ="clr-namespace:LearnApplication.Model"
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
              x:Class="LearnApplication.View.QuestionsPage"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             x:DataType="viewmodel:QuestionsViewModel">
 
 
     
@@ -14,36 +15,40 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Text="Добавить" Grid.Row="0"  Command="{Binding AddCommand}" 
-   SemanticProperties.Hint="Counts the number of times you click" HorizontalOptions="Fill" />
-
-
-        <CollectionView x:Name="collectionView"  Grid.Row="1" ItemsSource="{Binding LearnQuestions}" BackgroundColor="Black" SelectionMode="None" >
+        <Button Text="Добавить" 
+                Grid.Row="0"  
+                Command="{Binding AddCommand}"
+                HorizontalOptions="Fill" />
+        <CollectionView x:Name="collectionView"  
+                        Grid.Row="1" 
+                        ItemsSource="{Binding LearnQuestions}" 
+                        BackgroundColor="Black" 
+                        SelectionMode="None" >
             <CollectionView.ItemTemplate>
-                <DataTemplate  >
+                <DataTemplate x:DataType="{x:Type model:LearnQuestion}" >
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems>
-                                <SwipeItem  Text="Удалить" BackgroundColor="Red" 
-         Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:QuestionsViewModel}}, Path=DeleteCommand}"
-         CommandParameter="{Binding .}"/>
+                                <SwipeItem  Text="Удалить" 
+                                            BackgroundColor="Red" 
+                                            Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:QuestionsViewModel}}, Path=DeleteCommand}"
+                                            CommandParameter="{Binding .}"/>
                             </SwipeItems>
                         </SwipeView.RightItems>
                         <Frame Margin="5" Padding="5" >
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer
-                                   
-                                Command="{Binding Path=TapCommand, Source={RelativeSource AncestorType={x:Type viewmodel:QuestionsViewModel}}}"
-                                 CommandParameter="{Binding .}"/>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Path=TapCommand, Source={RelativeSource AncestorType={x:Type viewmodel:QuestionsViewModel}}}"
+                                    CommandParameter="{Binding .}"/>
                             </Frame.GestureRecognizers>
                             <StackLayout  Orientation="Vertical" >
-                                <Label Text="{Binding Question ,Mode=TwoWay}" TextColor="Black"/>
+                                <Label Text="{Binding Question ,Mode=TwoWay}" 
+                                       TextColor="Black"/>
                             </StackLayout>
                         </Frame>
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
     </Grid>
 </ContentPage>

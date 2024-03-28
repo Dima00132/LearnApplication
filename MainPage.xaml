@@ -5,7 +5,7 @@
              xmlns:local ="clr-namespace:LearnApplication.View"
              xmlns:model ="clr-namespace:LearnApplication.Model"
              x:Class="LearnApplication.MainPage"
-               >
+             x:DataType="viewmodel:MainViewModel" >
 
 
 

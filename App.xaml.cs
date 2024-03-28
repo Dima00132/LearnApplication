@@ -15,8 +15,9 @@ namespace LearnApplication
         {
             InitializeComponent();
             MainPage = new NavigationPage();
+
             var nameFile = "SaveLearnCategorys.xml";
-            var Path = $"D:\\{nameFile}";
+            Path = $"D:\\{nameFile}";
 
             _learnCategories = XmlSerializationService.DeserializeFromXml<ObservableCollection<LearnCategory>>(Path);
 

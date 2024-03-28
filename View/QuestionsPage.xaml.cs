@@ -8,9 +8,6 @@ namespace LearnApplication.View;
 [XamlCompilation(XamlCompilationOptions.Compile)]
 public partial class QuestionsPage : ContentPage
 {
-
-    private QuestionsViewModel viewModel;
-
     public QuestionsPage()
     {
         InitializeComponent();
@@ -18,8 +15,6 @@ public partial class QuestionsPage : ContentPage
 
     public QuestionsPage(QuestionsViewModel questionsViewModel) : base()
     {
-        BindingContext = viewModel= questionsViewModel;
+        BindingContext = questionsViewModel;
     }
-
-  
 }

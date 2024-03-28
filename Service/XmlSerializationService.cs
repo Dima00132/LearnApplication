@@ -13,8 +13,8 @@ namespace LearnApplication.Service
         {
             try
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                using StreamWriter writer = new StreamWriter(filePath);
+                XmlSerializer xmlSerializer = new(typeof(T));
+                using StreamWriter writer = new(filePath);
                 xmlSerializer.Serialize(writer, data);
             }
             catch (Exception ex)
@@ -26,15 +26,16 @@ namespace LearnApplication.Service
         {
             try
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                using StreamReader reader = new StreamReader(filePath);
-                return (T)xmlSerializer.Deserialize(reader);
+                XmlSerializer xmlSerializer = new(typeof(T));
+                using StreamReader reader = new(filePath);
+                if(xmlSerializer.Deserialize(reader) is T xmlDeserialize)
+                    return xmlDeserialize;
             }
             catch (Exception ex)
             {
                 _ = App.Current?.MainPage?.DisplayAlert("Ошибка  сохранения файла!", ex.Message, "OK");
             }
-            return default(T);
+            return default;
         }
     }
 }

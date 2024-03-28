@@ -22,57 +22,54 @@ namespace LearnApplication.ViewModel
     {
         public override Task OnNavigatingTo(object? parameter)
         {
-            var learnCategory = parameter as LearnCategory;
-            InitializesFields(learnCategory);
+            if(parameter is ObservableCollection<LearnQuestion> learnQuestions)
+                LearnQuestions = learnQuestions;
             return base.OnNavigatingTo(parameter);
         }
 
-    
+
 
         [ObservableProperty]
-        private ObservableCollection<LearnQuestion> _learnQuestions;
+        private ObservableCollection<LearnQuestion> _learnQuestions = new();
 
-        [ObservableProperty]
-        private LearnCategory _learnCategory;
+        //[ObservableProperty]
+        //private LearnCategory _learnCategory;
 
 
-        public RelayCommand AddCommand { get=> new RelayCommand(async () => await _navigationService.NavigateByPage<AddQuestionPage>(LearnQuestions.Add)); }
-        
-        async private void Add()
+        public RelayCommand AddCommand => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(LearnQuestions));
+
+        //async private void Add()
+        //{
+        //     await _navigationService.NavigateByPage<AddQuestionPage>(LearnQuestions.Add); 
+        //}
+
+
+        public RelayCommand<LearnQuestion> DeleteCommand => new((learnQuestion) =>
         {
-             await _navigationService.NavigateByPage<AddQuestionPage>(LearnQuestions.Add); 
-        }
+            if(learnQuestion is not null)
+                LearnQuestions.Remove(learnQuestion);
+        });
+
+        //[RelayCommand]
+        //public void Delete(LearnQuestion learnQuestion)
+        //{
+        //    LearnQuestions.Remove(learnQuestion);
+        //}
 
 
-        [RelayCommand]
-        public void Delete(LearnQuestion learnQuestion)
-        {
-            LearnQuestions.Remove(learnQuestion);
-        }
+        public RelayCommand<LearnQuestion> TapCommand => new(async (learnQuestion) => await _navigationService.NavigateByPage<SettingsPage>(learnQuestion));
 
-
-        [RelayCommand]
-        public async Task Tap(LearnQuestion learnQuestion)
-        {
-            await _navigationService.NavigateByPage<SettingsPage>(learnQuestion);  
-        }
+        //[RelayCommand]
+        //public async Task Tap(LearnQuestion learnQuestion)
+        //{
+        //    await _navigationService.NavigateByPage<SettingsPage>(learnQuestion);  
+        //}
 
 
         private readonly INavigationService _navigationService;
         public QuestionsViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-           
         }
-
-        private void InitializesFields(LearnCategory learnCategory)
-        {
-            LearnCategory = learnCategory;
-     
-            LearnQuestions = learnCategory.LearnQuestions;
-
-
-        }
-
     }
 }

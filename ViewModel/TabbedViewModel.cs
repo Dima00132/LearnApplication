@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LearnApplication.Model;
 using LearnApplication.Navigation;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
@@ -22,8 +23,12 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter)
         {
-            _subjectViewModel.OnNavigatingTo(parameter);
-            _questionsViewModel.OnNavigatingTo(parameter);
+            if (parameter is LearnCategory learnCategory)
+            {
+                SubjectViewModel?.OnNavigatingTo(learnCategory);
+                QuestionsViewModel?.OnNavigatingTo(learnCategory.LearnQuestions);
+                
+            }
             return base.OnNavigatingTo(parameter);
         }
 

@@ -2,25 +2,36 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
-             x:Class="LearnApplication.View.SettingsPage" >
+             xmlns:model ="clr-namespace:LearnApplication.Model"
+             x:Class="LearnApplication.View.SettingsPage" 
+             x:DataType="viewmodel:SettingsViewModel">
     <StackLayout Orientation="Vertical" BackgroundColor="#1f1f1f" >
         <Frame>
-            <Editor Text="{Binding Question}" TextColor="White" PlaceholderColor="DarkGray" Placeholder ="Введите вопрос"/>
+            <Editor Text="{Binding Question}"
+                    BackgroundColor="#1f1f1f" 
+                    TextColor="White" 
+                    PlaceholderColor="DarkGray" 
+                    Placeholder ="Введите вопрос"/>
         </Frame>
         <Frame>
-            <Editor Text="{Binding Answer}" TextColor="White" PlaceholderColor="DarkGray" Placeholder ="Введите ответ"/>
+            <Editor Text="{Binding Answer}" 
+                    BackgroundColor="#1f1f1f" 
+                    TextColor="White" 
+                    PlaceholderColor="DarkGray" 
+                    Placeholder ="Введите ответ"/>
         </Frame>
 
         <Frame>
-            <Editor Text="{Binding Hyperlink}" Keyboard="Url" IsReadOnly="true" PlaceholderColor="DarkGray"  Placeholder ="Ссылка на дополнительнй материал"/>
+            <Editor Text="{Binding Hyperlink}" 
+                    BackgroundColor="#1f1f1f" 
+                    Keyboard="Url" IsReadOnly="true" 
+                    PlaceholderColor="DarkGray"  
+                    Placeholder ="Ссылка на дополнительнй материал"/>
         </Frame>
-
-        <Frame>
-            <StackLayout Padding="8">
-                <Label Text="Я это помню?" FontSize="16" TextColor="Black" />
-                <Switch  IsToggled="{Binding IsKnown, Mode=TwoWay}" ThumbColor="Green"/>
-            </StackLayout>
-        </Frame>
-        <Button Text="Добавить" BackgroundColor="Gray" TextColor="White"  Command="{Binding SaveCangeCommand}"  />
+        
+        <Button Text="Добавить" 
+                BackgroundColor="Gray" 
+                TextColor="Green"  
+                Command="{Binding SaveCangeCommand}"  />
     </StackLayout>
 </ContentPage>

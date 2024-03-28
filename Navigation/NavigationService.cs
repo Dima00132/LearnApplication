@@ -1,9 +1,8 @@
-﻿
-using LearnApplication.View;
+﻿using LearnApplication.View;
 using LearnApplication.ViewModel;
 using LearnApplication.ViewModel.Base;
-using Syncfusion.Maui.Core.Carousel;
 using System.Diagnostics;
+
 
 
 namespace LearnApplication.Navigation
@@ -11,7 +10,7 @@ namespace LearnApplication.Navigation
     public class NavigationService : INavigationService
     {
 
-        private Dictionary<Type, Type> viewModelView = new()
+        private readonly Dictionary<Type, Type> viewModelView = new()
         {
             {typeof(AddQuestionViewModel),typeof(AddQuestionPage)},
             {typeof(QuestionsViewModel),typeof(QuestionsPage)},
@@ -23,7 +22,7 @@ namespace LearnApplication.Navigation
 
 
         readonly IServiceProvider _services;
-        protected INavigation Navigation
+        protected static INavigation Navigation
         {
             get
             {
@@ -60,14 +59,14 @@ namespace LearnApplication.Navigation
 
         private async Task NavigateToPage(Type typePage,object? parameter = null) 
         {
-            var toPage = ResolvePage(typePage) as Page;
-            await InitializecircutPage(toPage, parameter);
+            if(ResolvePage(typePage) is Page toPage)
+                await InitializecircutPage(toPage, parameter);
         }
 
         private async Task NavigateToPage<T>(object? parameter = null) where T : Page
         {
-            var toPage = ResolvePage<T>();
-            await InitializecircutPage(toPage, parameter);
+            if (ResolvePage<T>() is T toPage)
+                await InitializecircutPage(toPage, parameter);
         }
 
         private async Task InitializecircutPage(Page toPage, object? parameter = null)
@@ -78,7 +77,7 @@ namespace LearnApplication.Navigation
                 var toViewModel = GetPageViewModelBase(toPage);
                 if (toViewModel is not null)
                     await toViewModel.OnNavigatingTo(parameter);
-                await Navigation.PushAsync(toPage, true);
+                await NavigationService.Navigation.PushAsync(toPage, true);
                 toPage.NavigatedFrom += Page_NavigatedFrom;
             }
             else
@@ -87,8 +86,8 @@ namespace LearnApplication.Navigation
 
         private async void Page_NavigatedFrom(object? sender, NavigatedFromEventArgs e)
         {
-            bool isForwardNavigation = Navigation.NavigationStack.Count > 1
-                && Navigation.NavigationStack[^2] == sender;
+            bool isForwardNavigation = NavigationService.Navigation.NavigationStack.Count > 1
+                && NavigationService.Navigation.NavigationStack[^2] == sender;
             if (sender is Page thisPage)
             {
                 if (!isForwardNavigation)
@@ -106,11 +105,18 @@ namespace LearnApplication.Navigation
                 return fromViewModel.OnNavigatedFrom(isForward);
             return Task.CompletedTask;
         }
-        private ViewModelBase GetPageViewModelBase<T>(T toPage) where T : Page
-             =>toPage?.BindingContext as ViewModelBase;
+        private ViewModelBase GetPageViewModelBase(Page toPage)
+        { 
+            if(toPage?.BindingContext is ViewModelBase viewModel)
+                return viewModel;
+            throw new NullReferenceException($"Не найден BindingContext в Page {toPage?.GetType().FullName}");
+        }
         private async void Page_NavigatedTo(object? sender, NavigatedToEventArgs e)
-            => await CallNavigatedTo(sender as Page);
-        private  Task CallNavigatedTo(Page? page)
+        { 
+            if(sender is Page toPage)
+             await CallNavigatedTo(toPage); 
+        }
+        private  Task CallNavigatedTo(Page page)
         {
             var fromViewModel = GetPageViewModelBase(page);
             if (fromViewModel is not null)
@@ -123,13 +129,18 @@ namespace LearnApplication.Navigation
           => _services.GetService<T>();
 
         private object ResolvePage(Type type)
-            =>_services.GetService(type);
+        {
+            var service = _services.GetService(type);
+            if (service is not null)
+               return service;
+            throw new NullReferenceException($"Не найден сервер в {_services.GetType().FullName}");
+        }
         
 
         public Task NavigateBack()
         {
-            if (Navigation.NavigationStack.Count > 1)
-                return Navigation.PopAsync();
+            if (NavigationService.Navigation.NavigationStack.Count > 1)
+                return NavigationService.Navigation.PopAsync();
             throw new InvalidOperationException("No pages to navigate back to!");
         }
     }

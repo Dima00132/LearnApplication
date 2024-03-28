@@ -19,7 +19,7 @@ namespace LearnApplication.Model
 
         public bool IsQuestion { get => ReviewQuestions.Count >1; }    
 
-        public ReviewQuestion()
+        public ReviewQuestion():this([])
         {
         }
 
@@ -27,7 +27,7 @@ namespace LearnApplication.Model
         {
             var reviewQuestions = allOrUnknown ? returnsQuestions : returnsQuestions.Where(x => !x.IsKnown).ToList();
             ReviewQuestions = new ObservableCollection<LearnQuestion>(reviewQuestions);
-            _countQuestions = returnsQuestions.Count();
+            _countQuestions = returnsQuestions.Count;
             Progress = allOrUnknown ? 0 : returnsQuestions.Count((x) => x.IsKnown) / _countQuestions;
             _knownQuestions = allOrUnknown ? 0 : returnsQuestions.Count((x) => x.IsKnown);
 
@@ -45,7 +45,7 @@ namespace LearnApplication.Model
         }
 
 
-        public async void DeleteQuestion(LearnQuestion learnQuestion)
+        public  void DeleteQuestion(LearnQuestion learnQuestion)
         {
             learnQuestion.SetsQuestionAsAlreadyKnown();
             _knownQuestions++;

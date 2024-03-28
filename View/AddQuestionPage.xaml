@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LearnApplication.View.AddQuestionPage" >
+             xmlns:model ="clr-namespace:LearnApplication.Model"
+             xmlns:viewModel ="clr-namespace:LearnApplication.ViewModel"
+             x:Class="LearnApplication.View.AddQuestionPage"
+             x:DataType="viewModel:AddQuestionViewModel">
     <VerticalStackLayout>
         <Frame>
-            <Editor Text="{Binding Question}" TextColor="Black" Placeholder ="Введите вопрос" PlaceholderColor="DarkGray"/>
+            <Editor Text="{Binding Question}" 
+                    TextColor="Black" 
+                    Placeholder ="Введите вопрос" 
+                    PlaceholderColor="DarkGray"/>
         </Frame>
         <Frame>
-            <Editor Text="{Binding Answer}" TextColor="Black"  Placeholder ="Введите ответ" PlaceholderColor="DarkGray"/>
+            <Editor Text="{Binding Answer}" 
+                    TextColor="Black"  
+                    Placeholder ="Введите ответ" 
+                    PlaceholderColor="DarkGray"/>
         </Frame>
 
         <Frame>
-            <Editor Text="{Binding Hyperlink}" Keyboard="Url" IsReadOnly="true"  TextColor="Black" PlaceholderColor="DarkGray" Placeholder ="Ссылка на дополнительнй материал"/>
+            <Editor Text="{Binding Hyperlink}" 
+                    Keyboard="Url" 
+                    IsReadOnly="true"  
+                    TextColor="Black" 
+                    PlaceholderColor="DarkGray" 
+                    Placeholder ="Ссылка на дополнительнй материал"/>
         </Frame>
 
-        <Frame>
-            <StackLayout Padding="8">
-                <Label Text="Я это помню?" FontSize="16" TextColor="Black" />
-                <Switch  IsToggled="{Binding IsKnown,Mode=TwoWay}" />
-            </StackLayout>
-        </Frame>
-        <Button Text="Добавить"  Command="{Binding AddLearnQuestionCommand}" 
-   SemanticProperties.Hint="Counts the number of times you click"  />
+        <Button Text="Добавить"  
+                Command="{Binding AddLearnQuestionCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

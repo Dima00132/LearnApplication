@@ -24,7 +24,7 @@ namespace LearnApplication.Model
             _learnQuestions = learnQuestions;
         }
 
-        public ProgressLearn()
+        public ProgressLearn():this([])
         {
         }
 
@@ -47,7 +47,7 @@ namespace LearnApplication.Model
 
         public int CountQuestion()
         {
-            return _learnQuestions.Count();
+            return _learnQuestions.Count;
         }
 
 

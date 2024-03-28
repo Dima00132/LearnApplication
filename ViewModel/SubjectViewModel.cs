@@ -21,13 +21,12 @@ namespace LearnApplication.ViewModel
     {
         
         private  LearnCategory _learnCategory;
-        public RelayCommand RepeatAllQuestionsCommand 
-        { get => new RelayCommand(() => _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
-                () => _learnCategory?.LearnQuestions.Count != 0);  }
-        public RelayCommand RepeatDontKnownQuestionsCommand 
-        { get => new RelayCommand(() =>
+        public RelayCommand RepeatAllQuestionsCommand => new(() => 
+            _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
+             () => _learnCategory?.LearnQuestions.Count != 0);
+        public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
             _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
-            () => _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0); }
+            () => _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0);
 
         [ObservableProperty]
         private double _progressLearn;
@@ -46,20 +45,13 @@ namespace LearnApplication.ViewModel
         public SubjectViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            //RepeatAllQuestionsCommand = new RelayCommand(
-            //    ()=>_navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
-            //    () => _learnCategory?.LearnQuestions.Count != 0);
+            _learnCategory = new LearnCategory();
 
-            //RepeatDontKnownQuestionsCommand = new RelayCommand(()=> 
-            //_navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
-            //()=> _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0);
 
         }
 
         public void InitializesFields()
         {
-            if (_learnCategory is null)
-                return;
            ProgressLearn = _learnCategory.CountProgressLearn();
             LearnCount = _learnCategory.CountQuestion();
             DointKnownCount = _learnCategory.TestCountDontKnown;
@@ -67,8 +59,11 @@ namespace LearnApplication.ViewModel
         }
         public override Task OnNavigatingTo(object? parameter)
         {
-            _learnCategory = parameter as LearnCategory;
-            InitializesFields();
+            if(parameter is LearnCategory learnCategory) 
+            { 
+                _learnCategory = learnCategory;
+                InitializesFields();
+            }
             return base.OnNavigatingTo(parameter);
         }
 

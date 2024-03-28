@@ -16,9 +16,6 @@ namespace LearnApplication.ViewModel
 {
     public partial class AddQuestionViewModel:ViewModelBase
     {
-        //[ObservableProperty]
-        //private LearnCategory _learnQuestions;
-
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AddLearnQuestionCommand))]
         private string _question;
@@ -29,32 +26,31 @@ namespace LearnApplication.ViewModel
         [ObservableProperty]
         private string _hyperlink;
 
-        [ObservableProperty]
-        private bool _isKnown;
-
-        //[ObservableProperty]
-        //private ObservableCollection<LearnQuestion> _learnQuestions;
-        //[ObservableProperty]
-        private Action<LearnQuestion> _actionAddLearnQuestion;
+        private ObservableCollection<LearnQuestion> _learnQuestions;
 
         private readonly INavigationService _navigationService;
         public AddQuestionViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+            Question = string.Empty;
+            Answer = string.Empty;
+            Hyperlink = string.Empty;
+            _learnQuestions = [];
+
+
         }
         public override Task OnNavigatingTo(object? parameter)
         {
-            _actionAddLearnQuestion = parameter as Action<LearnQuestion>;
-            // LearnQuestions = parameter as LearnCategory;
-          //_learnQuestions = parameter as List<LearnQuestion>;
+            if (parameter is ObservableCollection<LearnQuestion> questions)
+                _learnQuestions = questions;
             return base.OnNavigatingTo(parameter);
         }
 
 
         [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
-        public async void   AddLearnQuestion()
+        public async Task AddLearnQuestion()
         {
-           _actionAddLearnQuestion?.Invoke(new LearnQuestion(Question, Answer, Hyperlink, IsKnown));
+            _learnQuestions.Add(new LearnQuestion(Question, Answer, Hyperlink));
             //LearnQuestions.AddLearnQuestion(new LearnQuestion(Question, Answer, Hyperlink, IsKnown));
             //_learnQuestions.Add(new LearnQuestion(Question, Answer, Hyperlink, IsKnown));
 

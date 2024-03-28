@@ -28,37 +28,41 @@ namespace LearnApplication.ViewModel
         public RepetitionOfMaterialViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+            _reviewQuestion = new();
         }
 
-        public RelayCommand<LearnQuestion> SettingsCommand => new RelayCommand<LearnQuestion>((x) => _navigationService.NavigateByPage<SettingsPage>(x));
+        public RelayCommand<LearnQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<SettingsPage>(learnQuestion));
         //private void Settings(LearnQuestion learnQuestion)
         //{
 
         //    _navigationService.NavigateByPage<SettingsPage>(learnQuestion);
-    
+
         //}
 
 
-        public RelayCommand<LearnQuestion> DontKnowCommand { get => new RelayCommand<LearnQuestion>((x) => ReviewQuestion.MoveQuestionToEnd(x)); }
+        public RelayCommand<LearnQuestion> DontKnowCommand => new((learnQuestion) =>
+        {
+            if(learnQuestion is not null)
+                ReviewQuestion.MoveQuestionToEnd(learnQuestion);
+        });
 
         //public void DontKnow(LearnQuestion learnQuestion)
         //{
         //    ReviewQuestion.MoveQuestionToEnd(learnQuestion);
-           
+
         //}
 
 
 
 
 
-        public RelayCommand<LearnQuestion> KnowCommand { get => new  RelayCommand<LearnQuestion>(
-            (x)=> 
-            {
-                if (!ReviewQuestion.IsQuestion)
-                    _navigationService.NavigateBack();
-                ReviewQuestion.DeleteQuestion(x);
-            }); 
-        }
+        public RelayCommand<LearnQuestion> KnowCommand => new((learnQuestion) =>
+        {
+            if (!ReviewQuestion.IsQuestion)
+                _navigationService.NavigateBack();
+            if (learnQuestion is not null)
+                ReviewQuestion.DeleteQuestion(learnQuestion);
+        });
 
 
         //public void Know(LearnQuestion learnQuestion)
@@ -67,13 +71,14 @@ namespace LearnApplication.ViewModel
         //        _navigationService.NavigateBack();
         //    ReviewQuestion.DeleteQuestion(learnQuestion);
         //}
-        
+
 
 
 
         public override Task OnNavigatingTo(object? parameter)
         {
-            ReviewQuestion = parameter as ReviewQuestion;
+            if(parameter is ReviewQuestion reviewQuestion)
+                ReviewQuestion = reviewQuestion;
             return base.OnNavigatingTo(parameter);
         }
     }

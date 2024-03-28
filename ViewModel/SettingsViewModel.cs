@@ -18,7 +18,7 @@ namespace LearnApplication.ViewModel
     public partial class SettingsViewModel :ViewModelBase
     {
     
-        private LearnQuestion _learnQuestiong;
+        private LearnQuestion _learnQuestion;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCangeCommand))]
@@ -30,24 +30,26 @@ namespace LearnApplication.ViewModel
         [ObservableProperty]
         private string _hyperlink;
 
-        [ObservableProperty]
-        private bool _isKnown;
-
 
         private readonly INavigationService _navigationService;
         public SettingsViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+            Question = string.Empty;
+            Answer = string.Empty;
+            Hyperlink = string.Empty;
+            _learnQuestion = new LearnQuestion();
         }
 
 
         public override Task OnNavigatingTo(object? parameter)
         {
-
-
-            _learnQuestiong = parameter as LearnQuestion;
-            Question = _learnQuestiong?.Question;
-            Answer = _learnQuestiong?.Answer;
+            if (parameter is LearnQuestion learnQuestion)
+            {
+                _learnQuestion = learnQuestion;
+                Question = learnQuestion.Question;
+                Answer = learnQuestion.Answer;
+            }
             return base.OnNavigatingTo(parameter);
         }
 
@@ -56,7 +58,7 @@ namespace LearnApplication.ViewModel
         public void SaveCange()
         {
 
-            _learnQuestiong.Change(new LearnQuestion(Question, Answer,Hyperlink,IsKnown));
+            _learnQuestion.Change(new LearnQuestion(Question, Answer,Hyperlink));
             _navigationService.NavigateBack();
         }
 

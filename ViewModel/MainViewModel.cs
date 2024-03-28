@@ -18,48 +18,64 @@ namespace LearnApplication.ViewModel
 {
     public partial class MainViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
+        
         [ObservableProperty]
         private ObservableCollection<LearnCategory> _categoryUnderStudys;
-
-        public override Task OnNavigatingTo(object? parameter)
-        {
-            CategoryUnderStudys = parameter as ObservableCollection<LearnCategory>;
-
-            return base.OnNavigatingTo(parameter);
-        }
-
-
-        private readonly INavigationService _navigationService;
         public MainViewModel( INavigationService navigationService)
         {
-            //_categoryUnderStudys = categoryUnderStudys;
+            _categoryUnderStudys = [];
             _navigationService = navigationService;
-             
+    
         }
 
-        public RelayCommand AddCommand => new RelayCommand(Add);
-        async private void Add()
+
+        public RelayCommand AddCommand => new(async() =>
         {
-            var subject = await App.Current?.MainPage?.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
+            var subject = await Application.Current?.MainPage?.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
             if (string.IsNullOrEmpty(subject))
                 return;
             CategoryUnderStudys.Add(new LearnCategory(subject));
-        }
+        });
 
-        [RelayCommand]
-        void Delete(LearnCategory learnCategory)
+        //public RelayCommand AddCommand => new RelayCommand(Add);
+        //async private void Add()
+        //{
+        //    var subject = await Application.Current?.MainPage?.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
+        //    if (string.IsNullOrEmpty(subject))
+        //        return;
+        //    CategoryUnderStudys.Add(new LearnCategory(subject));
+        //}
+
+        public RelayCommand<LearnCategory> DeleteCommand => new((learnCategory) =>
         {
-            CategoryUnderStudys.Remove(learnCategory);
-        }
+            if (learnCategory is not null)
+                CategoryUnderStudys.Remove(learnCategory);
+        });
 
-        [RelayCommand]
-        async Task Tap(LearnCategory learnCategory)
+        //[RelayCommand]
+        //void Delete(LearnCategory learnCategory)
+        //{
+        //    CategoryUnderStudys.Remove(learnCategory);
+        //}
+
+        public RelayCommand<LearnCategory> TapCommand => new(async (learnCategory) => await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory));
+
+        //[RelayCommand]
+        //async Task Tap(LearnCategory learnCategory)
+        //{
+
+        //    await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory);
+
+        //   // await _navigationService.NavigateByPage<TabbedLearnPage>(learnCategory);
+
+        //}       
+        public override Task OnNavigatingTo(object? parameter)
         {
-
-            await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory);
-
-           // await _navigationService.NavigateByPage<TabbedLearnPage>(learnCategory);
-
+            if(parameter is ObservableCollection<LearnCategory> categor)
+                CategoryUnderStudys = categor;
+            return base.OnNavigatingTo(parameter);
         }
+
     }
 }

@@ -23,14 +23,14 @@ namespace LearnApplication.Model
         [ObservableProperty]
         public int _numberOfRepetitions = 0;
 
-        public event EventHandler Tick;
+        public event EventHandler? TimerTick;
 
-        private NumberRepetition[] _repetitions = 
-        {
+        private readonly NumberRepetition[] _repetitions = 
+        [
             NumberRepetition.Test,NumberRepetition.First,NumberRepetition.Second,NumberRepetition.Third
-        }; 
+        ];
 
-        public LearnQuestion()
+        public LearnQuestion():this(string.Empty, string.Empty)
         {
         }
 
@@ -40,7 +40,6 @@ namespace LearnApplication.Model
             Answer = answer;
             Hyperlink = hyperlink;
             IsKnown = isKnown;
-
         }
 
        
@@ -48,14 +47,16 @@ namespace LearnApplication.Model
         public void SetsQuestionAsAlreadyKnown(bool isStartTimer = true)
         {
             IsKnown = true;
-           var _dispatcher = Application.Current?.Dispatcher.CreateTimer();
-            
+            var timeHours = Convert.ToDouble(_repetitions[NumberOfRepetitions]);
+            var _dispatcher = Application.Current?.Dispatcher.CreateTimer();
 
-            if (isStartTimer & NumberOfRepetitions < 4)
+            if (!isStartTimer & NumberOfRepetitions < 4)
+                return;
+           
+            if (_dispatcher is not null)
             {
-                _dispatcher.Tick += Timer_Tick;
                 NumberOfRepetitions++;
-                var timeHours = Convert.ToDouble(_repetitions[NumberOfRepetitions]);
+                _dispatcher.Tick += Timer_Tick;
                 _dispatcher.Interval = TimeSpan.FromSeconds(20);
                 _dispatcher.Start();
             }
@@ -66,7 +67,7 @@ namespace LearnApplication.Model
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 IsKnown = false;
-                Tick?.Invoke(this,EventArgs.Empty);
+                TimerTick?.Invoke(this,EventArgs.Empty);
                 //_dispatcher.Stop();
             });
             
