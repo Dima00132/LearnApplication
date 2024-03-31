@@ -13,9 +13,14 @@ namespace LearnApplication.Service
         {
             try
             {
+                using (FileStream fs = new FileStream(filePath,FileMode.OpenOrCreate))
+                {
+
+                }
                 XmlSerializer xmlSerializer = new(typeof(T));
                 using StreamWriter writer = new(filePath);
                 xmlSerializer.Serialize(writer, data);
+
             }
             catch (Exception ex)
             {

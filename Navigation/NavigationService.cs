@@ -22,7 +22,7 @@ namespace LearnApplication.Navigation
 
 
         readonly IServiceProvider _services;
-        protected static INavigation Navigation
+        public static INavigation Navigation
         {
             get
             {

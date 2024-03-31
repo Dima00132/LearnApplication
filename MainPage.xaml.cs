@@ -14,6 +14,12 @@ namespace LearnApplication
             BindingContext =viewModel;
             InitializeComponent();
         }
+
+        protected override void OnDisappearing()
+        {
+            var g = 2;
+            base.OnDisappearing();
+        }
     }
 
 }

@@ -40,6 +40,7 @@ namespace LearnApplication.Model
             Answer = answer;
             Hyperlink = hyperlink;
             IsKnown = isKnown;
+            //var dataTime = new DateTime().tim;
         }
 
        

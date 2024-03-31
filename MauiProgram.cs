@@ -9,6 +9,12 @@ using Syncfusion.Maui.Core.Hosting;
 using LearnApplication.Navigation;
 using LearnApplication.Service;
 using Microsoft.Maui.LifecycleEvents;
+using Microsoft.Maui;
+using CommunityToolkit.Mvvm;
+using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Storage;
+
+
 
 
 
@@ -20,12 +26,16 @@ namespace LearnApplication
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                .UseMauiApp<App>()
+            .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+
+            builder.Services.AddSingleton<IDataService, DataService>();
 
             builder.Services.AddSingleton<MainPage>().AddSingleton<MainViewModel>();
 
