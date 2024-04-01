@@ -21,13 +21,20 @@ namespace LearnApplication.ViewModel
             QuestionsViewModel = questViewModel;
         }
 
+        public override Task OnUpdate()
+        {
+            SubjectViewModel?.OnUpdate();
+            QuestionsViewModel?.OnUpdate();
+            return base.OnUpdate();
+        }
+
         public override Task OnNavigatingTo(object? parameter)
         {
-            if (parameter is LearnCategory learnCategory)
+            if (parameter is int id)
             {
-                SubjectViewModel?.OnNavigatingTo(learnCategory);
-                QuestionsViewModel?.OnNavigatingTo(learnCategory.LearnQuestions);
-                
+                SubjectViewModel?.OnNavigatingTo(id);
+                QuestionsViewModel?.OnNavigatingTo(id);
+
             }
             return base.OnNavigatingTo(parameter);
         }

@@ -4,14 +4,14 @@ using System.Collections.ObjectModel;
 namespace LearnApplication.Model
 {
     [Serializable]
-    public partial class ReviewQuestion : ObservableObject
+    public partial class ReviewQuestion
     {
 
-        [ObservableProperty]
-        private ObservableCollection<LearnQuestion> _reviewQuestions;
+      
+        public ObservableCollection<LearnQuestion> ReviewQuestions { get;set; }
 
-        [ObservableProperty]
-        private double _progress;
+       
+        public double Progress {get; set;}
 
         private readonly double _countQuestions;
 

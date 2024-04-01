@@ -17,13 +17,13 @@
         <StackLayout Padding="20" Grid.Row="2" BackgroundColor="#1f1f1f" >
             <Label Text="Выучено" />
             <Frame>
-                <Label TextColor="Gray" Text="{Binding LearnCount, StringFormat='Количество вопросов  -  {0}'}" />
+                <Label TextColor="Gray" Text="{Binding LearnCategory.CountQuestion, StringFormat='Количество вопросов  -  {0}'}" />
             </Frame>
             <Frame>
-                <Label TextColor="Green" Text="{Binding KnownCount, StringFormat='Изучено вопросов  -  {0}'}" />
+                <Label TextColor="Green" Text="{Binding LearnCategory.KnownCountLearn, StringFormat='Изучено вопросов  -  {0}'}" />
             </Frame>
             <Frame>
-                <Label TextColor="Red" Text="{Binding DointKnownCount, StringFormat='Не изучено вопросов  -  {0}'}" />
+                <Label TextColor="Red" Text="{Binding LearnCategory.DointKnownCountLearn, StringFormat='Не изучено вопросов  -  {0}'}" />
             </Frame>
         </StackLayout>
 
@@ -39,11 +39,11 @@
                     BackgroundColor="Gray" 
                     TextColor="Green"/>
 
-            <Button Text="{Binding DointKnownCount, StringFormat='На повтор  {0}'}" 
+            <!--<Button Text="{Binding DointKnownCount, StringFormat='На повтор  {0}'}" 
                     Command="{Binding RepeatDontKnownQuestionsCommand}"
                     TextColor="Green"
                     Grid.Column="1"  
-                    BackgroundColor="Gray"/>
+                    BackgroundColor="Gray"/>-->
 
         </Grid>
         

@@ -1,48 +1,63 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LearnApplication.Service;
+using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 
 namespace LearnApplication.Model
 {
-    [Serializable]
-    public partial class LearnCategory : ObservableObject
+
+    [Table("learn_category")]
+    public partial class LearnCategory: IDataSelect
     {
+        [PrimaryKey,AutoIncrement]
+        [Column("Id")]
+        public int Id { get; set; }
 
-        [ObservableProperty]
-        private string _subject;
+        [Column("subject")]
+        public string Subject { get; set; }
 
-        [ObservableProperty]
-        private int _testCountDontKnown = 0;
-
-
+        [Column("count_dont_known")]
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<LearnQuestion> LearnQuestions { get; set; } = [];
+
+        //[Column("progress_learn")]
+        //public ProgressLearn ProgressLearn { get; set; }
 
         public LearnCategory():this(string.Empty)
         {}
         public LearnCategory(string subject)
         {
+           
             Subject = subject;
-            TestCountDontKnown =  (int)DointKnownCountLearn();
+            //ProgressLearn = new ProgressLearn(LearnQuestions);
+            //CountDontKnown =  (int)DointKnownCountLearn;
         }
 
-        public double CountProgressLearn()
+
+        public double CountProgressLearn
         {
-            double count = LearnQuestions.Count;
-            double Known = LearnQuestions.Count(x => x.IsKnown);
-            return Known / count;
+            get
+            {
+
+                double count = LearnQuestions.Count;
+                double Known = LearnQuestions.Count(x => x.IsKnown);
+                return Known / count;
+            }
         }
+        public double DointKnownCountLearn => LearnQuestions.Count - KnownCountLearn;
 
-        public double DointKnownCountLearn()=>LearnQuestions.Count - KnownCountLearn();
-       
+        public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown);
 
-        public double KnownCountLearn()=>LearnQuestions.Count(x => x.IsKnown);
-     
+        public int CountQuestion => LearnQuestions.Count;
 
-        public int CountQuestion()=>LearnQuestions.Count;
+        public int CountDontKnown { get; private set; } = 0;
 
         public ReviewQuestion GetReviewQuestions(bool allOrUnknown = true)
         {
@@ -55,7 +70,16 @@ namespace LearnApplication.Model
         {
             if (learn is null)
                 return;
+
             LearnQuestions.Add(learn);
+
+            //if (localDbService is not null)
+            //{
+            //    localDbService.Create(learn);
+            //    localDbService.Update(this);
+            //}
+
+
             learn.TimerTick += Timer_Tick;
         }
 
@@ -63,7 +87,7 @@ namespace LearnApplication.Model
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                TestCountDontKnown = (int)DointKnownCountLearn();
+               // CountDontKnown = (int)ProgressLearn.DointKnownCountLearn;
             });
             
         }

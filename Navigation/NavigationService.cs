@@ -140,7 +140,12 @@ namespace LearnApplication.Navigation
         public Task NavigateBack()
         {
             if (NavigationService.Navigation.NavigationStack.Count > 1)
+            {
+                var page = NavigationService.Navigation.NavigationStack[^2];
+                if (page?.BindingContext is ViewModelBase viewModel)
+                    viewModel.OnUpdate();
                 return NavigationService.Navigation.PopAsync();
+            }
             throw new InvalidOperationException("No pages to navigate back to!");
         }
     }

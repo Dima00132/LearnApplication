@@ -15,11 +15,6 @@ namespace LearnApplication
             InitializeComponent();
         }
 
-        protected override void OnDisappearing()
-        {
-            var g = 2;
-            base.OnDisappearing();
-        }
     }
 
 }

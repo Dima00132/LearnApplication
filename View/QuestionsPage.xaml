@@ -4,8 +4,10 @@
              xmlns:model ="clr-namespace:LearnApplication.Model"
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
              x:Class="LearnApplication.View.QuestionsPage"
-             NavigationPage.HasNavigationBar="False"
-             x:DataType="viewmodel:QuestionsViewModel">
+             NavigationPage.HasNavigationBar="False">
+    <!--<ContentPage.BindingContext>
+        <viewmodel:QuestionsViewModel />
+    </ContentPage.BindingContext>-->
 
 
     

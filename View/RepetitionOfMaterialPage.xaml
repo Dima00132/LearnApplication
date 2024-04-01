@@ -24,6 +24,9 @@
         </Style>
     </ContentPage.Resources>
 
+    
+    
+    
 
     <Grid>
         <Grid.RowDefinitions>
@@ -33,13 +36,13 @@
 
         
         <ProgressBar Margin="20,0,20,10" 
-                     Progress="{Binding ReviewQuestion.Progress}"  
+                     Progress="{Binding ReviewQuestion.Progress,Mode=TwoWay}"  
                      ProgressColor="Green"/>
         
         <CarouselView x:Name="carouselView"
                       Grid.Row="1"
                   Margin="20,10,20,10" 
-                  ItemsSource="{Binding ReviewQuestion.ReviewQuestions }"
+                  ItemsSource="{Binding ReviewQuestion.ReviewQuestions ,Mode=TwoWay}"
                   IsBounceEnabled="False"
                   IsSwipeEnabled="False">
         <CarouselView.ItemsLayout>
@@ -109,11 +112,11 @@
                                              Margin="20,0,0,0"
                                              BackgroundColor="Red" />-->
 
-                                        <Label Grid.Column="0" 
+                                        <!--<Label Grid.Column="0" 
                                                Margin="20,0,0,0" 
                                                TextColor="Green"
                                                HorizontalOptions="Center"
-                                               Text="{Binding NumberOfRepetitions, StringFormat='Повтор - {0}'}"/>
+                                               Text="{Binding ReviewQuestion.NumberOfRepetitions, StringFormat='Повтор - {0}', Mode=TwoWay}"/>-->
                                     
                                     <ImageButton Grid.Column="2"
                                               Margin="50,0,0,0" 

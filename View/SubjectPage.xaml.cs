@@ -16,12 +16,4 @@ public partial class SubjectPage : ContentPage
     {
         BindingContext = subjectViewModel;
     }
-
-    protected override void OnAppearing()
-    {
-        if(BindingContext is SubjectViewModel subjectViewModel)
-            subjectViewModel.InitializesFields();
-        base.OnAppearing();
-    }
-
 }

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
 using LearnApplication.Navigation;
+using LearnApplication.Service;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
 using Microsoft.Maui.Animations;
@@ -32,9 +33,12 @@ namespace LearnApplication.ViewModel
 
 
         private readonly INavigationService _navigationService;
-        public SettingsViewModel(INavigationService navigationService)
+        private readonly LocalDbService _localDbService;
+
+        public SettingsViewModel(INavigationService navigationService, LocalDbService localDbService)
         {
             _navigationService = navigationService;
+            _localDbService = localDbService;
             Question = string.Empty;
             Answer = string.Empty;
             Hyperlink = string.Empty;
@@ -44,11 +48,12 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter)
         {
-            if (parameter is LearnQuestion learnQuestion)
+            if (parameter is int id)
             {
-                _learnQuestion = learnQuestion;
-                Question = learnQuestion.Question;
-                Answer = learnQuestion.Answer;
+                _learnQuestion = _localDbService.GetById<LearnQuestion>(id);
+                Question = _learnQuestion.Question;
+                Answer = _learnQuestion.Answer;
+                Hyperlink = _learnQuestion.Hyperlink;
             }
             return base.OnNavigatingTo(parameter);
         }
@@ -59,6 +64,7 @@ namespace LearnApplication.ViewModel
         {
 
             _learnQuestion.Change(new LearnQuestion(Question, Answer,Hyperlink));
+            //_localDbService.Update(_learnQuestion);
             _navigationService.NavigateBack();
         }
 

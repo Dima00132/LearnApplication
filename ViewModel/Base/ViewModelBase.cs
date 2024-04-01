@@ -17,6 +17,8 @@ namespace LearnApplication.ViewModel.Base
             => Task.CompletedTask;
         public virtual Task OnNavigatedTo()
             => Task.CompletedTask;
+        public virtual Task OnUpdate() 
+            => Task.CompletedTask;
 
     }
 }

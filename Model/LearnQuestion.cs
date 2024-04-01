@@ -1,27 +1,38 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LearnApplication.Model.Enum;
+using LearnApplication.Service;
 using Microsoft.Maui.Dispatching;
-
-
+using SQLite;
+using SQLiteNetExtensions.Attributes;
+using System.Xml.Serialization;
 
 namespace LearnApplication.Model
 {
-    [Serializable]
-    public partial class LearnQuestion:ObservableObject
+   
+    [Table("learn_question")]
+    public  class LearnQuestion: IDataSelect
     {
-        [ObservableProperty]
-        private string _question;
 
-        [ObservableProperty]
-        private string _answer;
-        [ObservableProperty]
-        private string _hyperlink;
+        [PrimaryKey,AutoIncrement]
+        [Column("Id")]
+        public int Id { get; set; }
 
-        [ObservableProperty]
-        private bool _isKnown;
+        [Column("learn_category_id")]
+        [ForeignKey(typeof(LearnCategory))]
+        public int LearnCategoryId { get; set; }
 
-        [ObservableProperty]
-        public int _numberOfRepetitions = 0;
+        [Column("question")]
+        public string Question { get; set; }
+
+        [Column("answer")]
+        public string Answer { get; set; }
+        [Column("hyperlink")]
+        public string Hyperlink { get; set; }
+
+        [Column("isKnown")]
+        public bool IsKnown { get; set; }
+
+        public int NumberOfRepetitions { get; set; } = 0;
 
         public event EventHandler? TimerTick;
 
@@ -76,10 +87,16 @@ namespace LearnApplication.Model
 
         public void Change(LearnQuestion learn)
         {
+           
             Question = learn.Question;
             Answer = learn.Answer;
             Hyperlink = learn.Hyperlink;
             IsKnown = learn.IsKnown;
+
+            //if (localDbService is null)
+            //    return;
+
+            //localDbService.Update(this);
         }
 
     }

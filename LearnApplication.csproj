@@ -83,6 +83,8 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
+		<PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
 		<PackageReference Include="Syncfusion.Maui.NavigationDrawer" Version="24.2.9" />
 	</ItemGroup>

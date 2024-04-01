@@ -13,8 +13,12 @@ public partial class QuestionsPage : ContentPage
         InitializeComponent();
     }
 
+
     public QuestionsPage(QuestionsViewModel questionsViewModel) : base()
     {
         BindingContext = questionsViewModel;
+  
     }
+
+
 }

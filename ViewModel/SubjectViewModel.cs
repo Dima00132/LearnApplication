@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
 using LearnApplication.Navigation;
+using LearnApplication.Service;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
 using System;
@@ -19,14 +20,14 @@ namespace LearnApplication.ViewModel
 
     public partial class SubjectViewModel : ViewModelBase
     {
-        
+        [ObservableProperty]
         private  LearnCategory _learnCategory;
         public RelayCommand RepeatAllQuestionsCommand => new(() => 
-            _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions()),
-             () => _learnCategory?.LearnQuestions.Count != 0);
+            _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.Id),
+             () => LearnCategory?.LearnQuestions.Count != 0);
         public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
-            _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.GetReviewQuestions(false)),
-            () => _learnCategory?.LearnQuestions.Count != 0 & _learnCategory?.DointKnownCountLearn() != 0);
+            _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.Id),
+            () => LearnCategory?.LearnQuestions.Count != 0 & LearnCategory?.DointKnownCountLearn != 0);
 
         [ObservableProperty]
         private double _progressLearn;
@@ -35,33 +36,52 @@ namespace LearnApplication.ViewModel
         public int _learnCount;
 
         [ObservableProperty]
-        private double _dointKnownCount;
+        private double _dontKnownCount;
 
         [ObservableProperty]
         private double _knownCount;
 
+        [ObservableProperty]
+        private int _reviewQuestionCount;
+
+
+
 
         private readonly INavigationService _navigationService;
-        public SubjectViewModel(INavigationService navigationService)
+        private readonly LocalDbService _localDbService;
+
+        public SubjectViewModel(INavigationService navigationService, LocalDbService localDbService)
         {
             _navigationService = navigationService;
-            _learnCategory = new LearnCategory();
+            _localDbService = localDbService;
+        }
 
-
+        public override Task OnUpdate()
+        {
+            InitializesFields();
+            return base.OnUpdate();
         }
 
         public void InitializesFields()
         {
-           ProgressLearn = _learnCategory.CountProgressLearn();
-            LearnCount = _learnCategory.CountQuestion();
-            DointKnownCount = _learnCategory.TestCountDontKnown;
-            KnownCount = _learnCategory.KnownCountLearn();
+            LearnCategory = _localDbService.GetById<LearnCategory>(_primaryKeyId);
+           // ProgressLearns = _learnCategory.ProgressLearn;
+
+            //ProgressLearn = _learnCategory.CountProgressLearn;
+            //LearnCount = _learnCategory.CountQuestion;
+            //DontKnownCount = _learnCategory.DointKnownCountLearn;
+            //KnownCount = _learnCategory.KnownCountLearn;
+            
         }
+
+        private int _primaryKeyId;
+
         public override Task OnNavigatingTo(object? parameter)
         {
-            if(parameter is LearnCategory learnCategory) 
-            { 
-                _learnCategory = learnCategory;
+
+            if (parameter is int id)
+            {
+                _primaryKeyId = id;
                 InitializesFields();
             }
             return base.OnNavigatingTo(parameter);

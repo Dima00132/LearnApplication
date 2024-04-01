@@ -35,7 +35,7 @@ namespace LearnApplication
                 });
 
 
-            builder.Services.AddSingleton<IDataService, DataService>();
+            builder.Services.AddSingleton<LocalDbService>();
 
             builder.Services.AddSingleton<MainPage>().AddSingleton<MainViewModel>();
 

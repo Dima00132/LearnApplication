@@ -1,55 +1,46 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SQLite;
+using SQLiteNetExtensions.Attributes;
+using System.Collections.ObjectModel;
 
 
-namespace LearnApplication.Model
-{
-    [Serializable]
-    public partial class ProgressLearn : ObservableObject
+namespace LearnApplication.Model {
+
+    [Table("ProgressLearn")]
+    public class ProgressLearn
     {
-        private readonly List<LearnQuestion> _learnQuestions;
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
 
-        private double _countProgressLearn;
-        public double CountProgressLearn
-        {
-            get => _countProgressLearn;
-            set
-            {
-                _countProgressLearn = CountProgress();
-                SetProperty(ref _countProgressLearn, value);
-            }
-        }
+        [Column("learn_question_id")]
+        [ForeignKey(typeof(LearnQuestion))]
+        public int LearnQuestionId { get; set; }
 
-        public ProgressLearn(List<LearnQuestion> learnQuestions)
+        private readonly ObservableCollection<LearnQuestion> _learnQuestions;
+        public ProgressLearn(ObservableCollection<LearnQuestion> learnQuestions)
         {
             _learnQuestions = learnQuestions;
         }
 
-        public ProgressLearn():this([])
+        public ProgressLearn() : this([])
         {
         }
 
-        private double CountProgress()
+        public double CountProgress
         {
-            double count = _learnQuestions.Count;
-            double Known = _learnQuestions.Count(x => x.IsKnown);
-            return Known / count;
+            get {
+                double count = _learnQuestions.Count;
+                double Known = _learnQuestions.Count(x => x.IsKnown);
+                return Known / count;
+            }
         }
 
-        public double DointKnownCountLearn()
-        {
-            return _learnQuestions.Count - KnownCountLearn();
-        }
-
-        public double KnownCountLearn()
-        {
-            return _learnQuestions.Count(x => x.IsKnown);
-        }
-
-        public int CountQuestion()
-        {
-            return _learnQuestions.Count;
-        }
+        public double DointKnownCountLearn => _learnQuestions.Count - KnownCountLearn;
 
 
+        public double KnownCountLearn => _learnQuestions.Count(x => x.IsKnown);
+
+
+        public int CountQuestion => _learnQuestions.Count;
     }
 }

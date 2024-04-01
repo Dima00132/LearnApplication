@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
 using LearnApplication.Navigation;
+using LearnApplication.Service;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
 using System;
@@ -26,23 +27,33 @@ namespace LearnApplication.ViewModel
         [ObservableProperty]
         private string _hyperlink;
 
-        private ObservableCollection<LearnQuestion> _learnQuestions;
+
+        private LearnCategory _learnCategory;
+
+        // private ObservableCollection<LearnQuestion> _learnQuestions;
 
         private readonly INavigationService _navigationService;
-        public AddQuestionViewModel(INavigationService navigationService)
+        private readonly LocalDbService _localDbService;
+
+        public AddQuestionViewModel(INavigationService navigationService,LocalDbService localDbService)
         {
             _navigationService = navigationService;
+            _localDbService = localDbService;
             Question = string.Empty;
             Answer = string.Empty;
             Hyperlink = string.Empty;
-            _learnQuestions = [];
+            //_learnQuestions = [];
 
 
         }
+     
         public override Task OnNavigatingTo(object? parameter)
         {
-            if (parameter is ObservableCollection<LearnQuestion> questions)
-                _learnQuestions = questions;
+            if (parameter is int id)
+            {
+                _learnCategory = _localDbService.GetById<LearnCategory>(id);
+                //_learnQuestions = new ObservableCollection<LearnQuestion>(value.LearnQuestions);
+            }
             return base.OnNavigatingTo(parameter);
         }
 
@@ -50,7 +61,12 @@ namespace LearnApplication.ViewModel
         [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
         public async Task AddLearnQuestion()
         {
-            _learnQuestions.Add(new LearnQuestion(Question, Answer, Hyperlink));
+            var question = new LearnQuestion(Question, Answer, Hyperlink);
+            _learnCategory.AddLearnQuestion(question);
+            
+            _localDbService.Create(question);
+            _localDbService.Update(_learnCategory); 
+
             //LearnQuestions.AddLearnQuestion(new LearnQuestion(Question, Answer, Hyperlink, IsKnown));
             //_learnQuestions.Add(new LearnQuestion(Question, Answer, Hyperlink, IsKnown));
 

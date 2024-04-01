@@ -19,6 +19,8 @@
 
         <ImageButton/>
 
+        <Button Text="Удалить все" Grid.Row="0"  Command="{Binding DeleteFileDataCommand}" 
+   SemanticProperties.Hint="Counts the number of times you click" HorizontalOptions="Fill" />
         <Button Text="Добавить" Grid.Row="1"  Command="{Binding AddCommand}" 
    SemanticProperties.Hint="Counts the number of times you click" HorizontalOptions="Fill" />
 
@@ -42,7 +44,7 @@
            CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
                             <StackLayout  Orientation="Vertical">
-                                <Label Text="{Binding TestCountDontKnown , Mode=TwoWay}" TextColor="Black" />
+                                <!--<Label Text="{Binding TestCountDontKnown , Mode=TwoWay}" TextColor="Black" />-->
                                 <Label Text="{Binding  Subject , Mode=TwoWay}" TextColor="Black"/>
                             </StackLayout>
                         </Frame>
