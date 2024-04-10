@@ -13,14 +13,16 @@ namespace LearnApplication.ViewModel
     {
         [ObservableProperty]
         private RepetitionOfEverythingViewModel _repetitionOfEverythingViewModel;
-
         [ObservableProperty]
-        private RepetitionOfUnknownsViewModel _repetitionOfUnknownsViewModel;
+        private RepetitionOfEverythingViewModel _repetitionOfUnknownsViewModel;
 
-        public TabbedRepetitionViewModel(RepetitionOfEverythingViewModel repetitionOfMaterialViewModelAll, RepetitionOfUnknownsViewModel repetitionOfMaterialViewModel)
+        //[ObservableProperty]
+        //private RepetitionOfUnknownsViewModel _repetitionOfUnknownsViewModel;
+
+        public TabbedRepetitionViewModel(RepetitionOfEverythingViewModel repetitionOfEverythingViewModel, RepetitionOfEverythingViewModel repetitionOfUnknownsViewModel)
         {
-            _repetitionOfEverythingViewModel = repetitionOfMaterialViewModelAll;
-            _repetitionOfUnknownsViewModel = repetitionOfMaterialViewModel;
+            _repetitionOfEverythingViewModel = repetitionOfEverythingViewModel;
+            _repetitionOfUnknownsViewModel = repetitionOfUnknownsViewModel;
         }
 
         public override Task OnUpdate()

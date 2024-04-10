@@ -39,12 +39,13 @@ namespace LearnApplication.Model
         public ReviewQuestion(LearnCategory learnCategory, bool allOrUnknown = true)
         {
             _learnCategory = learnCategory;
-            var reviewQuestions = allOrUnknown ? learnCategory.LearnQuestions.ToList() : learnCategory.LearnQuestions.Where(x => x.IsRepetitions).ToList();
+            var reviewQuestions = allOrUnknown ? learnCategory.LearnQuestions : learnCategory.LearnQuestions.Where(x => x.IsRepetitions);
             //_questions = new Stack<LearnQuestion>(returnsQuestions);
             ReviewQuestions = new ObservableCollection<LearnQuestion>(reviewQuestions);
             _countQuestions = learnCategory.LearnQuestions.Count;
-            Progress = allOrUnknown ? 0 : learnCategory.LearnQuestions.Count((x) => x.IsRepetitions) / _countQuestions;
-            _knownQuestions = allOrUnknown ? 0 : learnCategory.LearnQuestions.Count((x) => x.IsRepetitions);
+            //Progress = allOrUnknown ? 0 : learnCategory.LearnQuestions.Count((x) => x.IsRepetitions) / _countQuestions;
+            Progress = 0;
+            _knownQuestions = 0;
         
 
         }

@@ -9,6 +9,6 @@
             android:TabbedPage.ToolbarPlacement="Bottom"
             x:DataType="viewModel:TabbedRepetitionViewModel">
 
-    <view:RepetitionOfEverythingPage   BindingContext="{Binding RepetitionOfEverythingViewModel}"  Title="Subject"/>
-    <view:RepetitionOfUnknownsPage  BindingContext="{Binding RepetitionOfUnknownsViewModel}" Title="Questions"/>
+    <view:RepetitionOfEverythingPage   BindingContext="{Binding RepetitionOfEverythingViewModel}"  Title="Repetition of everything"/>
+    <view:RepetitionOfEverythingPage  BindingContext="{Binding RepetitionOfUnknownsViewModel}" Title="Repetition of unknowns"/>
 </TabbedPage>

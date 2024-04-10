@@ -63,10 +63,9 @@ namespace LearnApplication.Model
 
         public ReviewQuestion GetReviewQuestions(bool allOrUnknown = true)
         {
-            var questions = new List<LearnQuestion>(LearnQuestions);
+            //var questions = new List<LearnQuestion>(LearnQuestions);
             return new ReviewQuestion(this, allOrUnknown);
         }
-
 
         public void AddLearnQuestion(LearnQuestion learn)
         {

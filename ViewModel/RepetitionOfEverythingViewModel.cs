@@ -95,7 +95,7 @@ namespace LearnApplication.ViewModel
             if(parameter is LearnCategory learnCategory)
             {
                 //_id = id;
-               // ReviewQuestion = learnCategory.GetReviewQuestions();
+               ReviewQuestion = learnCategory.GetReviewQuestions();
                //Initializes();
             }
     
