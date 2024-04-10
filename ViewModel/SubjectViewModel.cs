@@ -22,12 +22,16 @@ namespace LearnApplication.ViewModel
     {
         [ObservableProperty]
         private  LearnCategory _learnCategory;
-        public RelayCommand RepeatAllQuestionsCommand => new(() => 
-            _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.Id),
-             () => LearnCategory?.LearnQuestions.Count != 0);
+        //public RelayCommand RepeatAllQuestionsCommand => new(() => 
+        //    _navigationService.NavigateByPage<RepetitionOfEverythingPage>(LearnCategory),
+        //     () => LearnCategory?.LearnQuestions.Count != 0);
+        //public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
+        //    _navigationService.NavigateByPage<RepetitionOfEverythingPage>(LearnCategory),
+        //    () => LearnCategory?.LearnQuestions.Count != 0 & LearnCategory?.DontKnownCountLearn != 0);
+        public RelayCommand RepeatAllQuestionsCommand => new(() =>
+    _navigationService.NavigateByPage<TabbedRepetitionPage>(LearnCategory));
         public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
-            _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory?.Id),
-            () => LearnCategory?.LearnQuestions.Count != 0 & LearnCategory?.DointKnownCountLearn != 0);
+            _navigationService.NavigateByPage<RepetitionOfEverythingPage>(LearnCategory));
 
         [ObservableProperty]
         private double _progressLearn;
@@ -36,7 +40,7 @@ namespace LearnApplication.ViewModel
         public int _learnCount;
 
         [ObservableProperty]
-        private double _dontKnownCount;
+        private double _repetitionsCount;
 
         [ObservableProperty]
         private double _knownCount;
@@ -64,24 +68,31 @@ namespace LearnApplication.ViewModel
 
         public void InitializesFields()
         {
-            LearnCategory = _localDbService.GetById<LearnCategory>(_primaryKeyId);
-           // ProgressLearns = _learnCategory.ProgressLearn;
+            //LearnCategory = _localDbService.GetById<LearnCategory>(_primaryKeyId);
+            // ProgressLearns = _learnCategory.ProgressLearn;
 
-            //ProgressLearn = _learnCategory.CountProgressLearn;
-            //LearnCount = _learnCategory.CountQuestion;
-            //DontKnownCount = _learnCategory.DointKnownCountLearn;
-            //KnownCount = _learnCategory.KnownCountLearn;
-            
+            ProgressLearn = _learnCategory.CountProgressLearn;
+            LearnCount = _learnCategory.CountQuestion;
+            RepetitionsCount = _learnCategory.RepetitionsCount;
+            KnownCount = _learnCategory.KnownCountLearn;
+           
         }
 
-        private int _primaryKeyId;
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            InitializesFields();
+        }
+
+        //private int _primaryKeyId;
 
         public override Task OnNavigatingTo(object? parameter)
         {
 
-            if (parameter is int id)
+            if (parameter is LearnCategory learnCategory)
             {
-                _primaryKeyId = id;
+                //_primaryKeyId = id;
+                LearnCategory = learnCategory;
+               // _learnCategory.TimerTick += Timer_Tick;
                 InitializesFields();
             }
             return base.OnNavigatingTo(parameter);
@@ -101,7 +112,7 @@ namespace LearnApplication.ViewModel
         //[RelayCommand]
         //async Task RepeatQuestions()
         //{
-        //    await _navigationService.NavigateByPage<RepetitionOfMaterialPage>(_learnCategory);
+        //    await _navigationService.NavigateByPage<RepetitionOfEverythingPage>(_learnCategory);
         //}
 
        // public bool CheckCountQuestions() => _learnCategory?.LearnQuestions.Count != 0;

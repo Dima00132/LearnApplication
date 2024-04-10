@@ -6,10 +6,6 @@
              xmlns:model ="clr-namespace:LearnApplication.Model"
              x:Class="LearnApplication.MainPage"
              x:DataType="viewmodel:MainViewModel" >
-
-
-
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -43,7 +39,9 @@
            Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}} , Path=TapCommand}"
            CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
+                            
                             <StackLayout  Orientation="Vertical">
+                                <ProgressBar BackgroundColor="Green" Scale="15"/>
                                 <!--<Label Text="{Binding TestCountDontKnown , Mode=TwoWay}" TextColor="Black" />-->
                                 <Label Text="{Binding  Subject , Mode=TwoWay}" TextColor="Black"/>
                             </StackLayout>

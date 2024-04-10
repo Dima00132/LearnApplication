@@ -5,37 +5,31 @@ using LearnApplication.Navigation;
 using LearnApplication.Service;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Compatibility;
-using Microsoft.Maui.Controls.Internals;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LearnApplication.ViewModel
 {
-    public partial class RepetitionOfMaterialViewModel : ViewModelBase
-    {   
+    public partial class RepetitionOfUnknownsViewModel:ViewModelBase
+    {
         [ObservableProperty]
-        private ReviewQuestion _reviewQuestion; 
+        private ReviewQuestion _reviewQuestion;
 
         private INavigationService _navigationService;
-        private int _id;
+
         private readonly LocalDbService _localDbService;
 
-        public RepetitionOfMaterialViewModel(INavigationService navigationService,LocalDbService localDbService)
+        public RepetitionOfUnknownsViewModel(INavigationService navigationService, LocalDbService localDbService)
         {
             _navigationService = navigationService;
-            _localDbService = localDbService;
-            _reviewQuestion = new();
+            // _localDbService = localDbService;
+            //_reviewQuestion = new();
         }
 
-        public RelayCommand<LearnQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<SettingsPage>(learnQuestion.Id));
+        public RelayCommand<LearnQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<SettingsPage>(learnQuestion));
         //private void Settings(LearnQuestion learnQuestion)
         //{
 
@@ -59,9 +53,6 @@ namespace LearnApplication.ViewModel
         //}
 
 
-
-
-
         public RelayCommand<LearnQuestion> KnowCommand => new((learnQuestion) =>
         {
             if (!ReviewQuestion.IsQuestion)
@@ -69,7 +60,8 @@ namespace LearnApplication.ViewModel
             if (learnQuestion is not null)
             {
                 ReviewQuestion.DeleteQuestion(learnQuestion);
-                _localDbService.Update(learnQuestion);
+
+                // _localDbService.Update(learnQuestion);
             }
         });
 
@@ -80,25 +72,27 @@ namespace LearnApplication.ViewModel
         //        _navigationService.NavigateBack();
         //    ReviewQuestion.DeleteQuestion(learnQuestion);
         //}
-        private void Initializes()
+        private void Initializes(LearnQuestion learnQuestion)
         {
-            ReviewQuestion = _localDbService.GetById<LearnCategory>(_id).GetReviewQuestions();
+
+            // ReviewQuestion = _localDbService.GetById<LearnCategory>(_id).GetReviewQuestions();
         }
 
         public override Task OnUpdate()
         {
-            Initializes();
+            //Initializes();
             return base.OnUpdate();
         }
 
         public override Task OnNavigatingTo(object? parameter)
         {
-            if(parameter is int id)
+            if (parameter is LearnCategory learnCategory)
             {
-                _id = id;
-                Initializes();
+                //_id = id;
+                //ReviewQuestion = learnCategory.GetReviewQuestions();
+                //Initializes();
             }
-    
+
             return base.OnNavigatingTo(parameter);
         }
     }

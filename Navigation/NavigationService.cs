@@ -14,9 +14,9 @@ namespace LearnApplication.Navigation
         {
             {typeof(AddQuestionViewModel),typeof(AddQuestionPage)},
             {typeof(QuestionsViewModel),typeof(QuestionsPage)},
-            {typeof(RepetitionOfMaterialViewModel),typeof(RepetitionOfMaterialPage)},
+            {typeof(RepetitionOfEverythingViewModel),typeof(RepetitionOfEverythingPage)},
             {typeof(SettingsViewModel),typeof(SettingsPage)},
-            {typeof(SubjectPage),typeof(SubjectPage)},
+            {typeof(SubjectViewModel),typeof(SubjectPage)},
             {typeof(TabbedLearnViewModel),typeof(TabbedLearnPage)}
         };
 
@@ -65,6 +65,7 @@ namespace LearnApplication.Navigation
 
         private async Task NavigateToPage<T>(object? parameter = null) where T : Page
         {
+            var page = ResolvePage<T>() ;
             if (ResolvePage<T>() is T toPage)
                 await InitializecircutPage(toPage, parameter);
         }

@@ -48,13 +48,22 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter)
         {
-            if (parameter is int id)
+            //if (parameter is int id)
+            //{
+            //    _learnQuestion = _localDbService.GetById<LearnQuestion>(id);
+            //    Question = _learnQuestion.Question;
+            //    Answer = _learnQuestion.Answer;
+            //    Hyperlink = _learnQuestion.Hyperlink;
+            //}
+
+            if (parameter is LearnQuestion learnQuestion)
             {
-                _learnQuestion = _localDbService.GetById<LearnQuestion>(id);
+                _learnQuestion = learnQuestion;
                 Question = _learnQuestion.Question;
                 Answer = _learnQuestion.Answer;
                 Hyperlink = _learnQuestion.Hyperlink;
             }
+            
             return base.OnNavigatingTo(parameter);
         }
 
@@ -64,8 +73,9 @@ namespace LearnApplication.ViewModel
         {
 
             _learnQuestion.Change(new LearnQuestion(Question, Answer,Hyperlink));
-            //_localDbService.Update(_learnQuestion);
+            _localDbService.Update(_learnQuestion);
             _navigationService.NavigateBack();
+            OnPropertyChanged();
         }
 
         public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);

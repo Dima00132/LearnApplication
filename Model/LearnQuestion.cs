@@ -26,15 +26,23 @@ namespace LearnApplication.Model
 
         [Column("answer")]
         public string Answer { get; set; }
-        [Column("hyperlink")]
+        [Column("hyper_link")]
         public string Hyperlink { get; set; }
 
-        [Column("isKnown")]
-        public bool IsKnown { get; set; }
+        [Column("is_known")]
+        public bool IsKnown { get; private set; } = false;
 
+        [Column("is_repetitions")]
+        public bool IsRepetitions { get; set; } = true;
+
+        // [Column("DispatcherTimer")]
+        public readonly IDispatcherTimer DispatcherTimer;
+
+        [Column("NumberOfRepetitions")]
         public int NumberOfRepetitions { get; set; } = 0;
 
-        public event EventHandler? TimerTick;
+
+        //public event EventHandler? TimerTick;
 
         private readonly NumberRepetition[] _repetitions = 
         [
@@ -45,12 +53,13 @@ namespace LearnApplication.Model
         {
         }
 
-        public LearnQuestion(string question, string answer ,string hyperlink = "", bool isKnown = false)
+        public LearnQuestion(string question, string answer ,string hyperlink = "")
         {
             Question = question;
             Answer = answer;
             Hyperlink = hyperlink;
-            IsKnown = isKnown;
+            DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
+            DispatcherTimer.Tick += Timer_Tick;
             //var dataTime = new DateTime().tim;
         }
 
@@ -58,19 +67,23 @@ namespace LearnApplication.Model
 
         public void SetsQuestionAsAlreadyKnown(bool isStartTimer = true)
         {
-            IsKnown = true;
             var timeHours = Convert.ToDouble(_repetitions[NumberOfRepetitions]);
-            var _dispatcher = Application.Current?.Dispatcher.CreateTimer();
+            // var _dispatcher = Application.Current?.Dispatcher.CreateTimer();
+            IsRepetitions = false;
 
             if (!isStartTimer & NumberOfRepetitions < 4)
-                return;
-           
-            if (_dispatcher is not null)
             {
-                NumberOfRepetitions++;
-                _dispatcher.Tick += Timer_Tick;
-                _dispatcher.Interval = TimeSpan.FromSeconds(20);
-                _dispatcher.Start();
+                IsKnown = true;
+                return;
+            }
+           
+            if (DispatcherTimer is not null)
+            {
+
+                // DispatcherTimer.Tick += Timer_Tick;
+
+                DispatcherTimer.Interval = TimeSpan.FromSeconds(20);
+                DispatcherTimer.Start();
             }
         }
 
@@ -78,8 +91,9 @@ namespace LearnApplication.Model
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                IsKnown = false;
-                TimerTick?.Invoke(this,EventArgs.Empty);
+                NumberOfRepetitions++;
+                IsRepetitions = true;
+                //TimerTick?.Invoke(this,EventArgs.Empty);
                 //_dispatcher.Stop();
             });
             
@@ -91,12 +105,6 @@ namespace LearnApplication.Model
             Question = learn.Question;
             Answer = learn.Answer;
             Hyperlink = learn.Hyperlink;
-            IsKnown = learn.IsKnown;
-
-            //if (localDbService is null)
-            //    return;
-
-            //localDbService.Update(this);
         }
 
     }

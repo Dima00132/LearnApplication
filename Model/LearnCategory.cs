@@ -37,7 +37,7 @@ namespace LearnApplication.Model
            
             Subject = subject;
             //ProgressLearn = new ProgressLearn(LearnQuestions);
-            //CountDontKnown =  (int)DointKnownCountLearn;
+            //CountDontKnown =  (int)DontKnownCountLearn;
         }
 
 
@@ -51,9 +51,11 @@ namespace LearnApplication.Model
                 return Known / count;
             }
         }
-        public double DointKnownCountLearn => LearnQuestions.Count - KnownCountLearn;
+        public double DontKnownCountLearn => LearnQuestions.Count - KnownCountLearn;
 
-        public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown);
+        public double RepetitionsCount => LearnQuestions.Count(x=>x.IsRepetitions);
+
+        public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown & x.NumberOfRepetitions == 3);
 
         public int CountQuestion => LearnQuestions.Count;
 
@@ -62,7 +64,7 @@ namespace LearnApplication.Model
         public ReviewQuestion GetReviewQuestions(bool allOrUnknown = true)
         {
             var questions = new List<LearnQuestion>(LearnQuestions);
-            return new ReviewQuestion(questions, allOrUnknown);
+            return new ReviewQuestion(this, allOrUnknown);
         }
 
 
@@ -72,24 +74,21 @@ namespace LearnApplication.Model
                 return;
 
             LearnQuestions.Add(learn);
-
-            //if (localDbService is not null)
-            //{
-            //    localDbService.Create(learn);
-            //    localDbService.Update(this);
-            //}
-
-
-            learn.TimerTick += Timer_Tick;
+            //learn.DispatcherTimer.Tick += Timer_Tick;
         }
 
-        private void Timer_Tick(object? sender, EventArgs e)
-        {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-               // CountDontKnown = (int)ProgressLearn.DointKnownCountLearn;
-            });
+
+        //public event EventHandler? TimerTick;
+
+        //private void Timer_Tick(object? sender, EventArgs e)
+        //{
+        //    MainThread.BeginInvokeOnMainThread(() =>
+        //    {
+        //        var g = 0;
+        //        TimerTick?.Invoke(sender, EventArgs.Empty);
+        //       //CountDontKnown = (int)ProgressLearn.DontKnownCountLearn;
+        //    });
             
-        }
+        //}
     }
 }

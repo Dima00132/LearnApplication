@@ -13,7 +13,7 @@ namespace LearnApplication.Service
 {
     public class LocalDbService
     {
-        private const string DB_NAME = "adata_learn.db3";
+        private const string DB_NAME = "data_learn_save_6.db3";
         private readonly SQLiteConnection _connection;
         private const SQLiteOpenFlags Flags =
             SQLiteOpenFlags.ReadWrite |
@@ -22,6 +22,7 @@ namespace LearnApplication.Service
 
         public LocalDbService()
         {
+          
             //File.Delete(Path.Combine(FileSystem.AppDataDirectory, DB_NAME));
             _connection = new SQLiteConnection(Path.Combine(FileSystem.AppDataDirectory, DB_NAME), Flags);
             _ = _connection.CreateTable<LearnCategory>();

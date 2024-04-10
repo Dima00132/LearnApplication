@@ -81,7 +81,7 @@ namespace LearnApplication.ViewModel
 
         public RelayCommand<LearnCategory> TapCommand
             => new(async (learnCategory) 
-                => await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory.Id));
+                => await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory));
 
         //[RelayCommand]
         //async Task Tap(LearnCategory learnCategory)

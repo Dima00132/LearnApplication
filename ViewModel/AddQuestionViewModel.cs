@@ -49,9 +49,15 @@ namespace LearnApplication.ViewModel
      
         public override Task OnNavigatingTo(object? parameter)
         {
-            if (parameter is int id)
+            //if (parameter is int id)
+            //{
+            //    _learnCategory = _localDbService.GetById<LearnCategory>(id);
+            //    //_learnQuestions = new ObservableCollection<LearnQuestion>(value.LearnQuestions);
+            //}
+
+            if (parameter is LearnCategory learnCategory)
             {
-                _learnCategory = _localDbService.GetById<LearnCategory>(id);
+                _learnCategory = learnCategory;
                 //_learnQuestions = new ObservableCollection<LearnQuestion>(value.LearnQuestions);
             }
             return base.OnNavigatingTo(parameter);

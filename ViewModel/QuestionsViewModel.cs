@@ -27,9 +27,15 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter)
         {
-            if (parameter is int id)
+            //if (parameter is int id)
+            //{
+            //    _questId = id;
+            //    Initializes();
+            //}
+
+            if (parameter is LearnCategory learnCategory)
             {
-                _questId = id;
+                _learnCategory = learnCategory;
                 Initializes();
             }
             return base.OnNavigatingTo(parameter);
@@ -38,7 +44,7 @@ namespace LearnApplication.ViewModel
         private void Initializes()
         {
 
-            _learnCategory = _localDbService.GetById<LearnCategory>(_questId);
+           // _learnCategory = _localDbService.GetById<LearnCategory>(_questId);
             LearnQuestions = _learnCategory.LearnQuestions;
             
 
@@ -58,7 +64,7 @@ namespace LearnApplication.ViewModel
         //private LearnCategory _learnCategory;
 
 
-        public RelayCommand AddCommand => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(_learnCategory.Id));
+        public RelayCommand AddCommand => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(_learnCategory));
 
         //async private void Add()
         //{
@@ -85,7 +91,7 @@ namespace LearnApplication.ViewModel
         public RelayCommand<LearnQuestion> TapCommand 
             => new(async (learnQuestion) =>
             {
-                await _navigationService.NavigateByPage<SettingsPage>(learnQuestion.Id);
+                await _navigationService.NavigateByPage<SettingsPage>(learnQuestion);
                 
             });
 

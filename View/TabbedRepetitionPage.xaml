@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LearnApplication.View.TabbedRepetitionPage"
+            xmlns:view="clr-namespace:LearnApplication.View"
+            xmlns:viewModel="clr-namespace:LearnApplication.ViewModel"
+            NavigationPage.HasNavigationBar="True"
+            xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            x:DataType="viewModel:TabbedRepetitionViewModel">
+
+    <view:RepetitionOfEverythingPage   BindingContext="{Binding RepetitionOfEverythingViewModel}"  Title="Subject"/>
+    <view:RepetitionOfUnknownsPage  BindingContext="{Binding RepetitionOfUnknownsViewModel}" Title="Questions"/>
+</TabbedPage>
