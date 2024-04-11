@@ -21,11 +21,12 @@
 
         <Frame>
             <Editor Text="{Binding Hyperlink}" 
-                    Keyboard="Url" 
-                    IsReadOnly="true"  
+                      
                     TextColor="Black" 
                     PlaceholderColor="DarkGray" 
                     Placeholder ="Ссылка на дополнительнй материал"/>
+            <!--Keyboard="Url" 
+  IsReadOnly="true"-->
         </Frame>
 
         <Button Text="Добавить"  

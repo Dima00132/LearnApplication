@@ -67,7 +67,7 @@ namespace LearnApplication.ViewModel
         [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
         public async Task AddLearnQuestion()
         {
-            var question = new LearnQuestion(Question, Answer, Hyperlink);
+            var question = new LearnQuestion(Question, Answer,  Hyperlink);
             _learnCategory.AddLearnQuestion(question);
             
             _localDbService.Create(question);

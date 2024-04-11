@@ -42,7 +42,7 @@ namespace LearnApplication.ViewModel
             Question = string.Empty;
             Answer = string.Empty;
             Hyperlink = string.Empty;
-            _learnQuestion = new LearnQuestion();
+           // _learnQuestion = new LearnQuestion();
         }
 
 
@@ -59,7 +59,7 @@ namespace LearnApplication.ViewModel
             if (parameter is LearnQuestion learnQuestion)
             {
                 _learnQuestion = learnQuestion;
-                Question = _learnQuestion.Question;
+               Question = _learnQuestion.Question;
                 Answer = _learnQuestion.Answer;
                 Hyperlink = _learnQuestion.Hyperlink;
             }
@@ -72,10 +72,10 @@ namespace LearnApplication.ViewModel
         public void SaveCange()
         {
 
-            _learnQuestion.Change(new LearnQuestion(Question, Answer,Hyperlink));
+            _learnQuestion.Change(new LearnQuestion(Question, Answer, Hyperlink));
             _localDbService.Update(_learnQuestion);
             _navigationService.NavigateBack();
-            OnPropertyChanged();
+           
         }
 
         public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);

@@ -25,13 +25,13 @@ namespace LearnApplication.ViewModel
         private ReviewQuestion _reviewQuestion; 
 
         private INavigationService _navigationService;
-
+        private LearnCategory _learnCategory;
         private readonly LocalDbService _localDbService;
 
         public RepetitionOfEverythingViewModel(INavigationService navigationService,LocalDbService localDbService)
         {
             _navigationService = navigationService;
-           // _localDbService = localDbService;
+           _localDbService = localDbService;
             //_reviewQuestion = new();
         }
 
@@ -67,7 +67,7 @@ namespace LearnApplication.ViewModel
             {
                ReviewQuestion.DeleteQuestion(learnQuestion);
                
-               // _localDbService.Update(learnQuestion);
+               _localDbService.Update(_learnCategory);
             }
         });
 
@@ -94,8 +94,8 @@ namespace LearnApplication.ViewModel
         {
             if(parameter is LearnCategory learnCategory)
             {
-                //_id = id;
-               ReviewQuestion = learnCategory.GetReviewQuestions();
+                _learnCategory = learnCategory;
+                ReviewQuestion = learnCategory.GetReviewQuestions();
                //Initializes();
             }
     

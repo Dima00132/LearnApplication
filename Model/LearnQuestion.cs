@@ -4,13 +4,14 @@ using LearnApplication.Service;
 using Microsoft.Maui.Dispatching;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
+using System;
 using System.Xml.Serialization;
 
 namespace LearnApplication.Model
 {
    
     [Table("learn_question")]
-    public  class LearnQuestion: IDataSelect
+    public partial class LearnQuestion:ObservableObject, IDataSelect
     {
 
         [PrimaryKey,AutoIncrement]
@@ -21,25 +22,42 @@ namespace LearnApplication.Model
         [ForeignKey(typeof(LearnCategory))]
         public int LearnCategoryId { get; set; }
 
-        [Column("question")]
-        public string Question { get; set; }
+        // [Column("question")]
 
-        [Column("answer")]
-        public string Answer { get; set; }
-        [Column("hyper_link")]
-        public string Hyperlink { get; set; }
+        [ObservableProperty]
+        private string _question;
 
-        [Column("is_known")]
-        public bool IsKnown { get; private set; } = false;
+        // [Column("answer")]
 
-        [Column("is_repetitions")]
-        public bool IsRepetitions { get; set; } = true;
+        [ObservableProperty]
+        private string _answer;
+
+
+        // [Column("hyper_link")]
+
+        [ObservableProperty]
+        private string _hyperlink;
+
+        // [Column("is_known")]
+
+
+        [ObservableProperty]
+        private bool _isKnown  = false;
+
+        // [Column("is_repetitions")]
+
+
+        [ObservableProperty]
+        private bool _isRepetitions  = true;
 
         // [Column("DispatcherTimer")]
         public readonly IDispatcherTimer DispatcherTimer;
 
-        [Column("NumberOfRepetitions")]
-        public int NumberOfRepetitions { get; set; } = 0;
+        
+        public DateTime DateTime { get;set; }
+
+       
+        public int NumberOfRepetitions { get; set; }
 
 
         //public event EventHandler? TimerTick;
@@ -49,40 +67,82 @@ namespace LearnApplication.Model
             NumberRepetition.Test,NumberRepetition.First,NumberRepetition.Second,NumberRepetition.Third
         ];
 
+        //public  LocalDbService _localDbService { get; set; }
+        //public  LearnCategory learnCategory { get; set; }
+
         public LearnQuestion():this(string.Empty, string.Empty)
         {
         }
 
-        public LearnQuestion(string question, string answer ,string hyperlink = "")
+        public LearnQuestion(string question, string answer , string hyperlink = "")
         {
             Question = question;
             Answer = answer;
+            //_localDbService = localDbService;
+            //this.learnCategory = learnCategory;
             Hyperlink = hyperlink;
             DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
-            DispatcherTimer.Tick += Timer_Tick;
+       
             //var dataTime = new DateTime().tim;
+        }
+
+        public void RestartsTheTimer()
+        {
+            if (IsRepetitions)
+                return;
+
+            var carentDate = DateTime;
+            var newDate = DateTime.Now;
+            var resald = newDate - carentDate;
+            var timeHours = Convert.ToDouble(_repetitions[NumberOfRepetitions]);
+            var oldTimeSpan = TimeSpan.FromSeconds(timeHours);
+
+            
+
+            if (resald >= oldTimeSpan)
+            {
+                NumberOfRepetitions++;
+                IsRepetitions = true;
+                return;
+            }
+            var newTimeSpan = oldTimeSpan - resald;
+
+            StartTimer(newTimeSpan);
+            //if (DispatcherTimer is not null)
+            //{
+
+            //    // DispatcherTimer.Tick += Timer_Tick;
+
+            //    DispatcherTimer.Interval = newTimeSpan;
+            //    DispatcherTimer.Start();
+            //}
+
         }
 
        
 
         public void SetsQuestionAsAlreadyKnown(bool isStartTimer = true)
         {
-            var timeHours = Convert.ToDouble(_repetitions[NumberOfRepetitions]);
-            // var _dispatcher = Application.Current?.Dispatcher.CreateTimer();
-            IsRepetitions = false;
-
             if (!isStartTimer & NumberOfRepetitions < 4)
             {
                 IsKnown = true;
                 return;
             }
-           
+            DateTime = DateTime.Now;
+            IsRepetitions = false;
+            var timeHours = Convert.ToDouble(_repetitions[NumberOfRepetitions]);
+            //var timeSpan = TimeSpan.FromHours(timeHours);
+            var timeSpan = TimeSpan.FromSeconds(timeHours);
+            StartTimer(timeSpan);
+
+        }
+
+        private void StartTimer(TimeSpan timeSpan)
+        {
             if (DispatcherTimer is not null)
             {
-
-                // DispatcherTimer.Tick += Timer_Tick;
-
-                DispatcherTimer.Interval = TimeSpan.FromSeconds(20);
+                DispatcherTimer.Tick += Timer_Tick;
+                DispatcherTimer.Interval = timeSpan;
                 DispatcherTimer.Start();
             }
         }
@@ -93,8 +153,9 @@ namespace LearnApplication.Model
             {
                 NumberOfRepetitions++;
                 IsRepetitions = true;
-                //TimerTick?.Invoke(this,EventArgs.Empty);
-                //_dispatcher.Stop();
+               
+                DispatcherTimer.Tick -= Timer_Tick;
+               //_localDbService.Update(learnCategory);
             });
             
         }

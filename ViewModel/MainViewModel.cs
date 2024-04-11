@@ -24,18 +24,20 @@ namespace LearnApplication.ViewModel
 
         [ObservableProperty]
         private ObservableCollection<LearnCategory> _categoryUnderStudys;
-        public MainViewModel( INavigationService navigationService, LocalDbService localDbService)
+        public MainViewModel(INavigationService navigationService, LocalDbService localDbService)
         {
             _categoryUnderStudys = [];
             _navigationService = navigationService;
             _localDbService = localDbService;
 
-           CategoryUnderStudys = new ObservableCollection<LearnCategory>(localDbService.GetLearn());
+            CategoryUnderStudys = new ObservableCollection<LearnCategory>(localDbService.GetLearn());
 
+            foreach (var category in CategoryUnderStudys)
+                category.StartTimer();
         }
 
 
-        public RelayCommand AddCommand => new(async() =>
+        public RelayCommand AddCommand => new(async () =>
         {
             var subject = await Application.Current?.MainPage?.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
             if (string.IsNullOrEmpty(subject))
@@ -48,7 +50,7 @@ namespace LearnApplication.ViewModel
 
         public RelayCommand DeleteFileDataCommand => new(async () =>
         {
-            var subject = await Application.Current?.MainPage?.DisplayAlert("Предупреждение","Удалить файл данных ?", "Да", "Нет");
+            var subject = await Application.Current?.MainPage?.DisplayAlert("Предупреждение", "Удалить файл данных ?", "Да", "Нет");
             if (!subject)
                 return;
             _localDbService.DeleteFileData();
@@ -80,8 +82,11 @@ namespace LearnApplication.ViewModel
         //}
 
         public RelayCommand<LearnCategory> TapCommand
-            => new(async (learnCategory) 
-                => await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory));
+            => new(async (learnCategory)
+                =>
+                   {
+                        await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory);
+                    });
 
         //[RelayCommand]
         //async Task Tap(LearnCategory learnCategory)

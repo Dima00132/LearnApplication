@@ -14,14 +14,14 @@ namespace LearnApplication.Model
 {
 
     [Table("learn_category")]
-    public partial class LearnCategory: IDataSelect
+    public partial class LearnCategory:ObservableObject, IDataSelect
     {
         [PrimaryKey,AutoIncrement]
         [Column("Id")]
         public int Id { get; set; }
 
-        [Column("subject")]
-        public string Subject { get; set; }
+        [ObservableProperty]
+        private string _subject;
 
         [Column("count_dont_known")]
         [OneToMany(CascadeOperations = CascadeOperation.All)]
@@ -74,6 +74,13 @@ namespace LearnApplication.Model
 
             LearnQuestions.Add(learn);
             //learn.DispatcherTimer.Tick += Timer_Tick;
+        }
+
+        public void StartTimer()
+        {
+            foreach (var item in LearnQuestions)
+                item.RestartsTheTimer();
+            
         }
 
 

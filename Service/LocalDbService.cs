@@ -13,7 +13,7 @@ namespace LearnApplication.Service
 {
     public class LocalDbService
     {
-        private const string DB_NAME = "data_learn_save_6.db3";
+        private const string DB_NAME = "data_learn_save_12.db3";
         private readonly SQLiteConnection _connection;
         private const SQLiteOpenFlags Flags =
             SQLiteOpenFlags.ReadWrite |
@@ -25,8 +25,24 @@ namespace LearnApplication.Service
           
             //File.Delete(Path.Combine(FileSystem.AppDataDirectory, DB_NAME));
             _connection = new SQLiteConnection(Path.Combine(FileSystem.AppDataDirectory, DB_NAME), Flags);
-            _ = _connection.CreateTable<LearnCategory>();
-            _ = _connection.CreateTable<LearnQuestion>();
+
+
+
+           // _ = _connection.CreateTable<LearnCategory>();
+            try
+            {
+                _ = _connection.CreateTables< LearnCategory,LearnQuestion>();
+                //_ = _connection.CreateTable<LearnQuestion>();
+            }
+            catch (Exception Ex)
+            {
+
+                var t = Ex;
+                throw;
+            }
+
+
+           
         }
 
         public  List<LearnCategory> GetLearn()
@@ -35,7 +51,17 @@ namespace LearnApplication.Service
 
         public void Create<T>(T learnCategory)
         {
-            _connection.InsertWithChildren(learnCategory); 
+            try
+            {
+                _connection.InsertWithChildren(learnCategory);
+            }
+            catch (Exception Ex)
+            {
+
+                var t = Ex;
+                throw; 
+            }
+            
         }
 
         public T UpdateAndGetById<T>(int id,T update) where T : IDataSelect, new()
