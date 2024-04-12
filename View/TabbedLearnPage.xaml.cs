@@ -7,10 +7,16 @@ namespace LearnApplication.View;
 [XamlCompilation(XamlCompilationOptions.Compile)]
 public partial class TabbedLearnPage : TabbedPage
 {
-    private readonly TabbedLearnViewModel tabbedLearnViewModel;
-    public TabbedLearnPage(TabbedLearnViewModel viewModel)
+    private readonly TabbedLearnViewModel _tabbedLearnViewModel;
+    public TabbedLearnPage(TabbedLearnViewModel tabbedLearnViewModel)
 	{
 		InitializeComponent();
-        BindingContext = tabbedLearnViewModel= viewModel;
+        BindingContext = _tabbedLearnViewModel= tabbedLearnViewModel;
+    }
+
+    protected override void OnDisappearing()
+    {
+        _tabbedLearnViewModel.OnSaveDb();
+        base.OnDisappearing();
     }
 }

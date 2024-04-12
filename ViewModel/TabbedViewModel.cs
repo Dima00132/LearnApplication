@@ -28,6 +28,13 @@ namespace LearnApplication.ViewModel
             return base.OnUpdate();
         }
 
+        public override Task OnSaveDb()
+        {
+            SubjectViewModel?.OnSaveDb();
+            QuestionsViewModel?.OnSaveDb();
+            return base.OnSaveDb();
+        }
+
         public override Task OnNavigatingTo(object? parameter)
         {
             if (parameter is LearnCategory learnCategory)

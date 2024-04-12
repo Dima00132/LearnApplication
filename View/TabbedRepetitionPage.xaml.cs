@@ -5,10 +5,19 @@ namespace LearnApplication.View;
 [XamlCompilation(XamlCompilationOptions.Compile)]
 public partial class TabbedRepetitionPage : TabbedPage
 {
-	public TabbedRepetitionPage(TabbedRepetitionViewModel tabbedRepetitionViewModel)
+    private readonly TabbedRepetitionViewModel _tabbedRepetitionViewModel;
+
+    public TabbedRepetitionPage(TabbedRepetitionViewModel tabbedRepetitionViewModel)
 	{
 		
-		BindingContext = tabbedRepetitionViewModel;
+		BindingContext = _tabbedRepetitionViewModel = tabbedRepetitionViewModel;
         InitializeComponent();
+     
+    }
+
+    protected override void OnDisappearing()
+    {
+        _tabbedRepetitionViewModel?.OnSaveDb();
+        base.OnDisappearing();
     }
 }

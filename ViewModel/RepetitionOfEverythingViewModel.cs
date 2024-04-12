@@ -58,6 +58,11 @@ namespace LearnApplication.ViewModel
 
         //}
 
+        public override Task OnSaveDb()
+        {
+            _localDbService.Update(_learnCategory);
+            return base.OnSaveDb();
+        }
 
         public RelayCommand<LearnQuestion> KnowCommand => new((learnQuestion) =>
         {
@@ -67,7 +72,7 @@ namespace LearnApplication.ViewModel
             {
                ReviewQuestion.DeleteQuestion(learnQuestion);
                
-               _localDbService.Update(_learnCategory);
+               //_localDbService.Update(_learnCategory);
             }
         });
 

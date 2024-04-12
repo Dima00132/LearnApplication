@@ -8,11 +8,19 @@ namespace LearnApplication
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-  
-        public MainPage(MainViewModel viewModel)
+        private readonly MainViewModel _mainViewModel;
+
+        public MainPage(MainViewModel mainViewModel)
         {
-            BindingContext =viewModel;
+            BindingContext = _mainViewModel= mainViewModel;
             InitializeComponent();
+            
+        }
+
+        protected override void OnDisappearing()
+        {
+            _mainViewModel.OnSaveDb();
+            base.OnDisappearing();
         }
 
     }

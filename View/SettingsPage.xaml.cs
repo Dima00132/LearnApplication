@@ -4,10 +4,18 @@ namespace LearnApplication.View;
 
 public partial class SettingsPage : ContentPage
 {
-	public SettingsPage(SettingsViewModel viewModel)
+    private readonly SettingsViewModel _settingsViewModel;
+
+    public SettingsPage(SettingsViewModel settingsViewModel)
 	{
 		InitializeComponent();
-		BindingContext = viewModel;
+		BindingContext = _settingsViewModel= settingsViewModel;
+        
+    }
 
+    protected override void OnDisappearing()
+    {
+        _settingsViewModel.OnSaveDb();
+        base.OnDisappearing();
     }
 }

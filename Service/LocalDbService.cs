@@ -86,14 +86,14 @@ namespace LearnApplication.Service
             
         }
 
-        public T UpdateAndGetById<T>(int id,T update) where T : IDataSelect, new()
-        {
-            Update(update);
-            return _connection.GetAllWithChildren<T>().Where(x => x.Id == id).FirstOrDefault();
-        }
+        //public T UpdateAndGetById<T>(int id,T update) where T : IDataSelect, new()
+        //{
+        //    Update(update);
+        //    return _connection.GetAllWithChildren<T>().Where(x => x.Id == id).FirstOrDefault();
+        //}
 
-        public T GetById<T>(int id) where T : IDataSelect, new()
-            =>_connection.GetAllWithChildren<T>().Where(x => x.Id == id).FirstOrDefault(); 
+        //public T GetById<T>(int id) where T : IDataSelect, new()
+        //    =>_connection.GetAllWithChildren<T>().Where(x => x.Id == id).FirstOrDefault(); 
         
         
         public void Update<T>(T value)=>_connection.UpdateWithChildren(value);

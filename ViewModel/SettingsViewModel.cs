@@ -73,9 +73,14 @@ namespace LearnApplication.ViewModel
         {
 
             _learnQuestion.Change(new LearnQuestion(Question, Answer, Hyperlink));
-            _localDbService.Update(_learnQuestion);
+            //_localDbService.Update(_learnQuestion);
             _navigationService.NavigateBack();
            
+        }
+        public override Task OnSaveDb()
+        {
+            _localDbService.Update(_learnQuestion);
+            return base.OnSaveDb();
         }
 
         public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);

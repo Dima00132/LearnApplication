@@ -4,24 +4,21 @@ namespace LearnApplication.View;
 
 public partial class AddQuestionPage : ContentPage
 {
-
+    private readonly AddQuestionViewModel _addQuestionViewModel;
     public AddQuestionPage()
     {
         InitializeComponent();
-  
-
     }
-    AddQuestionViewModel addQuestionViewModel;
-    public AddQuestionPage(AddQuestionViewModel viewModel)
+   
+   
+    public AddQuestionPage(AddQuestionViewModel viewModel):this()
 	{
-		InitializeComponent();
-		BindingContext = addQuestionViewModel= viewModel;
-
+		BindingContext = _addQuestionViewModel= viewModel;
     }
 
     protected override void OnDisappearing()
     {
-        //addQuestionViewModel._localDbService.UpdateAll();
+        _addQuestionViewModel.OnSaveDb();
         base.OnDisappearing();
     }
 

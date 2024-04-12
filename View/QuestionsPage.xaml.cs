@@ -19,12 +19,4 @@ public partial class QuestionsPage : ContentPage
         BindingContext = questionsViewModel;
   
     }
-
-    protected override void OnDisappearing()
-    {
-        var t = 0;
-        base.OnDisappearing();
-    }
-
-
 }

@@ -63,6 +63,12 @@ namespace LearnApplication.ViewModel
             return base.OnNavigatingTo(parameter);
         }
 
+        public override Task OnSaveDb()
+        {
+            _localDbService.Update(_learnCategory);
+            return base.OnSaveDb();
+        }
+
 
         [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
         public async Task AddLearnQuestion()
@@ -71,7 +77,7 @@ namespace LearnApplication.ViewModel
             _learnCategory.AddLearnQuestion(question);
             
             _localDbService.Create(question);
-            _localDbService.Update(_learnCategory); 
+            //_localDbService.Update(_learnCategory); 
 
             //LearnQuestions.AddLearnQuestion(new LearnQuestion(Question, Answer, Hyperlink, IsKnown));
             //_learnQuestions.Add(new LearnQuestion(Question, Answer, Hyperlink, IsKnown));

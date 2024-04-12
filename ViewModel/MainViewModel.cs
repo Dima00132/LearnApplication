@@ -36,6 +36,11 @@ namespace LearnApplication.ViewModel
             _learn.Start();
             CategoryUnderStudys = _learn.LearnCategories;
         }
+        public override Task OnSaveDb()
+        {
+            _localDbService.Update(_learn);
+            return base.OnSaveDb();
+        }
 
 
         public RelayCommand AddCommand => new(async () =>
@@ -48,7 +53,7 @@ namespace LearnApplication.ViewModel
             _learn.AddCategorie(learnCategory);
            // CategoryUnderStudys.Add(learnCategory);
             _localDbService.Create(learnCategory);
-            _localDbService.Update(_learn);
+            //_localDbService.Update(_learn);
         });
 
         public RelayCommand DeleteFileDataCommand => new(async () =>

@@ -27,17 +27,24 @@ namespace LearnApplication.ViewModel
 
         public override Task OnUpdate()
         {
-            _repetitionOfEverythingViewModel?.OnUpdate();
-            _repetitionOfUnknownsViewModel?.OnUpdate();
+            RepetitionOfEverythingViewModel?.OnUpdate();
+            RepetitionOfUnknownsViewModel?.OnUpdate();
             return base.OnUpdate();
+        }
+
+        public override Task OnSaveDb()
+        {
+            RepetitionOfEverythingViewModel?.OnSaveDb();
+            RepetitionOfUnknownsViewModel?.OnSaveDb();
+            return base.OnSaveDb();
         }
 
         public override Task OnNavigatingTo(object? parameter)
         {
             if (parameter is LearnCategory learnCategory)
             {
-                _repetitionOfEverythingViewModel?.OnNavigatingTo(learnCategory);
-                _repetitionOfUnknownsViewModel?.OnNavigatingTo(learnCategory);
+                RepetitionOfEverythingViewModel?.OnNavigatingTo(learnCategory);
+                RepetitionOfUnknownsViewModel?.OnNavigatingTo(learnCategory);
 
             }
             return base.OnNavigatingTo(parameter);
