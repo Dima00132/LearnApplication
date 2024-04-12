@@ -25,7 +25,7 @@ namespace LearnApplication.ViewModel
         private readonly Learn _learn;
 
         [ObservableProperty]
-        private ObservableCollection<LearnCategory> _categoryUnderStudys;
+        private ObservableCollection<Category> _categoryUnderStudys;
         public MainViewModel(INavigationService navigationService, LocalDbService localDbService)
         {
             _categoryUnderStudys = [];
@@ -49,7 +49,7 @@ namespace LearnApplication.ViewModel
             if (string.IsNullOrEmpty(subject))
                 return;
 
-            var learnCategory = new LearnCategory(subject);
+            var learnCategory = new Category(subject);
             _learn.AddCategorie(learnCategory);
            // CategoryUnderStudys.Add(learnCategory);
             _localDbService.Create(learnCategory);
@@ -62,7 +62,7 @@ namespace LearnApplication.ViewModel
             if (!subject)
                 return;
             _localDbService.DeleteFileData();
-            //CategoryUnderStudys = new ObservableCollection<LearnCategory>(_localDbService.GetLearn());
+            //CategoryUnderStudys = new ObservableCollection<Category>(_localDbService.GetLearn());
         });
 
         //public RelayCommand AddCommand => new RelayCommand(Add);
@@ -71,10 +71,10 @@ namespace LearnApplication.ViewModel
         //    var subject = await Application.Current?.MainPage?.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
         //    if (string.IsNullOrEmpty(subject))
         //        return;
-        //    CategoryUnderStudys.Add(new LearnCategory(subject));
+        //    CategoryUnderStudys.Add(new Category(subject));
         //}
 
-        public RelayCommand<LearnCategory> DeleteCommand => new((learnCategory) =>
+        public RelayCommand<Category> DeleteCommand => new((learnCategory) =>
         {
             if (learnCategory is not null)
             {
@@ -85,12 +85,12 @@ namespace LearnApplication.ViewModel
         });
 
         //[RelayCommand]
-        //void Delete(LearnCategory learnCategory)
+        //void Delete(Category learnCategory)
         //{
         //    CategoryUnderStudys.Remove(learnCategory);
         //}
 
-        public RelayCommand<LearnCategory> TapCommand
+        public RelayCommand<Category> TapCommand
             => new(async (learnCategory)
                 =>
                    {
@@ -99,7 +99,7 @@ namespace LearnApplication.ViewModel
                     });
 
         //[RelayCommand]
-        //async Task Tap(LearnCategory learnCategory)
+        //async Task Tap(Category learnCategory)
         //{
 
         //    await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory);
@@ -109,7 +109,7 @@ namespace LearnApplication.ViewModel
         //}       
         //public override Task OnNavigatingTo(object? parameter)
         //{
-        //    if(parameter is ObservableCollection<LearnCategory> categor)
+        //    if(parameter is ObservableCollection<Category> categor)
         //        CategoryUnderStudys = categor;
         //    return base.OnNavigatingTo(parameter);
         //}

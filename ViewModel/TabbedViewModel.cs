@@ -37,7 +37,7 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter)
         {
-            if (parameter is LearnCategory learnCategory)
+            if (parameter is Category learnCategory)
             {
                 SubjectViewModel?.OnNavigatingTo(learnCategory);
                 QuestionsViewModel?.OnNavigatingTo(learnCategory);

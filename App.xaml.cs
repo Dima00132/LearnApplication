@@ -11,7 +11,7 @@ namespace LearnApplication
 {
     public partial class App : Application
     {
-        private readonly ObservableCollection<LearnCategory> _learnCategories;
+        private readonly ObservableCollection<Category> _learnCategories;
 
 
         public App(INavigationService navigationService)
@@ -32,21 +32,21 @@ namespace LearnApplication
         //public  void Test()
         //{
 
-        //    var g = new List<LearnCategory>()
+        //    var g = new List<Category>()
         //    {
-        //        new LearnCategory("dsfs")
+        //        new Category("dsfs")
         //        {
-        //            LearnQuestions = new ob<LearnQuestion>()
+        //            LearnQuestions = new ob<СardQuestion>()
         //            {
-        //                new LearnQuestion("11","11"),
-        //                new LearnQuestion("1sfd1","11"),
-        //                new LearnQuestion("1sdfs1","11"),
-        //                new LearnQuestion("sdf1","11"),
-        //                new LearnQuestion("1dfs1","11"),
-        //                new LearnQuestion("fsdf11","11"),
-        //                new LearnQuestion("sfd11","11"),
-        //                new LearnQuestion("1sdfsd1","11"),
-        //                new LearnQuestion("fdssf11","11")
+        //                new СardQuestion("11","11"),
+        //                new СardQuestion("1sfd1","11"),
+        //                new СardQuestion("1sdfs1","11"),
+        //                new СardQuestion("sdf1","11"),
+        //                new СardQuestion("1dfs1","11"),
+        //                new СardQuestion("fsdf11","11"),
+        //                new СardQuestion("sfd11","11"),
+        //                new СardQuestion("1sdfsd1","11"),
+        //                new СardQuestion("fdssf11","11")
         //            }
         //        }
         //    };

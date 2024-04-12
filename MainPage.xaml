@@ -24,7 +24,7 @@
         <CollectionView    Grid.Row="2" ItemsSource="{Binding CategoryUnderStudys}" SelectionMode="None" >
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:LearnCategory}">
+                <DataTemplate x:DataType="{x:Type model:Category}">
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems>

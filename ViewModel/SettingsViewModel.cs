@@ -19,7 +19,7 @@ namespace LearnApplication.ViewModel
     public partial class SettingsViewModel :ViewModelBase
     {
     
-        private LearnQuestion _learnQuestion;
+        private СardQuestion _learnQuestion;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCangeCommand))]
@@ -42,7 +42,7 @@ namespace LearnApplication.ViewModel
             Question = string.Empty;
             Answer = string.Empty;
             Hyperlink = string.Empty;
-           // _learnQuestion = new LearnQuestion();
+           // _learnQuestion = new СardQuestion();
         }
 
 
@@ -50,13 +50,13 @@ namespace LearnApplication.ViewModel
         {
             //if (parameter is int id)
             //{
-            //    _learnQuestion = _localDbService.GetById<LearnQuestion>(id);
-            //    Question = _learnQuestion.Question;
+            //    _learnQuestion = _localDbService.GetById<СardQuestion>(id);
+            //    СardQuestion = _learnQuestion.СardQuestion;
             //    Answer = _learnQuestion.Answer;
             //    Hyperlink = _learnQuestion.Hyperlink;
             //}
 
-            if (parameter is LearnQuestion learnQuestion)
+            if (parameter is СardQuestion learnQuestion)
             {
                 _learnQuestion = learnQuestion;
                Question = _learnQuestion.Question;
@@ -72,7 +72,7 @@ namespace LearnApplication.ViewModel
         public void SaveCange()
         {
 
-            _learnQuestion.Change(new LearnQuestion(Question, Answer, Hyperlink));
+            _learnQuestion.Change(new СardQuestion(Question, Answer, Hyperlink));
             //_localDbService.Update(_learnQuestion);
             _navigationService.NavigateBack();
            

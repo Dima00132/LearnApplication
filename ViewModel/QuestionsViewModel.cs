@@ -22,7 +22,7 @@ namespace LearnApplication.ViewModel
 { 
     public partial class QuestionsViewModel : ViewModelBase
     {
-        private LearnCategory _learnCategory;
+        private Category _learnCategory;
         private int _questId;
 
         public override Task OnNavigatingTo(object? parameter)
@@ -33,7 +33,7 @@ namespace LearnApplication.ViewModel
             //    Initializes();
             //}
 
-            if (parameter is LearnCategory learnCategory)
+            if (parameter is Category learnCategory)
             {
                 _learnCategory = learnCategory;
                 Initializes();
@@ -44,7 +44,7 @@ namespace LearnApplication.ViewModel
         private void Initializes()
         {
 
-           // _learnCategory = _localDbService.GetById<LearnCategory>(_questId);
+           // _learnCategory = _localDbService.GetById<Category>(_questId);
             LearnQuestions = _learnCategory.LearnQuestions;
             
 
@@ -58,10 +58,10 @@ namespace LearnApplication.ViewModel
 
 
         [ObservableProperty]
-        private ObservableCollection<LearnQuestion> _learnQuestions = new();
+        private ObservableCollection<СardQuestion> _learnQuestions = new();
 
         //[ObservableProperty]
-        //private LearnCategory _learnCategory;
+        //private Category _learnCategory;
 
 
         public RelayCommand AddCommand => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(_learnCategory));
@@ -72,7 +72,7 @@ namespace LearnApplication.ViewModel
         //}
 
 
-        public RelayCommand<LearnQuestion> DeleteCommand => new((learnQuestion) =>
+        public RelayCommand<СardQuestion> DeleteCommand => new((learnQuestion) =>
         {
             if (learnQuestion is not null)
             {
@@ -82,13 +82,13 @@ namespace LearnApplication.ViewModel
         });
 
         //[RelayCommand]
-        //public void Delete(LearnQuestion learnQuestion)
+        //public void Delete(СardQuestion learnQuestion)
         //{
         //    LearnQuestions.Remove(learnQuestion);
         //}
 
 
-        public RelayCommand<LearnQuestion> TapCommand 
+        public RelayCommand<СardQuestion> TapCommand 
             => new(async (learnQuestion) =>
             {
                 await _navigationService.NavigateByPage<SettingsPage>(learnQuestion);
@@ -96,7 +96,7 @@ namespace LearnApplication.ViewModel
             });
 
         //[RelayCommand]
-        //public async Task Tap(LearnQuestion learnQuestion)
+        //public async Task Tap(СardQuestion learnQuestion)
         //{
         //    await _navigationService.NavigateByPage<SettingsPage>(learnQuestion);  
         //}

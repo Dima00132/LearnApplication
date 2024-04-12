@@ -19,7 +19,7 @@ namespace LearnApplication.Model
 
         [Column("categories")]
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public ObservableCollection<LearnCategory> LearnCategories { get;  set; } = [];
+        public ObservableCollection<Category> LearnCategories { get;  set; } = [];
 
         public void Start()
         {
@@ -27,13 +27,13 @@ namespace LearnApplication.Model
                 category.StartTimer();
         }
 
-        public void AddCategorie(LearnCategory learnCategory)
+        public void AddCategorie(Category learnCategory)
         {
             if (learnCategory is not null)
                 LearnCategories.Add(learnCategory);
         }
 
-        public void Delete(LearnCategory learnCategory)
+        public void Delete(Category learnCategory)
         {
             if (learnCategory is not null)
                 LearnCategories.Remove(learnCategory);

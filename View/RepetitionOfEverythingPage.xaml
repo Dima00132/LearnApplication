@@ -81,7 +81,7 @@
                     </VerticalStackLayout>-->
 
 
-                        <Border BackgroundColor="#1f1f1f" x:DataType="model:LearnQuestion">
+                        <Border BackgroundColor="#1f1f1f" x:DataType="model:СardQuestion">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="20" />
                             </Border.StrokeShape>

@@ -13,11 +13,11 @@ namespace LearnApplication.Model {
         public int Id { get; set; }
 
         [Column("learn_question_id")]
-        [ForeignKey(typeof(LearnQuestion))]
+        [ForeignKey(typeof(СardQuestion))]
         public int LearnQuestionId { get; set; }
 
-        private readonly ObservableCollection<LearnQuestion> _learnQuestions;
-        public ProgressLearn(ObservableCollection<LearnQuestion> learnQuestions)
+        private readonly ObservableCollection<СardQuestion> _learnQuestions;
+        public ProgressLearn(ObservableCollection<СardQuestion> learnQuestions)
         {
             _learnQuestions = learnQuestions;
         }

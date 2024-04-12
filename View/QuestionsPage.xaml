@@ -25,7 +25,7 @@
                         BindableLayout.ItemsSource="{Binding LearnQuestions}" 
                         BackgroundColor="Black" >
             <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:LearnQuestion}" >
+                <DataTemplate x:DataType="{x:Type model:СardQuestion}" >
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems>

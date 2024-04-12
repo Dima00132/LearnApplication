@@ -28,15 +28,15 @@ namespace LearnApplication.Service
 
 
 
-           // _ = _connection.CreateTable<LearnCategory>();
+           // _ = _connection.CreateTable<Category>();
             try
             {
                 _ = _connection.CreateTable<Learn>();
-                _ = _connection.CreateTable<LearnCategory>();
-                _ = _connection.CreateTable<LearnQuestion>();
+                _ = _connection.CreateTable<Category>();
+                _ = _connection.CreateTable<СardQuestion>();
                
-                //_ = _connection.CreateTables< LearnCategory,LearnQuestion, Learn>();
-                //_ = _connection.CreateTable<LearnQuestion>();
+                //_ = _connection.CreateTables< Category,СardQuestion, Learn>();
+                //_ = _connection.CreateTable<СardQuestion>();
             }
             catch (Exception Ex)
             {

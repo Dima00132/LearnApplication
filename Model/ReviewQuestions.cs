@@ -9,14 +9,14 @@ namespace LearnApplication.Model
     {
 
       
-        public ObservableCollection<LearnQuestion> ReviewQuestions { get;set; }
-        private Stack<LearnQuestion> _questions;
+        public ObservableCollection<СardQuestion> ReviewQuestions { get;set; }
+        private Stack<СardQuestion> _questions;
 
        
         public double Progress {get; set;}
 
         private readonly double _countQuestions;
-        private readonly LearnCategory _learnCategory;
+        private readonly Category _learnCategory;
         private  double _knownQuestions;
 
         public bool IsQuestion { get => ReviewQuestions.Count >1; }    
@@ -25,23 +25,23 @@ namespace LearnApplication.Model
         //{
         //}
 
-        //public ReviewQuestion(List<LearnQuestion> returnsQuestions,bool allOrUnknown = true)
+        //public ReviewQuestion(List<СardQuestion> returnsQuestions,bool allOrUnknown = true)
         //{
         //    var reviewQuestions = allOrUnknown ? returnsQuestions : returnsQuestions.Where(x => !x.IsKnown).ToList();
-        //    //_questions = new Stack<LearnQuestion>(returnsQuestions);
-        //    ReviewQuestions = new ObservableCollection<LearnQuestion>(returnsQuestions);
+        //    //_questions = new Stack<СardQuestion>(returnsQuestions);
+        //    ReviewQuestions = new ObservableCollection<СardQuestion>(returnsQuestions);
         //    _countQuestions = returnsQuestions.Count;
         //    Progress = allOrUnknown ? 0 : returnsQuestions.Count((x) => x.IsKnown) / _countQuestions;
         //    _knownQuestions = allOrUnknown ? 0 : returnsQuestions.Count((x) => x.IsKnown);
 
 
         //}
-        public ReviewQuestion(LearnCategory learnCategory, bool allOrUnknown = true)
+        public ReviewQuestion(Category learnCategory, bool allOrUnknown = true)
         {
             _learnCategory = learnCategory;
             var reviewQuestions = allOrUnknown ? learnCategory.LearnQuestions : learnCategory.LearnQuestions.Where(x => x.IsRepetitions);
-            //_questions = new Stack<LearnQuestion>(returnsQuestions);
-            ReviewQuestions = new ObservableCollection<LearnQuestion>(reviewQuestions);
+            //_questions = new Stack<СardQuestion>(returnsQuestions);
+            ReviewQuestions = new ObservableCollection<СardQuestion>(reviewQuestions);
             _countQuestions = learnCategory.LearnQuestions.Count;
             //Progress = allOrUnknown ? 0 : learnCategory.LearnQuestions.Count((x) => x.IsRepetitions) / _countQuestions;
             Progress = 0;
@@ -50,7 +50,7 @@ namespace LearnApplication.Model
 
         }
 
-        public void MoveQuestionToEnd(LearnQuestion learnQuestion)
+        public void MoveQuestionToEnd(СardQuestion learnQuestion)
         {
 
             ////////////////// Добавить 
@@ -67,7 +67,7 @@ namespace LearnApplication.Model
         //}
 
 
-        public void DeleteQuestion(LearnQuestion learnQuestion)
+        public void DeleteQuestion(СardQuestion learnQuestion)
         {
             learnQuestion.SetsQuestionAsAlreadyKnown();
             _knownQuestions++;

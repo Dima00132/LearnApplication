@@ -28,9 +28,9 @@ namespace LearnApplication.ViewModel
         private string _hyperlink;
 
 
-        private LearnCategory _learnCategory;
+        private Category _learnCategory;
 
-        // private ObservableCollection<LearnQuestion> _learnQuestions;
+        // private ObservableCollection<СardQuestion> _learnQuestions;
 
         private readonly INavigationService _navigationService;
         public readonly LocalDbService _localDbService;
@@ -51,14 +51,14 @@ namespace LearnApplication.ViewModel
         {
             //if (parameter is int id)
             //{
-            //    _learnCategory = _localDbService.GetById<LearnCategory>(id);
-            //    //_learnQuestions = new ObservableCollection<LearnQuestion>(value.LearnQuestions);
+            //    _learnCategory = _localDbService.GetById<Category>(id);
+            //    //_learnQuestions = new ObservableCollection<СardQuestion>(value.LearnQuestions);
             //}
 
-            if (parameter is LearnCategory learnCategory)
+            if (parameter is Category learnCategory)
             {
                 _learnCategory = learnCategory;
-                //_learnQuestions = new ObservableCollection<LearnQuestion>(value.LearnQuestions);
+                //_learnQuestions = new ObservableCollection<СardQuestion>(value.LearnQuestions);
             }
             return base.OnNavigatingTo(parameter);
         }
@@ -73,20 +73,20 @@ namespace LearnApplication.ViewModel
         [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
         public async Task AddLearnQuestion()
         {
-            var question = new LearnQuestion(Question, Answer,  Hyperlink);
+            var question = new СardQuestion(Question, Answer,  Hyperlink);
             _learnCategory.AddLearnQuestion(question);
             
             _localDbService.Create(question);
             //_localDbService.Update(_learnCategory); 
 
-            //LearnQuestions.AddLearnQuestion(new LearnQuestion(Question, Answer, Hyperlink, IsKnown));
-            //_learnQuestions.Add(new LearnQuestion(Question, Answer, Hyperlink, IsKnown));
+            //LearnQuestions.AddLearnQuestion(new СardQuestion(СardQuestion, Answer, Hyperlink, IsKnown));
+            //_learnQuestions.Add(new СardQuestion(СardQuestion, Answer, Hyperlink, IsKnown));
 
             await _navigationService.NavigateBack();
 
             //await Shell.Current.GoToAsync("../TabbedTestPage");
-            //MessagingCenter.Send<AddQuestionViewModel, LearnCategory>(this, nameof(SubjectPage), _learnQuestions);
-            //MessagingCenter.Send<AddQuestionViewModel, LearnCategory>(this, nameof(QuestionsViewModel), _learnQuestions);
+            //MessagingCenter.Send<AddQuestionViewModel, Category>(this, nameof(SubjectPage), _learnQuestions);
+            //MessagingCenter.Send<AddQuestionViewModel, Category>(this, nameof(QuestionsViewModel), _learnQuestions);
         }
 
         public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);

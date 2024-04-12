@@ -25,7 +25,7 @@ namespace LearnApplication.ViewModel
         private ReviewQuestion _reviewQuestion; 
 
         private INavigationService _navigationService;
-        private LearnCategory _learnCategory;
+        private Category _learnCategory;
         private readonly LocalDbService _localDbService;
 
         public RepetitionOfEverythingViewModel(INavigationService navigationService,LocalDbService localDbService)
@@ -35,8 +35,8 @@ namespace LearnApplication.ViewModel
             //_reviewQuestion = new();
         }
 
-        public RelayCommand<LearnQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<SettingsPage>(learnQuestion));
-        //private void Settings(LearnQuestion learnQuestion)
+        public RelayCommand<СardQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<SettingsPage>(learnQuestion));
+        //private void Settings(СardQuestion learnQuestion)
         //{
 
         //    _navigationService.NavigateByPage<SettingsPage>(learnQuestion);
@@ -44,7 +44,7 @@ namespace LearnApplication.ViewModel
         //}
 
 
-        public RelayCommand<LearnQuestion> DontKnowCommand => new((learnQuestion) =>
+        public RelayCommand<СardQuestion> DontKnowCommand => new((learnQuestion) =>
         {
             if (learnQuestion is not null)
             {
@@ -52,7 +52,7 @@ namespace LearnApplication.ViewModel
             }
         });
 
-        //public void DontKnow(LearnQuestion learnQuestion)
+        //public void DontKnow(СardQuestion learnQuestion)
         //{
         //    ReviewQuestion.MoveQuestionToEnd(learnQuestion);
 
@@ -64,7 +64,7 @@ namespace LearnApplication.ViewModel
             return base.OnSaveDb();
         }
 
-        public RelayCommand<LearnQuestion> KnowCommand => new((learnQuestion) =>
+        public RelayCommand<СardQuestion> KnowCommand => new((learnQuestion) =>
         {
             if (!ReviewQuestion.IsQuestion)
                 _navigationService.NavigateBack();
@@ -77,16 +77,16 @@ namespace LearnApplication.ViewModel
         });
 
 
-        //public void Know(LearnQuestion learnQuestion)
+        //public void Know(СardQuestion learnQuestion)
         //{
         //    if (!ReviewQuestion.IsQuestion)
         //        _navigationService.NavigateBack();
         //    ReviewQuestion.DeleteQuestion(learnQuestion);
         //}
-        private void Initializes(LearnQuestion learnQuestion)
+        private void Initializes(СardQuestion learnQuestion)
         {
             
-           // ReviewQuestion = _localDbService.GetById<LearnCategory>(_id).GetReviewQuestions();
+           // ReviewQuestion = _localDbService.GetById<Category>(_id).GetReviewQuestions();
         }
 
         public override Task OnUpdate()
@@ -97,7 +97,7 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter)
         {
-            if(parameter is LearnCategory learnCategory)
+            if(parameter is Category learnCategory)
             {
                 _learnCategory = learnCategory;
                 ReviewQuestion = learnCategory.GetReviewQuestions();

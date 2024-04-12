@@ -21,13 +21,13 @@ namespace LearnApplication.ViewModel
     public partial class SubjectViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private  LearnCategory _learnCategory;
+        private  Category _learnCategory;
         //public RelayCommand RepeatAllQuestionsCommand => new(() => 
-        //    _navigationService.NavigateByPage<RepetitionOfEverythingPage>(LearnCategory),
-        //     () => LearnCategory?.LearnQuestions.Count != 0);
+        //    _navigationService.NavigateByPage<RepetitionOfEverythingPage>(Category),
+        //     () => Category?.LearnQuestions.Count != 0);
         //public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
-        //    _navigationService.NavigateByPage<RepetitionOfEverythingPage>(LearnCategory),
-        //    () => LearnCategory?.LearnQuestions.Count != 0 & LearnCategory?.DontKnownCountLearn != 0);
+        //    _navigationService.NavigateByPage<RepetitionOfEverythingPage>(Category),
+        //    () => Category?.LearnQuestions.Count != 0 & Category?.DontKnownCountLearn != 0);
         public RelayCommand RepeatAllQuestionsCommand => new(() =>
     _navigationService.NavigateByPage<TabbedRepetitionPage>(LearnCategory));
         public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
@@ -68,7 +68,7 @@ namespace LearnApplication.ViewModel
 
         public void InitializesFields()
         {
-            //LearnCategory = _localDbService.GetById<LearnCategory>(_primaryKeyId);
+            //Category = _localDbService.GetById<Category>(_primaryKeyId);
             // ProgressLearns = _learnCategory.ProgressLearn;
 
             ProgressLearn = _learnCategory.CountProgressLearn;
@@ -88,7 +88,7 @@ namespace LearnApplication.ViewModel
         public override Task OnNavigatingTo(object? parameter)
         {
 
-            if (parameter is LearnCategory learnCategory)
+            if (parameter is Category learnCategory)
             {
                 //_primaryKeyId = id;
                 LearnCategory = learnCategory;

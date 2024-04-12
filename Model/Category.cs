@@ -14,7 +14,7 @@ namespace LearnApplication.Model
 {
 
     [Table("learn_category")]
-    public partial class LearnCategory:ObservableObject, IDataSelect
+    public partial class Category:ObservableObject, IDataSelect
     {
         [PrimaryKey,AutoIncrement]
         [Column("Id")]
@@ -29,14 +29,14 @@ namespace LearnApplication.Model
 
         [Column("count_dont_known")]
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public ObservableCollection<LearnQuestion> LearnQuestions { get; set; } = [];
+        public ObservableCollection<СardQuestion> LearnQuestions { get; set; } = [];
 
         //[Column("progress_learn")]
         //public ProgressLearn ProgressLearn { get; set; }
 
-        public LearnCategory():this(string.Empty)
+        public Category():this(string.Empty)
         {}
-        public LearnCategory(string subject)
+        public Category(string subject)
         {
            
             Subject = subject;
@@ -67,11 +67,11 @@ namespace LearnApplication.Model
 
         public ReviewQuestion GetReviewQuestions(bool allOrUnknown = true)
         {
-            //var questions = new List<LearnQuestion>(LearnQuestions);
+            //var questions = new List<СardQuestion>(LearnQuestions);
             return new ReviewQuestion(this, allOrUnknown);
         }
 
-        public void AddLearnQuestion(LearnQuestion learn)
+        public void AddLearnQuestion(СardQuestion learn)
         {
             if (learn is null)
                 return;

@@ -11,7 +11,7 @@ namespace LearnApplication.Model
 {
    
     [Table("learn_question")]
-    public partial class LearnQuestion:ObservableObject, IDataSelect
+    public partial class СardQuestion:ObservableObject, IDataSelect
     {
 
         [PrimaryKey,AutoIncrement]
@@ -19,7 +19,7 @@ namespace LearnApplication.Model
         public int Id { get; set; }
 
         [Column("learn_category_id")]
-        [ForeignKey(typeof(LearnCategory))]
+        [ForeignKey(typeof(Category))]
         public int LearnCategoryId { get; set; }
 
         // [Column("question")]
@@ -68,13 +68,13 @@ namespace LearnApplication.Model
         ];
 
         //public  LocalDbService _localDbService { get; set; }
-        //public  LearnCategory learnCategory { get; set; }
+        //public  Category learnCategory { get; set; }
 
-        public LearnQuestion():this(string.Empty, string.Empty)
+        public СardQuestion():this(string.Empty, string.Empty)
         {
         }
 
-        public LearnQuestion(string question, string answer , string hyperlink = "")
+        public СardQuestion(string question, string answer , string hyperlink = "")
         {
             Question = question;
             Answer = answer;
@@ -160,7 +160,7 @@ namespace LearnApplication.Model
             
         }
 
-        public void Change(LearnQuestion learn)
+        public void Change(СardQuestion learn)
         {
            
             Question = learn.Question;
