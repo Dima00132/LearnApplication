@@ -13,11 +13,11 @@ namespace LearnApplication.Service
 {
     public class LocalDbService
     {
-        private const string DB_NAME = "data_learn_save_12.db3";
+        private const string DB_NAME = "data_learn_save_15.db3";
         private readonly SQLiteConnection _connection;
         private const SQLiteOpenFlags Flags =
             SQLiteOpenFlags.ReadWrite |
-            SQLiteOpenFlags.Create    |
+            SQLiteOpenFlags.Create  |
             SQLiteOpenFlags.SharedCache;
 
         public LocalDbService()
@@ -31,7 +31,11 @@ namespace LearnApplication.Service
            // _ = _connection.CreateTable<LearnCategory>();
             try
             {
-                _ = _connection.CreateTables< LearnCategory,LearnQuestion>();
+                _ = _connection.CreateTable<Learn>();
+                _ = _connection.CreateTable<LearnCategory>();
+                _ = _connection.CreateTable<LearnQuestion>();
+               
+                //_ = _connection.CreateTables< LearnCategory,LearnQuestion, Learn>();
                 //_ = _connection.CreateTable<LearnQuestion>();
             }
             catch (Exception Ex)
@@ -45,8 +49,26 @@ namespace LearnApplication.Service
            
         }
 
-        public  List<LearnCategory> GetLearn()
-            =>_connection.GetAllWithChildren<LearnCategory>(recursive: true);
+        private Learn _learn;
+        public void UpdateAll()
+        {
+            if (_learn is null)
+                return;
+            _connection.Update(_learn);
+        }
+
+        public Learn GetLearn()
+        {
+            _learn = _connection.GetAllWithChildren<Learn>(recursive: true).FirstOrDefault();
+            // var table = _connection.GetTableInfo("learn");
+            if (_learn is null)
+            {
+                _learn = new Learn();
+                Create(_learn);
+                return new Learn();
+            }
+            return _learn;
+        }
 
 
         public void Create<T>(T learnCategory)
@@ -78,9 +100,10 @@ namespace LearnApplication.Service
         
         public void DeleteAll()
         {
-            var learn = GetLearn();
-            foreach (var item in learn)
-                Delete(item);
+            //var learn = GetLearn();
+            //foreach (var item in learn.FirstOrDefault().LearnCategories)
+            //    learn.Delete(item);
+                
             
         }
         public void DeleteFileData()

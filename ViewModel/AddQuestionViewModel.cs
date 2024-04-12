@@ -33,7 +33,7 @@ namespace LearnApplication.ViewModel
         // private ObservableCollection<LearnQuestion> _learnQuestions;
 
         private readonly INavigationService _navigationService;
-        private readonly LocalDbService _localDbService;
+        public readonly LocalDbService _localDbService;
 
         public AddQuestionViewModel(INavigationService navigationService,LocalDbService localDbService)
         {

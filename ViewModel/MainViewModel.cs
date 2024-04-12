@@ -22,6 +22,8 @@ namespace LearnApplication.ViewModel
         private readonly INavigationService _navigationService;
         private readonly LocalDbService _localDbService;
 
+        private readonly Learn _learn;
+
         [ObservableProperty]
         private ObservableCollection<LearnCategory> _categoryUnderStudys;
         public MainViewModel(INavigationService navigationService, LocalDbService localDbService)
@@ -29,11 +31,10 @@ namespace LearnApplication.ViewModel
             _categoryUnderStudys = [];
             _navigationService = navigationService;
             _localDbService = localDbService;
-
-            CategoryUnderStudys = new ObservableCollection<LearnCategory>(localDbService.GetLearn());
-
-            foreach (var category in CategoryUnderStudys)
-                category.StartTimer();
+            var t = localDbService.GetLearn();
+            _learn = t; ;
+            _learn.Start();
+            CategoryUnderStudys = _learn.LearnCategories;
         }
 
 
@@ -44,8 +45,10 @@ namespace LearnApplication.ViewModel
                 return;
 
             var learnCategory = new LearnCategory(subject);
-            CategoryUnderStudys.Add(learnCategory);
+            _learn.AddCategorie(learnCategory);
+           // CategoryUnderStudys.Add(learnCategory);
             _localDbService.Create(learnCategory);
+            _localDbService.Update(_learn);
         });
 
         public RelayCommand DeleteFileDataCommand => new(async () =>
@@ -54,7 +57,7 @@ namespace LearnApplication.ViewModel
             if (!subject)
                 return;
             _localDbService.DeleteFileData();
-            CategoryUnderStudys = new ObservableCollection<LearnCategory>(_localDbService.GetLearn());
+            //CategoryUnderStudys = new ObservableCollection<LearnCategory>(_localDbService.GetLearn());
         });
 
         //public RelayCommand AddCommand => new RelayCommand(Add);
@@ -70,7 +73,8 @@ namespace LearnApplication.ViewModel
         {
             if (learnCategory is not null)
             {
-                CategoryUnderStudys.Remove(learnCategory);
+                _learn.Delete(learnCategory);
+                //CategoryUnderStudys.Remove(learnCategory);
                 _localDbService.Delete(learnCategory);
             }
         });
@@ -85,6 +89,7 @@ namespace LearnApplication.ViewModel
             => new(async (learnCategory)
                 =>
                    {
+                       
                         await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(learnCategory);
                     });
 

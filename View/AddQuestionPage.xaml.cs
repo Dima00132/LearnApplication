@@ -11,11 +11,19 @@ public partial class AddQuestionPage : ContentPage
   
 
     }
+    AddQuestionViewModel addQuestionViewModel;
     public AddQuestionPage(AddQuestionViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext = viewModel;
+		BindingContext = addQuestionViewModel= viewModel;
 
     }
+
+    protected override void OnDisappearing()
+    {
+        //addQuestionViewModel._localDbService.UpdateAll();
+        base.OnDisappearing();
+    }
+
 
 }

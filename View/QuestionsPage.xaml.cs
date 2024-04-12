@@ -20,5 +20,11 @@ public partial class QuestionsPage : ContentPage
   
     }
 
+    protected override void OnDisappearing()
+    {
+        var t = 0;
+        base.OnDisappearing();
+    }
+
 
 }

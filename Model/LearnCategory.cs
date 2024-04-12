@@ -23,6 +23,10 @@ namespace LearnApplication.Model
         [ObservableProperty]
         private string _subject;
 
+        [Column("learn_id")]
+        [ForeignKey(typeof(Learn))]
+        public int LearnId { get; set; }
+
         [Column("count_dont_known")]
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<LearnQuestion> LearnQuestions { get; set; } = [];
