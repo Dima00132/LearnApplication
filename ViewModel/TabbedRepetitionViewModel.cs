@@ -32,11 +32,11 @@ namespace LearnApplication.ViewModel
             return base.OnUpdate();
         }
 
-        public override Task OnSaveDb()
+        public override Task OnUpdateDbService()
         {
-            RepetitionOfEverythingViewModel?.OnSaveDb();
-            RepetitionOfUnknownsViewModel?.OnSaveDb();
-            return base.OnSaveDb();
+            RepetitionOfEverythingViewModel?.OnUpdateDbService();
+           // RepetitionOfUnknownsViewModel?.OnUpdateDbService();
+            return base.OnUpdateDbService();
         }
 
         public override Task OnNavigatingTo(object? parameter)

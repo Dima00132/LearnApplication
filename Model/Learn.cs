@@ -4,6 +4,7 @@ using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +22,26 @@ namespace LearnApplication.Model
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<Category> LearnCategories { get;  set; } = [];
 
-        public void Start()
+        public ObservableCollection<Category> GetCategories()
         {
-            foreach (var category in LearnCategories)
-                category.StartTimer();
+            RunsTimerCompletionChecks();
+            return LearnCategories;
         }
 
+        public ObservableCollection<Category> GetSortedCategoriesByViewingTime(bool restartTimer = true)
+        {
+            if(restartTimer)
+                RunsTimerCompletionChecks();
+            var sortedByPlantTime = LearnCategories.OrderByDescending(x => x.LastEntrance);
+            LearnCategories = new ObservableCollection<Category>(sortedByPlantTime);
+            return LearnCategories;
+        }
+
+        private void RunsTimerCompletionChecks()
+        {
+            foreach (var category in LearnCategories)
+                category.RestartsTheTimer();
+        }
         public void AddCategorie(Category learnCategory)
         {
             if (learnCategory is not null)

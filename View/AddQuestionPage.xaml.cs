@@ -10,7 +10,6 @@ public partial class AddQuestionPage : ContentPage
         InitializeComponent();
     }
    
-   
     public AddQuestionPage(AddQuestionViewModel viewModel):this()
 	{
 		BindingContext = _addQuestionViewModel= viewModel;
@@ -18,7 +17,7 @@ public partial class AddQuestionPage : ContentPage
 
     protected override void OnDisappearing()
     {
-        _addQuestionViewModel.OnSaveDb();
+        _addQuestionViewModel.OnUpdateDbService();
         base.OnDisappearing();
     }
 

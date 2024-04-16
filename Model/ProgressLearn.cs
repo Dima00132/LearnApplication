@@ -16,6 +16,9 @@ namespace LearnApplication.Model {
         [ForeignKey(typeof(СardQuestion))]
         public int LearnQuestionId { get; set; }
 
+        public DateTime LastEntrance { get; set; }
+
+
         private readonly ObservableCollection<СardQuestion> _learnQuestions;
         public ProgressLearn(ObservableCollection<СardQuestion> learnQuestions)
         {
@@ -24,6 +27,7 @@ namespace LearnApplication.Model {
 
         public ProgressLearn() : this([])
         {
+           
         }
 
         public double CountProgress

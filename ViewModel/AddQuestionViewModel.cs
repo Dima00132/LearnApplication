@@ -63,10 +63,10 @@ namespace LearnApplication.ViewModel
             return base.OnNavigatingTo(parameter);
         }
 
-        public override Task OnSaveDb()
+        public override Task OnUpdateDbService()
         {
             _localDbService.Update(_learnCategory);
-            return base.OnSaveDb();
+            return base.OnUpdateDbService();
         }
 
 
@@ -74,15 +74,15 @@ namespace LearnApplication.ViewModel
         public async Task AddLearnQuestion()
         {
             var question = new СardQuestion(Question, Answer,  Hyperlink);
-            _learnCategory.AddLearnQuestion(question);
+            _learnCategory.AddQuestion(question);
             
             _localDbService.Create(question);
             //_localDbService.Update(_learnCategory); 
 
-            //LearnQuestions.AddLearnQuestion(new СardQuestion(СardQuestion, Answer, Hyperlink, IsKnown));
+            //LearnQuestions.AddQuestion(new СardQuestion(СardQuestion, Answer, Hyperlink, IsKnown));
             //_learnQuestions.Add(new СardQuestion(СardQuestion, Answer, Hyperlink, IsKnown));
 
-            await _navigationService.NavigateBack();
+            await _navigationService.NavigateBackUpdate();
 
             //await Shell.Current.GoToAsync("../TabbedTestPage");
             //MessagingCenter.Send<AddQuestionViewModel, Category>(this, nameof(SubjectPage), _learnQuestions);

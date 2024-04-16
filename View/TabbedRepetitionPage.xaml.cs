@@ -17,7 +17,7 @@ public partial class TabbedRepetitionPage : TabbedPage
 
     protected override void OnDisappearing()
     {
-        _tabbedRepetitionViewModel?.OnSaveDb();
+        _tabbedRepetitionViewModel?.OnUpdateDbService();
         base.OnDisappearing();
     }
 }

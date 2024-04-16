@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Converters;
+using CommunityToolkit.Mvvm.ComponentModel;
 using LearnApplication.Service;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
@@ -14,7 +15,7 @@ namespace LearnApplication.Model
 {
 
     [Table("learn_category")]
-    public partial class Category:ObservableObject, IDataSelect
+    public partial class Category:ObservableObject
     {
         [PrimaryKey,AutoIncrement]
         [Column("Id")]
@@ -31,6 +32,8 @@ namespace LearnApplication.Model
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<СardQuestion> LearnQuestions { get; set; } = [];
 
+        public DateTime LastEntrance { get; set; }
+
         //[Column("progress_learn")]
         //public ProgressLearn ProgressLearn { get; set; }
 
@@ -44,12 +47,30 @@ namespace LearnApplication.Model
             //CountDontKnown =  (int)DontKnownCountLearn;
         }
 
+        public string MemorizationPercentage
+        {
+            get
+            {
+                if (LearnQuestions.Count == 0)
+                    return "0";
+                double know = LearnQuestions.Count(x => x.IsKnown);
+                double count = LearnQuestions.Count;
+
+
+                var percentage = know * 100.0 / count;
+                var percentageStr = Math.Round(percentage,1).ToString();
+
+               // var percentage = LearnQuestions.Count == 0? 0 :(LearnQuestions.Count(x => x.IsKnown) * 100) / LearnQuestions.Count;
+                return percentageStr;
+            }
+            set { }
+        }
+
 
         public double CountProgressLearn
         {
             get
             {
-
                 double count = LearnQuestions.Count;
                 double Known = LearnQuestions.Count(x => x.IsKnown);
                 return Known / count;
@@ -71,34 +92,25 @@ namespace LearnApplication.Model
             return new ReviewQuestion(this, allOrUnknown);
         }
 
-        public void AddLearnQuestion(СardQuestion learn)
+        public void AddQuestion(СardQuestion question)
         {
-            if (learn is null)
+            if (question is null)
                 return;
-
-            LearnQuestions.Add(learn);
-            //learn.DispatcherTimer.Tick += Timer_Tick;
+            LearnQuestions.Insert(0,question);
         }
 
-        public void StartTimer()
+        public void RemoveQuestion(СardQuestion question)
+        {
+            if (question is null)
+                return;
+            LearnQuestions.Remove(question);
+        }
+
+        public void RestartsTheTimer()
         {
             foreach (var item in LearnQuestions)
-                item.RestartsTheTimer();
+                item.RestartsTimer();
             
         }
-
-
-        //public event EventHandler? TimerTick;
-
-        //private void Timer_Tick(object? sender, EventArgs e)
-        //{
-        //    MainThread.BeginInvokeOnMainThread(() =>
-        //    {
-        //        var g = 0;
-        //        TimerTick?.Invoke(sender, EventArgs.Empty);
-        //       //CountDontKnown = (int)ProgressLearn.DontKnownCountLearn;
-        //    });
-            
-        //}
     }
 }

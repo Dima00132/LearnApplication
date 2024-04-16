@@ -12,7 +12,6 @@ namespace LearnApplication.Navigation
         Task NavigateToMainPage(object? parameter = null);
         Task NavigateByPage<T>(object? parameter = null) where T : Page;
         public Task NavigateByViewModel<T>(object? parameter = null) where T : ViewModelBase;
-        //Task NavigateByPage<T>() where T : Page;
-        Task NavigateBack();
+        Task NavigateBackUpdate();
     }
 }

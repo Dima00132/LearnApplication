@@ -36,11 +36,15 @@ namespace LearnApplication.ViewModel
             if (parameter is Category learnCategory)
             {
                 _learnCategory = learnCategory;
-                Initializes();
+                LearnQuestions = _learnCategory.LearnQuestions;
             }
             return base.OnNavigatingTo(parameter);
         }
-
+        public override Task OnUpdateDbService()
+        {
+            _localDbService.Update(_learnCategory);
+            return base.OnUpdateDbService();
+        }
         private void Initializes()
         {
 
@@ -50,11 +54,11 @@ namespace LearnApplication.ViewModel
 
         }
 
-        public override Task OnUpdate()
-        {
-            Initializes(); 
-            return base.OnUpdate();
-        }
+        //public override Task OnUpdate()
+        //{
+        //    Initializes(); 
+        //    return base.OnUpdate();
+        //}
 
 
         [ObservableProperty]
@@ -76,7 +80,8 @@ namespace LearnApplication.ViewModel
         {
             if (learnQuestion is not null)
             {
-                LearnQuestions.Remove(learnQuestion);
+                _learnCategory.RemoveQuestion(learnQuestion);
+      /*          LearnQuestions.Remove(learnQuestion)*/;
                 _localDbService.Delete(learnQuestion);
             }
         });

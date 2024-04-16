@@ -17,9 +17,15 @@ namespace LearnApplication
             
         }
 
+        protected override void OnAppearing()
+        {
+            _mainViewModel.OnUpdate();
+            base.OnAppearing();
+        }
+
         protected override void OnDisappearing()
         {
-            _mainViewModel.OnSaveDb();
+            _mainViewModel.OnUpdateDbService();
             base.OnDisappearing();
         }
 

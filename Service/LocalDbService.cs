@@ -1,4 +1,5 @@
 ﻿
+
 using LearnApplication.Model;
 using SQLite;
 
@@ -13,77 +14,46 @@ namespace LearnApplication.Service
 {
     public class LocalDbService
     {
-        private const string DB_NAME = "data_learn_save_15.db3";
-        private readonly SQLiteConnection _connection;
+        private const string DB_NAME = "data_learn_save_18.db3";
+        private SQLiteConnection _connection;
         private const SQLiteOpenFlags Flags =
             SQLiteOpenFlags.ReadWrite |
             SQLiteOpenFlags.Create  |
             SQLiteOpenFlags.SharedCache;
 
-        public LocalDbService()
+
+        private void Init()
         {
-          
-            //File.Delete(Path.Combine(FileSystem.AppDataDirectory, DB_NAME));
-            _connection = new SQLiteConnection(Path.Combine(FileSystem.AppDataDirectory, DB_NAME), Flags);
-
-
-
-           // _ = _connection.CreateTable<Category>();
-            try
-            {
-                _ = _connection.CreateTable<Learn>();
-                _ = _connection.CreateTable<Category>();
-                _ = _connection.CreateTable<СardQuestion>();
-               
-                //_ = _connection.CreateTables< Category,СardQuestion, Learn>();
-                //_ = _connection.CreateTable<СardQuestion>();
-            }
-            catch (Exception Ex)
-            {
-
-                var t = Ex;
-                throw;
-            }
-
-
-           
-        }
-
-        private Learn _learn;
-        public void UpdateAll()
-        {
-            if (_learn is null)
+            if (_connection is not null)
                 return;
-            _connection.Update(_learn);
+
+            _connection = new SQLiteConnection(Path.Combine(FileSystem.AppDataDirectory, DB_NAME), Flags);
+            _ = _connection.CreateTable<Learn>();
+            _ = _connection.CreateTable<Category>();
+            _ = _connection.CreateTable<СardQuestion>();
         }
 
         public Learn GetLearn()
         {
-            _learn = _connection.GetAllWithChildren<Learn>(recursive: true).FirstOrDefault();
-            // var table = _connection.GetTableInfo("learn");
-            if (_learn is null)
+            Init();
+
+            var learn = _connection.GetAllWithChildren<Learn>(recursive: true).FirstOrDefault();
+
+            if (learn is null)
             {
-                _learn = new Learn();
-                Create(_learn);
-                return new Learn();
+                learn = new Learn();
+                Create(learn);
             }
-            return _learn;
+            return learn;
         }
 
+       
 
-        public void Create<T>(T learnCategory)
+
+        public void Create<T>(T value)
         {
-            try
-            {
-                _connection.InsertWithChildren(learnCategory);
-            }
-            catch (Exception Ex)
-            {
-
-                var t = Ex;
-                throw; 
-            }
-            
+            Init();
+            _connection.InsertWithChildren(value, recursive: true);
         }
 
         //public T UpdateAndGetById<T>(int id,T update) where T : IDataSelect, new()
@@ -94,9 +64,12 @@ namespace LearnApplication.Service
 
         //public T GetById<T>(int id) where T : IDataSelect, new()
         //    =>_connection.GetAllWithChildren<T>().Where(x => x.Id == id).FirstOrDefault(); 
-        
-        
-        public void Update<T>(T value)=>_connection.UpdateWithChildren(value);
+
+        public void Update<T>(T value)
+        {
+            Init();
+            _connection.UpdateWithChildren(value);
+        }
         
         public void DeleteAll()
         {
@@ -108,12 +81,30 @@ namespace LearnApplication.Service
         }
         public void DeleteFileData()
         {
-            _connection.Dispose();
-            File.Delete(Path.Combine(FileSystem.AppDataDirectory, DB_NAME));
-            
+            Init();
+            try
+            {
+                _connection.Dispose();
+                File.Delete(Path.Combine(FileSystem.AppDataDirectory, DB_NAME));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }    
         }
 
-        public void Delete<T>(T value)=>_connection.Delete(value);
+        public void Delete<T>(T value)
+        {
+            Init();
+            try
+            {
+                _connection.Delete(value);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         
     }
 }

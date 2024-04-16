@@ -58,21 +58,21 @@ namespace LearnApplication.ViewModel
 
         //}
 
-        public override Task OnSaveDb()
+        public override Task OnUpdateDbService()
         {
             _localDbService.Update(_learnCategory);
-            return base.OnSaveDb();
+            return base.OnUpdateDbService();
         }
 
         public RelayCommand<СardQuestion> KnowCommand => new((learnQuestion) =>
         {
             if (!ReviewQuestion.IsQuestion)
-                _navigationService.NavigateBack();
+                _navigationService.NavigateBackUpdate();
             if (learnQuestion is not null)
             {
                ReviewQuestion.DeleteQuestion(learnQuestion);
                
-               //_localDbService.Update(_learnCategory);
+               _localDbService.Update(learnQuestion);
             }
         });
 
@@ -80,7 +80,7 @@ namespace LearnApplication.ViewModel
         //public void Know(СardQuestion learnQuestion)
         //{
         //    if (!ReviewQuestion.IsQuestion)
-        //        _navigationService.NavigateBack();
+        //        _navigationService.NavigateBackUpdate();
         //    ReviewQuestion.DeleteQuestion(learnQuestion);
         //}
         private void Initializes(СardQuestion learnQuestion)

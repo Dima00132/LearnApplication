@@ -16,7 +16,7 @@ public partial class TabbedLearnPage : TabbedPage
 
     protected override void OnDisappearing()
     {
-        _tabbedLearnViewModel.OnSaveDb();
+        _tabbedLearnViewModel.OnUpdateDbService();
         base.OnDisappearing();
     }
 }

@@ -11,7 +11,7 @@ namespace LearnApplication.Model
 {
    
     [Table("learn_question")]
-    public partial class СardQuestion:ObservableObject, IDataSelect
+    public partial class СardQuestion:ObservableObject
     {
 
         [PrimaryKey,AutoIncrement]
@@ -22,82 +22,51 @@ namespace LearnApplication.Model
         [ForeignKey(typeof(Category))]
         public int LearnCategoryId { get; set; }
 
-        // [Column("question")]
-
         [ObservableProperty]
         private string _question;
-
-        // [Column("answer")]
 
         [ObservableProperty]
         private string _answer;
 
-
-        // [Column("hyper_link")]
-
         [ObservableProperty]
         private string _hyperlink;
 
-        // [Column("is_known")]
-
-
         [ObservableProperty]
-        private bool _isKnown  = false;
-
-        // [Column("is_repetitions")]
-
+        private bool _isKnown;
 
         [ObservableProperty]
         private bool _isRepetitions  = true;
 
-        // [Column("DispatcherTimer")]
         public readonly IDispatcherTimer DispatcherTimer;
 
-        
         public DateTime DateTime { get;set; }
 
-       
         public int NumberOfRepetitions { get; set; }
-
-
-        //public event EventHandler? TimerTick;
 
         private readonly NumberRepetition[] _repetitions = 
         [
             NumberRepetition.Test,NumberRepetition.First,NumberRepetition.Second,NumberRepetition.Third
         ];
 
-        //public  LocalDbService _localDbService { get; set; }
-        //public  Category learnCategory { get; set; }
-
         public СardQuestion():this(string.Empty, string.Empty)
         {
         }
 
-        public СardQuestion(string question, string answer , string hyperlink = "")
+        public СardQuestion(string question, string answer = "", string hyperlink = "")
         {
             Question = question;
             Answer = answer;
-            //_localDbService = localDbService;
-            //this.learnCategory = learnCategory;
             Hyperlink = hyperlink;
             DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
-       
-            //var dataTime = new DateTime().tim;
         }
 
-        public void RestartsTheTimer()
+        public void RestartsTimer()
         {
             if (IsRepetitions)
                 return;
-
-            var carentDate = DateTime;
-            var newDate = DateTime.Now;
-            var resald = newDate - carentDate;
+            var resald = DateTime.Now - DateTime;
             var timeHours = Convert.ToDouble(_repetitions[NumberOfRepetitions]);
             var oldTimeSpan = TimeSpan.FromSeconds(timeHours);
-
-            
 
             if (resald >= oldTimeSpan)
             {
@@ -108,21 +77,13 @@ namespace LearnApplication.Model
             var newTimeSpan = oldTimeSpan - resald;
 
             StartTimer(newTimeSpan);
-            //if (DispatcherTimer is not null)
-            //{
-
-            //    // DispatcherTimer.Tick += Timer_Tick;
-
-            //    DispatcherTimer.Interval = newTimeSpan;
-            //    DispatcherTimer.Start();
-            //}
-
         }
 
        
 
         public void SetsQuestionAsAlreadyKnown(bool isStartTimer = true)
         {
+            IsKnown = true;
             if (!isStartTimer & NumberOfRepetitions < 4)
             {
                 IsKnown = true;
@@ -153,19 +114,16 @@ namespace LearnApplication.Model
             {
                 NumberOfRepetitions++;
                 IsRepetitions = true;
-               
                 DispatcherTimer.Tick -= Timer_Tick;
-               //_localDbService.Update(learnCategory);
             });
             
         }
 
-        public void Change(СardQuestion learn)
-        {
-           
-            Question = learn.Question;
-            Answer = learn.Answer;
-            Hyperlink = learn.Hyperlink;
+        public void Change(string question,string answer = "", string hyperlink = "")
+        { 
+            Question = question;
+            Answer = answer;
+            Hyperlink = hyperlink;
         }
 
     }

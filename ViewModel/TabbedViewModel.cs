@@ -28,11 +28,11 @@ namespace LearnApplication.ViewModel
             return base.OnUpdate();
         }
 
-        public override Task OnSaveDb()
+        public override Task OnUpdateDbService()
         {
-            SubjectViewModel?.OnSaveDb();
-            QuestionsViewModel?.OnSaveDb();
-            return base.OnSaveDb();
+            SubjectViewModel?.OnUpdateDbService();
+            QuestionsViewModel?.OnUpdateDbService();
+            return base.OnUpdateDbService();
         }
 
         public override Task OnNavigatingTo(object? parameter)

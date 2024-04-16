@@ -20,8 +20,7 @@
         <Button Text="Добавить" Grid.Row="1"  Command="{Binding AddCommand}" 
    SemanticProperties.Hint="Counts the number of times you click" HorizontalOptions="Fill" />
 
-
-        <CollectionView    Grid.Row="2" ItemsSource="{Binding CategoryUnderStudys}" SelectionMode="None" >
+        <CollectionView  Grid.Row="2" ItemsSource="{Binding CategoryUnderStudys}" SelectionMode="None" >
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Category}">
@@ -40,10 +39,17 @@
            CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
                             
-                            <StackLayout  Orientation="Vertical">
-                                <ProgressBar BackgroundColor="Green" Scale="15"/>
-                                <!--<Label Text="{Binding TestCountDontKnown , Mode=TwoWay}" TextColor="Black" />-->
-                                <Label Text="{Binding  Subject , Mode=TwoWay}" TextColor="Black"/>
+                            <StackLayout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="1" TextColor="Green" FontSize="Subtitle"  Text="{Binding MemorizationPercentage, StringFormat='{0}%',Mode=TwoWay}" />
+                                    <!--<Label Text="{Binding TestCountDontKnown , Mode=TwoWay}" TextColor="Black" />-->
+                                    <Label Grid.Column="0" Text="{Binding  Subject , Mode=TwoWay}" TextColor="Black"/>
+                                </Grid>
                             </StackLayout>
                         </Frame>
                     </SwipeView>

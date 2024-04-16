@@ -23,13 +23,13 @@ namespace LearnApplication.ViewModel
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCangeCommand))]
-        private string _question;
+        private string _question = string.Empty;
 
         [ObservableProperty]
-        private string _answer;
+        private string _answer = string.Empty;
 
         [ObservableProperty]
-        private string _hyperlink;
+        private string _hyperlink = string.Empty;
 
 
         private readonly INavigationService _navigationService;
@@ -39,23 +39,14 @@ namespace LearnApplication.ViewModel
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
-            Question = string.Empty;
-            Answer = string.Empty;
-            Hyperlink = string.Empty;
-           // _learnQuestion = new СardQuestion();
+            //Question = string.Empty;
+            //Answer = string.Empty;
+            //Hyperlink = string.Empty;
         }
 
 
         public override Task OnNavigatingTo(object? parameter)
         {
-            //if (parameter is int id)
-            //{
-            //    _learnQuestion = _localDbService.GetById<СardQuestion>(id);
-            //    СardQuestion = _learnQuestion.СardQuestion;
-            //    Answer = _learnQuestion.Answer;
-            //    Hyperlink = _learnQuestion.Hyperlink;
-            //}
-
             if (parameter is СardQuestion learnQuestion)
             {
                 _learnQuestion = learnQuestion;
@@ -63,7 +54,6 @@ namespace LearnApplication.ViewModel
                 Answer = _learnQuestion.Answer;
                 Hyperlink = _learnQuestion.Hyperlink;
             }
-            
             return base.OnNavigatingTo(parameter);
         }
 
@@ -72,15 +62,14 @@ namespace LearnApplication.ViewModel
         public void SaveCange()
         {
 
-            _learnQuestion.Change(new СardQuestion(Question, Answer, Hyperlink));
+            _learnQuestion.Change(Question, Answer, Hyperlink);
             //_localDbService.Update(_learnQuestion);
-            _navigationService.NavigateBack();
-           
+            _navigationService.NavigateBackUpdate();  
         }
-        public override Task OnSaveDb()
+        public override Task OnUpdateDbService()
         {
             _localDbService.Update(_learnQuestion);
-            return base.OnSaveDb();
+            return base.OnUpdateDbService();
         }
 
         public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);

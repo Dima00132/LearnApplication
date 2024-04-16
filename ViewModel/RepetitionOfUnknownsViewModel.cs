@@ -56,7 +56,7 @@ namespace LearnApplication.ViewModel
         public RelayCommand<СardQuestion> KnowCommand => new((learnQuestion) =>
         {
             if (!ReviewQuestion.IsQuestion)
-                _navigationService.NavigateBack();
+                _navigationService.NavigateBackUpdate();
             if (learnQuestion is not null)
             {
                 ReviewQuestion.DeleteQuestion(learnQuestion);
@@ -69,14 +69,14 @@ namespace LearnApplication.ViewModel
         //public void Know(СardQuestion learnQuestion)
         //{
         //    if (!ReviewQuestion.IsQuestion)
-        //        _navigationService.NavigateBack();
+        //        _navigationService.NavigateBackUpdate();
         //    ReviewQuestion.DeleteQuestion(learnQuestion);
         //}
-        private void Initializes(СardQuestion learnQuestion)
-        {
+        //private void Initializes(СardQuestion learnQuestion)
+        //{
 
-            // ReviewQuestion = _localDbService.GetById<Category>(_id).GetReviewQuestions();
-        }
+        //    // ReviewQuestion = _localDbService.GetById<Category>(_id).GetReviewQuestions();
+        //}
 
         public override Task OnUpdate()
         {

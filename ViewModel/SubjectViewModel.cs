@@ -66,6 +66,12 @@ namespace LearnApplication.ViewModel
             return base.OnUpdate();
         }
 
+        public override Task OnUpdateDbService()
+        {
+            _localDbService.Update(LearnCategory);
+            return base.OnUpdateDbService();
+        }
+
         public void InitializesFields()
         {
             //Category = _localDbService.GetById<Category>(_primaryKeyId);

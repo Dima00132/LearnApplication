@@ -17,12 +17,13 @@ namespace LearnApplication.Navigation
             {typeof(RepetitionOfEverythingViewModel),typeof(RepetitionOfEverythingPage)},
             {typeof(SettingsViewModel),typeof(SettingsPage)},
             {typeof(SubjectViewModel),typeof(SubjectPage)},
-            {typeof(TabbedLearnViewModel),typeof(TabbedLearnPage)}
+            {typeof(TabbedLearnViewModel),typeof(TabbedLearnPage)},
+            {typeof(TabbedRepetitionViewModel),typeof(TabbedRepetitionPage)}
         };
 
 
         readonly IServiceProvider _services;
-        public static INavigation Navigation
+        public INavigation Navigation
         {
             get
             {
@@ -40,9 +41,9 @@ namespace LearnApplication.Navigation
         public NavigationService(IServiceProvider services)=> _services = services;
 
         public Task NavigateToMainPage(object? parameter = null)
-                    => NavigateToPage<MainPage>(parameter);
+                    => NavigateToPageAsync<MainPage>(parameter);
         public Task NavigateByPage<T>(object? parameter = null) where T : Page
-                => NavigateToPage<T>(parameter);
+                => NavigateToPageAsync<T>(parameter);
 
 
         public Task NavigateByViewModel<T>(object? parameter = null) where T : ViewModelBase
@@ -51,50 +52,49 @@ namespace LearnApplication.Navigation
             if (viewModelView.ContainsKey(typeof(T)))
             {
                 var typePage = viewModelView[typeof(T)];
-                return NavigateToPage(typePage, parameter);
+                return NavigateToPageAsync(typePage, parameter);
             }else
                 throw new KeyNotFoundException($"Не найден тип в словаре {viewModelView}");
         }
 
 
-        private async Task NavigateToPage(Type typePage,object? parameter = null) 
+        private async Task NavigateToPageAsync(Type typePage,object? parameter = null) 
         {
             if(ResolvePage(typePage) is Page toPage)
-                await InitializecircutPage(toPage, parameter);
+                await InitializecircutPageAsync(toPage, parameter);
         }
 
-        private async Task NavigateToPage<T>(object? parameter = null) where T : Page
+        private async Task NavigateToPageAsync<T>(object? parameter = null) where T : Page
         {
-            var page = ResolvePage<T>() ;
             if (ResolvePage<T>() is T toPage)
-                await InitializecircutPage(toPage, parameter);
+                await InitializecircutPageAsync(toPage, parameter);
         }
 
-        private async Task InitializecircutPage(Page toPage, object? parameter = null)
+        private async Task InitializecircutPageAsync(Page toPage, object? parameter = null)
         {
             if (toPage is not null)
             {
-                toPage.NavigatedTo += Page_NavigatedTo;
+                toPage.NavigatedTo += Page_NavigatedToAsync;
                 var toViewModel = GetPageViewModelBase(toPage);
                 if (toViewModel is not null)
                     await toViewModel.OnNavigatingTo(parameter);
-                await NavigationService.Navigation.PushAsync(toPage, true);
-                toPage.NavigatedFrom += Page_NavigatedFrom;
+                await Navigation.PushAsync(toPage, true);
+                toPage.NavigatedFrom += Page_NavigatedFromAsync;
             }
             else
                 throw new InvalidOperationException($"Unable to resolve type");
         }
 
-        private async void Page_NavigatedFrom(object? sender, NavigatedFromEventArgs e)
+        private async void Page_NavigatedFromAsync(object? sender, NavigatedFromEventArgs e)
         {
-            bool isForwardNavigation = NavigationService.Navigation.NavigationStack.Count > 1
-                && NavigationService.Navigation.NavigationStack[^2] == sender;
+            bool isForwardNavigation = Navigation.NavigationStack.Count > 1
+                && Navigation.NavigationStack[^2] == sender;
             if (sender is Page thisPage)
             {
                 if (!isForwardNavigation)
                 {
-                    thisPage.NavigatedTo -= Page_NavigatedTo;
-                    thisPage.NavigatedFrom -= Page_NavigatedFrom;
+                    thisPage.NavigatedTo -= Page_NavigatedToAsync;
+                    thisPage.NavigatedFrom -= Page_NavigatedFromAsync;
                 }
                 await CallNavigatedFrom(thisPage, isForwardNavigation);
             }
@@ -112,7 +112,7 @@ namespace LearnApplication.Navigation
                 return viewModel;
             throw new NullReferenceException($"Не найден BindingContext в Page {toPage?.GetType().FullName}");
         }
-        private async void Page_NavigatedTo(object? sender, NavigatedToEventArgs e)
+        private async void Page_NavigatedToAsync(object? sender, NavigatedToEventArgs e)
         { 
             if(sender is Page toPage)
              await CallNavigatedTo(toPage); 
@@ -136,16 +136,24 @@ namespace LearnApplication.Navigation
                return service;
             throw new NullReferenceException($"Не найден сервер в {_services.GetType().FullName}");
         }
-        
 
         public Task NavigateBack()
         {
-            if (NavigationService.Navigation.NavigationStack.Count > 1)
+            if (Navigation.NavigationStack.Count > 1)
             {
-                var page = NavigationService.Navigation.NavigationStack[^2];
+                return Navigation.PopAsync();
+            }
+            throw new InvalidOperationException("No pages to navigate back to!");
+        }
+
+        public Task NavigateBackUpdate()
+        {
+            if (Navigation.NavigationStack.Count > 1)
+            {
+                var page = Navigation.NavigationStack[^2];
                 if (page?.BindingContext is ViewModelBase viewModel)
                     viewModel.OnUpdate();
-                return NavigationService.Navigation.PopAsync();
+                return Navigation.PopAsync();
             }
             throw new InvalidOperationException("No pages to navigate back to!");
         }

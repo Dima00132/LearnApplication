@@ -15,7 +15,7 @@ public partial class SettingsPage : ContentPage
 
     protected override void OnDisappearing()
     {
-        _settingsViewModel.OnSaveDb();
+        _settingsViewModel.OnUpdateDbService();
         base.OnDisappearing();
     }
 }
