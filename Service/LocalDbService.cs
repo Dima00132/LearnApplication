@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace LearnApplication.Service
 {
-    public class LocalDbService
+
+    public sealed class LocalDbService: ILocalDbService
     {
         private const string DB_NAME = "data_learn_save_18.db3";
         private SQLiteConnection _connection;
@@ -22,11 +23,10 @@ namespace LearnApplication.Service
             SQLiteOpenFlags.SharedCache;
 
 
-        private void Init()
+        public void Init()
         {
             if (_connection is not null)
                 return;
-
             _connection = new SQLiteConnection(Path.Combine(FileSystem.AppDataDirectory, DB_NAME), Flags);
             _ = _connection.CreateTable<Learn>();
             _ = _connection.CreateTable<Category>();
@@ -36,9 +36,7 @@ namespace LearnApplication.Service
         public Learn GetLearn()
         {
             Init();
-
             var learn = _connection.GetAllWithChildren<Learn>(recursive: true).FirstOrDefault();
-
             if (learn is null)
             {
                 learn = new Learn();
@@ -47,23 +45,11 @@ namespace LearnApplication.Service
             return learn;
         }
 
-       
-
-
         public void Create<T>(T value)
         {
             Init();
             _connection.InsertWithChildren(value, recursive: true);
         }
-
-        //public T UpdateAndGetById<T>(int id,T update) where T : IDataSelect, new()
-        //{
-        //    Update(update);
-        //    return _connection.GetAllWithChildren<T>().Where(x => x.Id == id).FirstOrDefault();
-        //}
-
-        //public T GetById<T>(int id) where T : IDataSelect, new()
-        //    =>_connection.GetAllWithChildren<T>().Where(x => x.Id == id).FirstOrDefault(); 
 
         public void Update<T>(T value)
         {
@@ -71,14 +57,6 @@ namespace LearnApplication.Service
             _connection.UpdateWithChildren(value);
         }
         
-        public void DeleteAll()
-        {
-            //var learn = GetLearn();
-            //foreach (var item in learn.FirstOrDefault().LearnCategories)
-            //    learn.Delete(item);
-                
-            
-        }
         public void DeleteFileData()
         {
             Init();

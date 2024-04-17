@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace LearnApplication.ViewModel
 {
-    public partial class SettingsViewModel :ViewModelBase
+    public sealed partial class SettingsViewModel :ViewModelBase
     {
     
         private СardQuestion _learnQuestion;
@@ -33,9 +33,9 @@ namespace LearnApplication.ViewModel
 
 
         private readonly INavigationService _navigationService;
-        private readonly LocalDbService _localDbService;
+        private readonly ILocalDbService _localDbService;
 
-        public SettingsViewModel(INavigationService navigationService, LocalDbService localDbService)
+        public SettingsViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {
             _navigationService = navigationService;
             _localDbService = localDbService;

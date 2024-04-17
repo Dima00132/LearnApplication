@@ -19,16 +19,16 @@ using System.Threading.Tasks;
 
 namespace LearnApplication.ViewModel
 {
-    public partial class RepetitionViewModel : ViewModelBase
+    public sealed partial class RepetitionViewModel : ViewModelBase
     {   
         [ObservableProperty]
         private ReviewQuestion _reviewQuestion; 
 
         private INavigationService _navigationService;
         private Category _learnCategory;
-        private readonly LocalDbService _localDbService;
+        private readonly ILocalDbService _localDbService;
 
-        public RepetitionViewModel(INavigationService navigationService,LocalDbService localDbService)
+        public RepetitionViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {
             _navigationService = navigationService;
            _localDbService = localDbService;
@@ -64,11 +64,11 @@ namespace LearnApplication.ViewModel
         });
 
 
-        public override Task OnUpdate()
-        {
-            //Initializes();
-            return base.OnUpdate();
-        }
+        //public override Task OnUpdate()
+        //{
+        //    //Initializes();
+        //    return base.OnUpdate();
+        //}
 
         public override Task OnNavigatingTo(object? parameterFirst, object? parameterSecond)
         {

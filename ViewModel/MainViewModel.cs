@@ -17,10 +17,10 @@ using LearnApplication.Service;
 
 namespace LearnApplication.ViewModel
 {
-    public partial class MainViewModel : ViewModelBase
+    public sealed partial class MainViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly LocalDbService _localDbService;
+        private readonly ILocalDbService _localDbService;
 
         private readonly Learn _learn;
 
@@ -29,7 +29,7 @@ namespace LearnApplication.ViewModel
 
         private bool _isStart = true;
 
-        public MainViewModel(INavigationService navigationService, LocalDbService localDbService)
+        public MainViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {
             _navigationService = navigationService;
             _localDbService = localDbService;

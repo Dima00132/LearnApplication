@@ -15,51 +15,44 @@ using System.Threading.Tasks;
 
 namespace LearnApplication.ViewModel
 {
-    public partial class AddQuestionViewModel:ViewModelBase
+    public sealed partial class AddQuestionViewModel:ViewModelBase
     {
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AddLearnQuestionCommand))]
-        private string _question;
-
-        [ObservableProperty]
-        private string _answer;
-
-        [ObservableProperty]
-        private string _hyperlink;
-
-
         private Category _learnCategory;
 
-        // private ObservableCollection<СardQuestion> _learnQuestions;
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddLearnQuestionCommand))]
+        private string _question = string.Empty;
+
+        [ObservableProperty]
+        private string _answer = string.Empty;
+
+        [ObservableProperty]
+        private string _hyperlink = string.Empty;
 
         private readonly INavigationService _navigationService;
-        public readonly LocalDbService _localDbService;
+        public readonly ILocalDbService _localDbService;
 
-        public AddQuestionViewModel(INavigationService navigationService,LocalDbService localDbService)
+        public AddQuestionViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
-            Question = string.Empty;
-            Answer = string.Empty;
-            Hyperlink = string.Empty;
-            //_learnQuestions = [];
-
-
         }
      
+        [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
+        public async Task AddLearnQuestion()
+        {
+            var question = new СardQuestion(Question, Answer,  Hyperlink);
+            _learnCategory.AddQuestion(question);       
+            _localDbService.Create(question);
+            await _navigationService.NavigateBackUpdate();
+        }
+
+        public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);
+
         public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
-            //if (parameter is int id)
-            //{
-            //    _category = _localDbService.GetById<Category>(id);
-            //    //_learnQuestions = new ObservableCollection<СardQuestion>(value.LearnQuestions);
-            //}
-
             if (parameter is Category learnCategory)
-            {
                 _learnCategory = learnCategory;
-                //_learnQuestions = new ObservableCollection<СardQuestion>(value.LearnQuestions);
-            }
             return base.OnNavigatingTo(parameter);
         }
 
@@ -68,27 +61,5 @@ namespace LearnApplication.ViewModel
             _localDbService.Update(_learnCategory);
             return base.OnUpdateDbService();
         }
-
-
-        [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
-        public async Task AddLearnQuestion()
-        {
-            var question = new СardQuestion(Question, Answer,  Hyperlink);
-            _learnCategory.AddQuestion(question);
-            
-            _localDbService.Create(question);
-            //_localDbService.Update(_category); 
-
-            //LearnQuestions.AddQuestion(new СardQuestion(СardQuestion, Answer, Hyperlink, IsKnown));
-            //_learnQuestions.Add(new СardQuestion(СardQuestion, Answer, Hyperlink, IsKnown));
-
-            await _navigationService.NavigateBackUpdate();
-
-            //await Shell.Current.GoToAsync("../TabbedTestPage");
-            //MessagingCenter.Send<AddQuestionViewModel, Category>(this, nameof(SubjectPage), _learnQuestions);
-            //MessagingCenter.Send<AddQuestionViewModel, Category>(this, nameof(QuestionsViewModel), _learnQuestions);
-        }
-
-        public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);
     }
 }

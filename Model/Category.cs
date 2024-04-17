@@ -41,10 +41,7 @@ namespace LearnApplication.Model
         {}
         public Category(string subject)
         {
-           
             Subject = subject;
-            //ProgressLearn = new ProgressLearn(LearnQuestions);
-            //CountDontKnown =  (int)DontKnownCountLearn;
         }
 
         public string MemorizationPercentage
@@ -67,19 +64,9 @@ namespace LearnApplication.Model
         }
 
 
-        //public double CountProgressLearn
-        //{
-        //    get
-        //    {
-        //        double count = LearnQuestions.Count;
-        //        double Known = LearnQuestions.Count(x => x.IsKnown);
-        //        return Known / count;
-        //    }
-        //}
-
         public double RepetitionsCount => LearnQuestions.Count(x=>x.IsRepetitions & !x.IsKnown);
 
-        public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown & x.NumberOfRepetitions == 3);
+        public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown & x.NumberOfRepetitions >= 3);
 
         public int CountQuestion => LearnQuestions.Count;
 
@@ -87,7 +74,6 @@ namespace LearnApplication.Model
 
         public ReviewQuestion GetReviewQuestions(bool allOrUnknown = true)
         {
-            //var questions = new List<СardQuestion>(LearnQuestions);
             return new ReviewQuestion(this, allOrUnknown);
         }
 

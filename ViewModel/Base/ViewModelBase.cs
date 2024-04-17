@@ -11,8 +11,6 @@ namespace LearnApplication.ViewModel.Base
     {
         public virtual Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
              => Task.CompletedTask;
-        //public virtual Task OnNavigatingTo(object? parameterFirst, object? parameterSecond)
-        //     => Task.CompletedTask;
         public virtual Task OnNavigatedFrom(bool isForwardNavigation)
             => Task.CompletedTask;
         public virtual Task OnNavigatedTo()

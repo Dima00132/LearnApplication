@@ -18,10 +18,10 @@ using System.Threading.Tasks;
 namespace LearnApplication.ViewModel
 {
 
-    public partial class SubjectViewModel : ViewModelBase
+    public sealed partial class SubjectViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
-        private readonly LocalDbService _localDbService;
+        private readonly ILocalDbService _localDbService;
 
         [ObservableProperty]
         private  Category _category;
@@ -47,7 +47,7 @@ namespace LearnApplication.ViewModel
             _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, false),
             () => Category?.RepetitionsCount != 0);
 
-        public SubjectViewModel(INavigationService navigationService, LocalDbService localDbService)
+        public SubjectViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
@@ -67,22 +67,11 @@ namespace LearnApplication.ViewModel
 
         public void InitializesFields()
         {
-            //Category = _localDbService.GetById<Category>(_primaryKeyId);
-            // ProgressLearns = _category.ProgressLearn;
-
-           // ProgressLearn = _category.CountProgressLearn;
             LearnCount = Category.CountQuestion;
             RepetitionsCount = Category.RepetitionsCount;
             KnownCount = Category.KnownCountLearn;
            
         }
-
-        //private void Timer_Tick(object? sender, EventArgs e)
-        //{
-        //    InitializesFields();
-        //}
-
-        //private int _primaryKeyId;
 
         public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {

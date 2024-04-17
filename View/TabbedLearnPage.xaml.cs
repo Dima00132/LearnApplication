@@ -14,6 +14,12 @@ public partial class TabbedLearnPage : TabbedPage
         BindingContext = _tabbedLearnViewModel= tabbedLearnViewModel;
     }
 
+    protected override void OnAppearing()
+    {
+        _tabbedLearnViewModel.OnUpdate();
+        base.OnAppearing();
+    }
+
     protected override void OnDisappearing()
     {
         _tabbedLearnViewModel.OnUpdateDbService();

@@ -85,13 +85,14 @@ namespace LearnApplication.Model
 
         public void SetQuestionAsAlreadyKnown(bool isStartTimer = true)
         {
-            if (!isStartTimer & NumberOfRepetitions < 4)
+            IsRepetitions = false;
+            if (!isStartTimer | NumberOfRepetitions == 4)
             {
                 IsKnown = true;
                 return;
             }
             DateTime = DateTime.Now;
-            IsRepetitions = false;
+       
             var timeHours = Convert.ToDouble(_repetitionTimes[NumberOfRepetitions]);
             //var timeSpan = TimeSpan.FromHours(timeHours);
             var timeSpan = TimeSpan.FromSeconds(timeHours);

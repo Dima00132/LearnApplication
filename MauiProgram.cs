@@ -14,10 +14,6 @@ using CommunityToolkit.Mvvm;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Storage;
 
-
-
-
-
 namespace LearnApplication
 {
 
@@ -25,11 +21,11 @@ namespace LearnApplication
     {
         public static MauiAppBuilder ConfigureServices(this MauiAppBuilder builder)
         {
-            builder.Services.AddSingleton<LocalDbService>();
-
-            builder.Services.AddTransient<MainPage>().AddTransient<MainViewModel>();
+            builder.Services.AddSingleton<ILocalDbService ,LocalDbService >();
 
             builder.Services.AddSingleton<INavigationService, NavigationService>();
+
+            builder.Services.AddTransient<MainPage>().AddTransient<MainViewModel>();
 
             builder.Services.AddTransient<TabbedLearnPage>().AddTransient<TabbedLearnViewModel>();
 
@@ -42,9 +38,9 @@ namespace LearnApplication
             builder.Services.AddTransient<AddQuestionPage>().AddTransient<AddQuestionViewModel>();
 
             builder.Services.AddTransient<RepetitionPage>().AddTransient<RepetitionViewModel>();
-            builder.Services.AddTransient<RepetitionOfUnknownsPage>().AddTransient<RepetitionOfUnknownsViewModel>();
 
             builder.Services.AddTransient<TabbedRepetitionPage>().AddTransient<TabbedRepetitionViewModel>();
+
             return builder;
         }
     }

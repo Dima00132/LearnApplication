@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace LearnApplication.Navigation
 {
-    public class NavigationService : INavigationService
+    public sealed class NavigationService : INavigationService
     {
 
         private readonly Dictionary<Type, Type> viewModelView = new()
@@ -22,7 +22,7 @@ namespace LearnApplication.Navigation
         };
 
 
-        readonly IServiceProvider _services;
+        private readonly IServiceProvider _services;
         public INavigation Navigation
         {
             get
@@ -68,7 +68,7 @@ namespace LearnApplication.Navigation
         private async Task NavigateToPageAsync<T>(object? parameter = null, object? parameterSecond = null) where T : Page
         {
             if (ResolvePage<T>() is T toPage)
-                await InitializecircutPageAsync(toPage, parameter);
+                await InitializecircutPageAsync(toPage, parameter, parameterSecond);
         }
 
         private async Task InitializecircutPageAsync(Page toPage, object? parameter = null, object? parameterSecond = null)

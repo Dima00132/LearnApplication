@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LearnApplication.ViewModel
 {
-    public partial class TabbedRepetitionViewModel:ViewModelBase
+    public sealed partial class TabbedRepetitionViewModel:ViewModelBase
     {
         [ObservableProperty]
         private RepetitionViewModel _repetitionOfEverythingViewModel;

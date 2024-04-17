@@ -7,7 +7,7 @@ using LearnApplication.ViewModel.Base;
 
 namespace LearnApplication.ViewModel
 {
-    public partial class TabbedLearnViewModel :ViewModelBase
+    public sealed partial class TabbedLearnViewModel :ViewModelBase
     {
         [ObservableProperty]
         private SubjectViewModel _subjectViewModel;
