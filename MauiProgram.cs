@@ -41,7 +41,7 @@ namespace LearnApplication
 
             builder.Services.AddTransient<AddQuestionPage>().AddTransient<AddQuestionViewModel>();
 
-            builder.Services.AddTransient<RepetitionOfEverythingPage>().AddTransient<RepetitionOfEverythingViewModel>();
+            builder.Services.AddTransient<RepetitionPage>().AddTransient<RepetitionViewModel>();
             builder.Services.AddTransient<RepetitionOfUnknownsPage>().AddTransient<RepetitionOfUnknownsViewModel>();
 
             builder.Services.AddTransient<TabbedRepetitionPage>().AddTransient<TabbedRepetitionViewModel>();

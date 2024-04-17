@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LearnApplication.View.RepetitionOfEverythingPage"
+             x:Class="LearnApplication.View.RepetitionPage"
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
              xmlns:model ="clr-namespace:LearnApplication.Model"
              xmlns:local ="clr-namespace:LearnApplication.View"
-             x:DataType="viewmodel:RepetitionOfEverythingViewModel"
+             x:DataType="viewmodel:RepetitionViewModel"
              NavigationPage.HasNavigationBar="True">
 
 
@@ -58,7 +58,7 @@
                             <SwipeItems Mode="Execute" >
                                 <SwipeItem Text="Знаю"  
                                        BackgroundColor="#1f1f1f"
-                                       Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionOfEverythingViewModel}}, Path=KnowCommand}"
+                                       Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=KnowCommand}"
                                        CommandParameter="{Binding .}"/>
                             </SwipeItems>
 
@@ -68,7 +68,7 @@
                             <SwipeItems Mode="Execute">
                                 <SwipeItem Text="Не знаю"
                                        BackgroundColor="#1f1f1f"
-                                       Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionOfEverythingViewModel}}, Path=DontKnowCommand}"
+                                       Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=DontKnowCommand}"
                                        CommandParameter="{Binding .}"/>
                             </SwipeItems>
                         </SwipeView.LeftItems>
@@ -121,7 +121,7 @@
 
                                         <ImageButton Grid.Column="2"
                                               Margin="50,0,0,0" 
-                                              Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionOfEverythingViewModel}}, Path=SettingsCommand}" 
+                                              Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=SettingsCommand}" 
                                               CommandParameter="{Binding .}"
                                               Source="ellipsis.png" />
                                     </Grid>
@@ -217,14 +217,14 @@
                                         Grid.Column="0"  
                                         Text="Помню" 
                                         Style="{StaticResource ButtonStyle}"
-                                        Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionOfEverythingViewModel}}, Path=KnowCommand}"
+                                        Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=KnowCommand}"
                                         CommandParameter="{Binding .}"/>
 
                                     <Button TextColor="Red"
                                         Grid.Column="1"  
                                         Text="Не помню" 
                                         Style="{StaticResource ButtonStyle}"
-                                        Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionOfEverythingViewModel}}, Path=DontKnowCommand}"
+                                        Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=DontKnowCommand}"
                                         CommandParameter="{Binding .}"/>
                                 </Grid>
 

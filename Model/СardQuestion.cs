@@ -13,7 +13,6 @@ namespace LearnApplication.Model
     [Table("learn_question")]
     public partial class СardQuestion:ObservableObject
     {
-
         [PrimaryKey,AutoIncrement]
         [Column("Id")]
         public int Id { get; set; }
@@ -37,13 +36,13 @@ namespace LearnApplication.Model
         [ObservableProperty]
         private bool _isRepetitions  = true;
 
-        public readonly IDispatcherTimer DispatcherTimer;
+        [ObservableProperty]
+        public int _numberOfRepetitions;
 
+        public readonly IDispatcherTimer DispatcherTimer;
         public DateTime DateTime { get;set; }
 
-        public int NumberOfRepetitions { get; set; }
-
-        private readonly NumberRepetition[] _repetitions = 
+        private readonly NumberRepetition[] _repetitionTimes = 
         [
             NumberRepetition.Test,NumberRepetition.First,NumberRepetition.Second,NumberRepetition.Third
         ];
@@ -60,12 +59,17 @@ namespace LearnApplication.Model
             DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
         }
 
+        public double GetLearningProgress()
+        {
+            return NumberOfRepetitions / (double)_repetitionTimes.Length;
+        }
+
         public void RestartsTimer()
         {
             if (IsRepetitions)
                 return;
             var resald = DateTime.Now - DateTime;
-            var timeHours = Convert.ToDouble(_repetitions[NumberOfRepetitions]);
+            var timeHours = Convert.ToDouble(_repetitionTimes[NumberOfRepetitions]);
             var oldTimeSpan = TimeSpan.FromSeconds(timeHours);
 
             if (resald >= oldTimeSpan)
@@ -79,11 +83,8 @@ namespace LearnApplication.Model
             StartTimer(newTimeSpan);
         }
 
-       
-
-        public void SetsQuestionAsAlreadyKnown(bool isStartTimer = true)
+        public void SetQuestionAsAlreadyKnown(bool isStartTimer = true)
         {
-            IsKnown = true;
             if (!isStartTimer & NumberOfRepetitions < 4)
             {
                 IsKnown = true;
@@ -91,7 +92,7 @@ namespace LearnApplication.Model
             }
             DateTime = DateTime.Now;
             IsRepetitions = false;
-            var timeHours = Convert.ToDouble(_repetitions[NumberOfRepetitions]);
+            var timeHours = Convert.ToDouble(_repetitionTimes[NumberOfRepetitions]);
             //var timeSpan = TimeSpan.FromHours(timeHours);
             var timeSpan = TimeSpan.FromSeconds(timeHours);
             StartTimer(timeSpan);
@@ -108,6 +109,13 @@ namespace LearnApplication.Model
             }
         }
 
+        public void Change(string question,string answer = "", string hyperlink = "")
+        { 
+            Question = question;
+            Answer = answer;
+            Hyperlink = hyperlink;
+        }
+
         private void Timer_Tick(object? sender, EventArgs e)
         {
             MainThread.BeginInvokeOnMainThread(() =>
@@ -116,14 +124,6 @@ namespace LearnApplication.Model
                 IsRepetitions = true;
                 DispatcherTimer.Tick -= Timer_Tick;
             });
-            
-        }
-
-        public void Change(string question,string answer = "", string hyperlink = "")
-        { 
-            Question = question;
-            Answer = answer;
-            Hyperlink = hyperlink;
         }
 
     }

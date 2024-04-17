@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace LearnApplication.ViewModel
 {
-    public partial class RepetitionOfEverythingViewModel : ViewModelBase
+    public partial class RepetitionViewModel : ViewModelBase
     {   
         [ObservableProperty]
         private ReviewQuestion _reviewQuestion; 
@@ -28,20 +28,13 @@ namespace LearnApplication.ViewModel
         private Category _learnCategory;
         private readonly LocalDbService _localDbService;
 
-        public RepetitionOfEverythingViewModel(INavigationService navigationService,LocalDbService localDbService)
+        public RepetitionViewModel(INavigationService navigationService,LocalDbService localDbService)
         {
             _navigationService = navigationService;
            _localDbService = localDbService;
-            //_reviewQuestion = new();
         }
 
         public RelayCommand<СardQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<SettingsPage>(learnQuestion));
-        //private void Settings(СardQuestion learnQuestion)
-        //{
-
-        //    _navigationService.NavigateByPage<SettingsPage>(learnQuestion);
-
-        //}
 
 
         public RelayCommand<СardQuestion> DontKnowCommand => new((learnQuestion) =>
@@ -52,12 +45,6 @@ namespace LearnApplication.ViewModel
             }
         });
 
-        //public void DontKnow(СardQuestion learnQuestion)
-        //{
-        //    ReviewQuestion.MoveQuestionToEnd(learnQuestion);
-
-        //}
-
         public override Task OnUpdateDbService()
         {
             _localDbService.Update(_learnCategory);
@@ -66,7 +53,7 @@ namespace LearnApplication.ViewModel
 
         public RelayCommand<СardQuestion> KnowCommand => new((learnQuestion) =>
         {
-            if (!ReviewQuestion.IsQuestion)
+            if (!ReviewQuestion.IsQuestions)
                 _navigationService.NavigateBackUpdate();
             if (learnQuestion is not null)
             {
@@ -77,34 +64,21 @@ namespace LearnApplication.ViewModel
         });
 
 
-        //public void Know(СardQuestion learnQuestion)
-        //{
-        //    if (!ReviewQuestion.IsQuestion)
-        //        _navigationService.NavigateBackUpdate();
-        //    ReviewQuestion.DeleteQuestion(learnQuestion);
-        //}
-        private void Initializes(СardQuestion learnQuestion)
-        {
-            
-           // ReviewQuestion = _localDbService.GetById<Category>(_id).GetReviewQuestions();
-        }
-
         public override Task OnUpdate()
         {
             //Initializes();
             return base.OnUpdate();
         }
 
-        public override Task OnNavigatingTo(object? parameter)
+        public override Task OnNavigatingTo(object? parameterFirst, object? parameterSecond)
         {
-            if(parameter is Category learnCategory)
+            if(parameterFirst is Category learnCategory)
             {
                 _learnCategory = learnCategory;
-                ReviewQuestion = learnCategory.GetReviewQuestions();
-               //Initializes();
+                if(parameterSecond is bool allOrUnknown)
+                    ReviewQuestion = learnCategory.GetReviewQuestions(allOrUnknown);
             }
-    
-            return base.OnNavigatingTo(parameter);
+            return base.OnNavigatingTo(parameterFirst, parameterSecond);
         }
     }
 }

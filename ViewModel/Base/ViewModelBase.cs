@@ -9,10 +9,10 @@ namespace LearnApplication.ViewModel.Base
 {
     public abstract class ViewModelBase : ObservableObject
     {
-        public virtual Task OnNavigatingTo(object? parameter)
+        public virtual Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
              => Task.CompletedTask;
-        public virtual Task OnNavigatingTo(object? parameterFirst, object? parameterSecond)
-             => Task.CompletedTask;
+        //public virtual Task OnNavigatingTo(object? parameterFirst, object? parameterSecond)
+        //     => Task.CompletedTask;
         public virtual Task OnNavigatedFrom(bool isForwardNavigation)
             => Task.CompletedTask;
         public virtual Task OnNavigatedTo()

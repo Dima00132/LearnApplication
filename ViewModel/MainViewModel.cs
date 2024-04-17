@@ -27,12 +27,14 @@ namespace LearnApplication.ViewModel
         [ObservableProperty]
         private ObservableCollection<Category> _categoryUnderStudys;
 
+        private bool _isStart = true;
+
         public MainViewModel(INavigationService navigationService, LocalDbService localDbService)
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
             _learn = localDbService.GetLearn();
-          CategoryUnderStudys = _learn.GetSortedCategoriesByViewingTime();
+           // CategoryUnderStudys = _learn.GetSortedCategoriesByViewingTime();
         }
         public override Task OnUpdateDbService()
         {
@@ -43,7 +45,8 @@ namespace LearnApplication.ViewModel
 
         public override Task OnUpdate()
         {
-            CategoryUnderStudys = _learn.GetSortedCategoriesByViewingTime(false);
+            CategoryUnderStudys = _learn.GetSortedCategoriesByViewingTime(_isStart);
+            _isStart = false;
             return base.OnUpdate();
         }
 

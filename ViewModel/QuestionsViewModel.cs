@@ -25,7 +25,7 @@ namespace LearnApplication.ViewModel
         private Category _learnCategory;
         private int _questId;
 
-        public override Task OnNavigatingTo(object? parameter)
+        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
             //if (parameter is int id)
             //{
@@ -48,7 +48,7 @@ namespace LearnApplication.ViewModel
         private void Initializes()
         {
 
-           // _learnCategory = _localDbService.GetById<Category>(_questId);
+           // _category = _localDbService.GetById<Category>(_questId);
             LearnQuestions = _learnCategory.LearnQuestions;
             
 
@@ -65,7 +65,7 @@ namespace LearnApplication.ViewModel
         private ObservableCollection<СardQuestion> _learnQuestions = new();
 
         //[ObservableProperty]
-        //private Category _learnCategory;
+        //private Category _category;
 
 
         public RelayCommand AddCommand => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(_learnCategory));

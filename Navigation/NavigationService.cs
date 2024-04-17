@@ -14,7 +14,7 @@ namespace LearnApplication.Navigation
         {
             {typeof(AddQuestionViewModel),typeof(AddQuestionPage)},
             {typeof(QuestionsViewModel),typeof(QuestionsPage)},
-            {typeof(RepetitionOfEverythingViewModel),typeof(RepetitionOfEverythingPage)},
+            {typeof(RepetitionViewModel),typeof(RepetitionPage)},
             {typeof(SettingsViewModel),typeof(SettingsPage)},
             {typeof(SubjectViewModel),typeof(SubjectPage)},
             {typeof(TabbedLearnViewModel),typeof(TabbedLearnPage)},
@@ -42,8 +42,9 @@ namespace LearnApplication.Navigation
 
         public Task NavigateToMainPage(object? parameter = null)
                     => NavigateToPageAsync<MainPage>(parameter);
-        public Task NavigateByPage<T>(object? parameter = null) where T : Page
-                => NavigateToPageAsync<T>(parameter);
+        public Task NavigateByPage<T>(object? parameter = null, object? parameterSecond = null) where T : Page
+                => NavigateToPageAsync<T>(parameter, parameterSecond);
+   
 
 
         public Task NavigateByViewModel<T>(object? parameter = null) where T : ViewModelBase
@@ -64,20 +65,20 @@ namespace LearnApplication.Navigation
                 await InitializecircutPageAsync(toPage, parameter);
         }
 
-        private async Task NavigateToPageAsync<T>(object? parameter = null) where T : Page
+        private async Task NavigateToPageAsync<T>(object? parameter = null, object? parameterSecond = null) where T : Page
         {
             if (ResolvePage<T>() is T toPage)
                 await InitializecircutPageAsync(toPage, parameter);
         }
 
-        private async Task InitializecircutPageAsync(Page toPage, object? parameter = null)
+        private async Task InitializecircutPageAsync(Page toPage, object? parameter = null, object? parameterSecond = null)
         {
             if (toPage is not null)
             {
                 toPage.NavigatedTo += Page_NavigatedToAsync;
                 var toViewModel = GetPageViewModelBase(toPage);
                 if (toViewModel is not null)
-                    await toViewModel.OnNavigatingTo(parameter);
+                    await toViewModel.OnNavigatingTo(parameter, parameterSecond);
                 await Navigation.PushAsync(toPage, true);
                 toPage.NavigatedFrom += Page_NavigatedFromAsync;
             }

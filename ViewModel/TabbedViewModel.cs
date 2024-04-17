@@ -35,7 +35,7 @@ namespace LearnApplication.ViewModel
             return base.OnUpdateDbService();
         }
 
-        public override Task OnNavigatingTo(object? parameter)
+        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
             if (parameter is Category learnCategory)
             {

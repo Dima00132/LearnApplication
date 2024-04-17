@@ -53,32 +53,31 @@ namespace LearnApplication.Model
             {
                 if (LearnQuestions.Count == 0)
                     return "0";
-                double know = LearnQuestions.Count(x => x.IsKnown);
+                double know = LearnQuestions.Sum(x=>x.GetLearningProgress());
                 double count = LearnQuestions.Count;
 
 
                 var percentage = know * 100.0 / count;
                 var percentageStr = Math.Round(percentage,1).ToString();
 
-               // var percentage = LearnQuestions.Count == 0? 0 :(LearnQuestions.Count(x => x.IsKnown) * 100) / LearnQuestions.Count;
+            
                 return percentageStr;
             }
             set { }
         }
 
 
-        public double CountProgressLearn
-        {
-            get
-            {
-                double count = LearnQuestions.Count;
-                double Known = LearnQuestions.Count(x => x.IsKnown);
-                return Known / count;
-            }
-        }
-        public double DontKnownCountLearn => LearnQuestions.Count - KnownCountLearn;
+        //public double CountProgressLearn
+        //{
+        //    get
+        //    {
+        //        double count = LearnQuestions.Count;
+        //        double Known = LearnQuestions.Count(x => x.IsKnown);
+        //        return Known / count;
+        //    }
+        //}
 
-        public double RepetitionsCount => LearnQuestions.Count(x=>x.IsRepetitions);
+        public double RepetitionsCount => LearnQuestions.Count(x=>x.IsRepetitions & !x.IsKnown);
 
         public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown & x.NumberOfRepetitions == 3);
 
@@ -109,8 +108,7 @@ namespace LearnApplication.Model
         public void RestartsTheTimer()
         {
             foreach (var item in LearnQuestions)
-                item.RestartsTimer();
-            
+                item.RestartsTimer(); 
         }
     }
 }

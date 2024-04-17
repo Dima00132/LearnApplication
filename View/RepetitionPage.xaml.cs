@@ -3,14 +3,14 @@ using LearnApplication.ViewModel;
 namespace LearnApplication.View;
 
 [XamlCompilation(XamlCompilationOptions.Compile)]
-public partial class RepetitionOfEverythingPage : ContentPage
+public partial class RepetitionPage : ContentPage
 {
-    public RepetitionOfEverythingPage()
+    public RepetitionPage()
     {
         InitializeComponent();
     }
 
-    public RepetitionOfEverythingPage(RepetitionOfEverythingViewModel viewModel):this()
+    public RepetitionPage(RepetitionViewModel viewModel):this()
 	{
 		BindingContext = viewModel;    
     }

@@ -12,14 +12,14 @@ namespace LearnApplication.ViewModel
     public partial class TabbedRepetitionViewModel:ViewModelBase
     {
         [ObservableProperty]
-        private RepetitionOfEverythingViewModel _repetitionOfEverythingViewModel;
+        private RepetitionViewModel _repetitionOfEverythingViewModel;
         [ObservableProperty]
-        private RepetitionOfEverythingViewModel _repetitionOfUnknownsViewModel;
+        private RepetitionViewModel _repetitionOfUnknownsViewModel;
 
         //[ObservableProperty]
         //private RepetitionOfUnknownsViewModel _repetitionOfUnknownsViewModel;
 
-        public TabbedRepetitionViewModel(RepetitionOfEverythingViewModel repetitionOfEverythingViewModel, RepetitionOfEverythingViewModel repetitionOfUnknownsViewModel)
+        public TabbedRepetitionViewModel(RepetitionViewModel repetitionOfEverythingViewModel, RepetitionViewModel repetitionOfUnknownsViewModel)
         {
             _repetitionOfEverythingViewModel = repetitionOfEverythingViewModel;
             _repetitionOfUnknownsViewModel = repetitionOfUnknownsViewModel;
@@ -35,16 +35,16 @@ namespace LearnApplication.ViewModel
         public override Task OnUpdateDbService()
         {
             RepetitionOfEverythingViewModel?.OnUpdateDbService();
-           // RepetitionOfUnknownsViewModel?.OnUpdateDbService();
+            RepetitionOfUnknownsViewModel?.OnUpdateDbService();
             return base.OnUpdateDbService();
         }
 
-        public override Task OnNavigatingTo(object? parameter)
+        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
             if (parameter is Category learnCategory)
             {
-                RepetitionOfEverythingViewModel?.OnNavigatingTo(learnCategory);
-                RepetitionOfUnknownsViewModel?.OnNavigatingTo(learnCategory);
+                RepetitionOfEverythingViewModel?.OnNavigatingTo(learnCategory, parameterSecond);
+                RepetitionOfUnknownsViewModel?.OnNavigatingTo(learnCategory, parameterSecond);
 
             }
             return base.OnNavigatingTo(parameter);

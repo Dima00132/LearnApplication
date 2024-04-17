@@ -20,18 +20,11 @@ namespace LearnApplication.ViewModel
 
     public partial class SubjectViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
+        private readonly LocalDbService _localDbService;
+
         [ObservableProperty]
-        private  Category _learnCategory;
-        //public RelayCommand RepeatAllQuestionsCommand => new(() => 
-        //    _navigationService.NavigateByPage<RepetitionOfEverythingPage>(Category),
-        //     () => Category?.LearnQuestions.Count != 0);
-        //public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
-        //    _navigationService.NavigateByPage<RepetitionOfEverythingPage>(Category),
-        //    () => Category?.LearnQuestions.Count != 0 & Category?.DontKnownCountLearn != 0);
-        public RelayCommand RepeatAllQuestionsCommand => new(() =>
-    _navigationService.NavigateByPage<TabbedRepetitionPage>(LearnCategory));
-        public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
-            _navigationService.NavigateByPage<RepetitionOfEverythingPage>(LearnCategory));
+        private  Category _category;
 
         [ObservableProperty]
         private double _progressLearn;
@@ -47,12 +40,12 @@ namespace LearnApplication.ViewModel
 
         [ObservableProperty]
         private int _reviewQuestionCount;
-
-
-
-
-        private readonly INavigationService _navigationService;
-        private readonly LocalDbService _localDbService;
+        public RelayCommand RepeatAllQuestionsCommand => new(() =>
+            _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, true),
+            () => Category?.CountQuestion != 0);
+        public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
+            _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, false),
+            () => Category?.RepetitionsCount != 0);
 
         public SubjectViewModel(INavigationService navigationService, LocalDbService localDbService)
         {
@@ -68,37 +61,37 @@ namespace LearnApplication.ViewModel
 
         public override Task OnUpdateDbService()
         {
-            _localDbService.Update(LearnCategory);
+            _localDbService.Update(Category);
             return base.OnUpdateDbService();
         }
 
         public void InitializesFields()
         {
             //Category = _localDbService.GetById<Category>(_primaryKeyId);
-            // ProgressLearns = _learnCategory.ProgressLearn;
+            // ProgressLearns = _category.ProgressLearn;
 
-            ProgressLearn = _learnCategory.CountProgressLearn;
-            LearnCount = _learnCategory.CountQuestion;
-            RepetitionsCount = _learnCategory.RepetitionsCount;
-            KnownCount = _learnCategory.KnownCountLearn;
+           // ProgressLearn = _category.CountProgressLearn;
+            LearnCount = Category.CountQuestion;
+            RepetitionsCount = Category.RepetitionsCount;
+            KnownCount = Category.KnownCountLearn;
            
         }
 
-        private void Timer_Tick(object? sender, EventArgs e)
-        {
-            InitializesFields();
-        }
+        //private void Timer_Tick(object? sender, EventArgs e)
+        //{
+        //    InitializesFields();
+        //}
 
         //private int _primaryKeyId;
 
-        public override Task OnNavigatingTo(object? parameter)
+        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
 
-            if (parameter is Category learnCategory)
+            if (parameter is Category category)
             {
                 //_primaryKeyId = id;
-                LearnCategory = learnCategory;
-               // _learnCategory.TimerTick += Timer_Tick;
+                Category = category;
+               // _category.TimerTick += Timer_Tick;
                 InitializesFields();
             }
             return base.OnNavigatingTo(parameter);
@@ -108,7 +101,7 @@ namespace LearnApplication.ViewModel
         //private void Add()
         //{
 
-        //    _navigationService.NavigateByPage<AddQuestionPage>(_learnCategory);
+        //    _navigationService.NavigateByPage<AddQuestionPage>(_category);
 
         //}
 
@@ -118,10 +111,10 @@ namespace LearnApplication.ViewModel
         //[RelayCommand]
         //async Task RepeatQuestions()
         //{
-        //    await _navigationService.NavigateByPage<RepetitionOfEverythingPage>(_learnCategory);
+        //    await _navigationService.NavigateByPage<RepetitionPage>(_category);
         //}
 
-       // public bool CheckCountQuestions() => _learnCategory?.LearnQuestions.Count != 0;
+       // public bool CheckCountQuestions() => _category?.LearnQuestions.Count != 0;
 
     }
 }

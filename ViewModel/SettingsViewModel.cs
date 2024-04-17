@@ -45,7 +45,7 @@ namespace LearnApplication.ViewModel
         }
 
 
-        public override Task OnNavigatingTo(object? parameter)
+        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
             if (parameter is СardQuestion learnQuestion)
             {

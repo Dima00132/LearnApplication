@@ -47,11 +47,11 @@ namespace LearnApplication.ViewModel
 
         }
      
-        public override Task OnNavigatingTo(object? parameter)
+        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
             //if (parameter is int id)
             //{
-            //    _learnCategory = _localDbService.GetById<Category>(id);
+            //    _category = _localDbService.GetById<Category>(id);
             //    //_learnQuestions = new ObservableCollection<СardQuestion>(value.LearnQuestions);
             //}
 
@@ -77,7 +77,7 @@ namespace LearnApplication.ViewModel
             _learnCategory.AddQuestion(question);
             
             _localDbService.Create(question);
-            //_localDbService.Update(_learnCategory); 
+            //_localDbService.Update(_category); 
 
             //LearnQuestions.AddQuestion(new СardQuestion(СardQuestion, Answer, Hyperlink, IsKnown));
             //_learnQuestions.Add(new СardQuestion(СardQuestion, Answer, Hyperlink, IsKnown));
