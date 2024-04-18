@@ -23,8 +23,7 @@
 
         <Frame>
             <Editor Text="{Binding Hyperlink}" 
-                    BackgroundColor="#1f1f1f" 
-                    Keyboard="Url" IsReadOnly="true" 
+                    BackgroundColor="#1f1f1f"
                     PlaceholderColor="DarkGray"  
                     Placeholder ="Ссылка на дополнительнй материал"/>
         </Frame>

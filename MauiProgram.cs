@@ -41,6 +41,8 @@ namespace LearnApplication
 
             builder.Services.AddTransient<TabbedRepetitionPage>().AddTransient<TabbedRepetitionViewModel>();
 
+            builder.Services.AddTransient<WebPage>().AddTransient<WebViewModel>();
+
             return builder;
         }
     }

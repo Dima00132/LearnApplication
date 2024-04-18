@@ -51,18 +51,30 @@ namespace LearnApplication.ViewModel
             return base.OnUpdateDbService();
         }
 
-        public RelayCommand<СardQuestion> KnowCommand => new((learnQuestion) =>
+        public RelayCommand<СardQuestion> KnowCommand => new((question) =>
         {
             if (!ReviewQuestion.IsQuestions)
                 _navigationService.NavigateBackUpdate();
-            if (learnQuestion is not null)
+            if (question is not null)
             {
-               ReviewQuestion.DeleteQuestion(learnQuestion);
+               ReviewQuestion.DeleteQuestion(question);
                
-               _localDbService.Update(learnQuestion);
+               _localDbService.Update(question);
             }
         });
 
+        public RelayCommand<СardQuestion> LinkToAdditionalMaterialCommand => new((question) => 
+        {
+
+            var urlWeb = question.GetUrlWebView();
+            if (!urlWeb.IsUrlValid)
+            {
+                Application.Current?.MainPage?.DisplayAlert("Connection error!", "Неверно указала ссылка на материал! Проверьте правильность ссылки.", "Ok");
+                return;
+            }
+            
+            _navigationService.NavigateByPage<WebPage>(urlWeb.GetUrl());
+        } );
 
         //public override Task OnUpdate()
         //{

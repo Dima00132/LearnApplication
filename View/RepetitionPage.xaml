@@ -171,8 +171,13 @@
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="20" />
                                             </Border.StrokeShape>
-                                            <Label  Style="{StaticResource LabelStyle}"
-                                                Text="{Binding Hyperlink ,Mode =TwoWay}"/>
+
+                                            <Button Text = "Дополниетльный материал" 
+                                                    Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path= LinkToAdditionalMaterialCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                          
+                                            <!--<Label  Style="{StaticResource LabelStyle}"
+                                                Text="{Binding Hyperlink ,Mode =TwoWay}"/>-->
                                         </Border>
 
 
