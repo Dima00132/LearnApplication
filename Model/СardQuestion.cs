@@ -1,36 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LearnApplication.Model.Enum;
-using LearnApplication.Service;
-using Microsoft.Maui.Dispatching;
+using LearnApplication.Model.Web;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
-using System;
-using System.Net;
-using System.Xml.Serialization;
-using static System.Net.WebRequestMethods;
 
 namespace LearnApplication.Model
 {
-
-    public sealed class UrlWebValid
-    {
-        private readonly UrlWebViewSource _urlWebViewSource;
-        public readonly bool IsUrlValid;
-
-        public UrlWebValid(UrlWebViewSource urlWebViewSource)
-        {
-            IsUrlValid = CheckNet.Check(urlWebViewSource.Url);
-            _urlWebViewSource = urlWebViewSource;
-        }
-
-        public UrlWebViewSource GetUrl()
-        {
-            if (!IsUrlValid)
-                _urlWebViewSource.Url = "https://www.exai.com/blog/400-bad-request-error";
-            return _urlWebViewSource;
-        }
-    }
-
     [Table("learn_question")]
     public partial class СardQuestion:ObservableObject
     {
@@ -155,6 +130,5 @@ namespace LearnApplication.Model
                 DispatcherTimer.Tick -= Timer_Tick;
             });
         }
-
     }
 }

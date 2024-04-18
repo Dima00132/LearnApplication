@@ -1,7 +1,6 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 
-namespace LearnApplication.Model
+namespace LearnApplication.Model.Web
 {
     public class CheckNet
     {
