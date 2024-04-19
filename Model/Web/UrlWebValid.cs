@@ -7,7 +7,7 @@
 
         public UrlWebValid(UrlWebViewSource urlWebViewSource)
         {
-            IsUrlValid = CheckNet.Check(urlWebViewSource.Url);
+            IsUrlValid = CheckNet.CheckAll(urlWebViewSource.Url);
             _urlWebViewSource = urlWebViewSource;
         }
 

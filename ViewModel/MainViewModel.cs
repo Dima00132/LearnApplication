@@ -34,21 +34,8 @@ namespace LearnApplication.ViewModel
             _navigationService = navigationService;
             _localDbService = localDbService;
             _learn = localDbService.GetLearn();
-           // CategoryUnderStudys = _learn.GetSortedCategoriesByViewingTime();
-        }
-        public override Task OnUpdateDbService()
-        {
-            //CategoryUnderStudys = _learn.GetSortedCategoriesByViewingTime(false);
-            _localDbService.Update(_learn);
-            return base.OnUpdateDbService();
         }
 
-        public override Task OnUpdate()
-        {
-            CategoryUnderStudys = _learn.GetSortedCategoriesByViewingTime(_isStart);
-            _isStart = false;
-            return base.OnUpdate();
-        }
 
         public RelayCommand AddCommand => new(async () =>
         {
@@ -58,7 +45,6 @@ namespace LearnApplication.ViewModel
             var learnCategory = new Category(subject);
             _learn.AddCategorie(learnCategory);
             _localDbService.Create(learnCategory);
-
         });
 
         public RelayCommand DeleteFileDataCommand => new(async () =>
@@ -67,17 +53,7 @@ namespace LearnApplication.ViewModel
             if (!subject)
                 return;
             _localDbService.DeleteFileData();
-            //CategoryUnderStudys = new ObservableCollection<Category>(_localDbService.GetLearn());
         });
-
-        //public RelayCommand AddCommand => new RelayCommand(Add);
-        //async private void Add()
-        //{
-        //    var subject = await Application.Current?.MainPage?.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
-        //    if (string.IsNullOrEmpty(subject))
-        //        return;
-        //    CategoryUnderStudys.Add(new Category(subject));
-        //}
 
         public RelayCommand<Category> DeleteCommand => new((category) =>
         {
@@ -88,17 +64,23 @@ namespace LearnApplication.ViewModel
             }
         });
 
-        //[RelayCommand]
-        //void Delete(Category learnCategory)
-        //{
-        //    CategoryUnderStudys.Remove(learnCategory);
-        //}
+        public RelayCommand<Category> TapCommand=> new(async (category)=>
+        {
+            category.LastEntrance = DateTime.Now;
+            await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(category);
+        });
 
-        public RelayCommand<Category> TapCommand=> new(async (category)
-            =>
-              {
-                 category.LastEntrance = DateTime.Now;
-                 await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(category);
-              });
+        public override Task OnUpdateDbService()
+        {
+            _localDbService.Update(_learn);
+            return base.OnUpdateDbService();
+        }
+
+        public override Task OnUpdate()
+        {
+            CategoryUnderStudys = _learn.GetSortedCategoriesByViewingTime(_isStart);
+            _isStart = false;
+            return base.OnUpdate();
+        }
     }
 }

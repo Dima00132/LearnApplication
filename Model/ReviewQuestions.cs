@@ -12,7 +12,7 @@ namespace LearnApplication.Model
         public double _progress;
 
         private readonly double _countQuestions;
-       // private readonly Category _learnCategory;
+       // private readonly Category _category;
         private  double _knownQuestions;
 
         public bool IsQuestions { get => ReviewQuestions.Count >1; }
@@ -21,7 +21,7 @@ namespace LearnApplication.Model
         private readonly bool _isAllOrUnknown;
         public ReviewQuestion(Category learnCategory, bool allOrUnknown = true)
         {
-           // _learnCategory = learnCategory;
+           // _category = learnCategory;
             _isAllOrUnknown = allOrUnknown;
             var reviewQuestions = _isAllOrUnknown ? learnCategory.LearnQuestions : learnCategory.LearnQuestions.Where(x => x.IsRepetitions & !x.IsKnown);
             ReviewQuestions = new ObservableCollection<СardQuestion>(reviewQuestions);

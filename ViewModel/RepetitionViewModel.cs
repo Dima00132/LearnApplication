@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
+using LearnApplication.Model.Web;
 using LearnApplication.Navigation;
 using LearnApplication.Service;
 using LearnApplication.View;
@@ -72,15 +73,9 @@ namespace LearnApplication.ViewModel
                 Application.Current?.MainPage?.DisplayAlert("Connection error!", "Неверно указала ссылка на материал! Проверьте правильность ссылки.", "Ok");
                 return;
             }
-            
             _navigationService.NavigateByPage<WebPage>(urlWeb.GetUrl());
-        } );
+        },(question) => !CheckNet.IsNullOrEmpty(question.Hyperlink));
 
-        //public override Task OnUpdate()
-        //{
-        //    //Initializes();
-        //    return base.OnUpdate();
-        //}
 
         public override Task OnNavigatingTo(object? parameterFirst, object? parameterSecond)
         {

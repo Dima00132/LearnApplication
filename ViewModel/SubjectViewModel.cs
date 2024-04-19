@@ -30,22 +30,41 @@ namespace LearnApplication.ViewModel
         private double _progressLearn;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RepeatAllQuestionsCommand))]
         public int _learnCount;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RepeatDontKnownQuestionsCommand))]
         private double _repetitionsCount;
 
         [ObservableProperty]
         private double _knownCount;
 
-        [ObservableProperty]
-        private int _reviewQuestionCount;
-        public RelayCommand RepeatAllQuestionsCommand => new(() =>
-            _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, true),
-            () => Category?.CountQuestion != 0);
-        public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
-            _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, false),
-            () => Category?.RepetitionsCount != 0);
+
+        //public RelayCommand RepeatAllQuestionsCommand => new(() =>
+        //    _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, true),
+        //    () => Category?.CountQuestion != 0);
+
+        //public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
+        //   _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, false),
+        //   () => Category?.RepetitionsCount != 0);
+
+
+        [RelayCommand(CanExecute = nameof(CheckCountQuestion))]
+        public void RepeatAllQuestions()
+            => _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, true);
+        public bool CheckCountQuestion() => Category?.CountQuestion != 0;
+
+
+
+
+        [RelayCommand(CanExecute = nameof(CheckRepetitionsCount))]
+        public void RepeatDontKnownQuestions()
+            => _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, false);
+        public bool CheckRepetitionsCount() => Category?.RepetitionsCount != 0;
+
+
+
 
         public SubjectViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {

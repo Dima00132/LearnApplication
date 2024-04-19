@@ -9,15 +9,26 @@ namespace LearnApplication.Model.Web
             HttpStatusCode.Accepted,HttpStatusCode.Found,HttpStatusCode.OK,
         ];
 
-        public static bool Check(string url)
+        public static bool CheckAll(string url)
         {
-            return !string.IsNullOrEmpty(url) && IsOnline(url);
+            return !IsNullOrEmpty(url) && IsFormedUriString(url) && IsOnline(url);
         }
 
-        private static bool IsOnline(string url)
+        public static bool IsNullOrEmpty(string url)
+        {
+            return string.IsNullOrEmpty(url);
+        }
+
+        public static bool IsFormedUriString(string url)
+        {
+            return  Uri.IsWellFormedUriString(url, UriKind.Absolute);
+        }
+
+        public static bool IsOnline(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Timeout = 3000;
+            request.Timeout = 1000;
+            //request.Timeout = 3000;
             try
             {
                 WebResponse resp = request.GetResponse();

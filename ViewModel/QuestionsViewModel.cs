@@ -36,39 +36,17 @@ namespace LearnApplication.ViewModel
 
         }
 
-
-        //private void Initializes()
-        //{
-
-        //   // _category = _localDbService.GetById<Category>(_questId);
-        //    LearnQuestions = _category.LearnQuestions;
-
-
-        //}
-
-        //public override Task OnUpdate()
-        //{
-        //    Initializes(); 
-        //    return base.OnUpdate();
-        //}
-
-
-
-        //[ObservableProperty]
-        //private Category _category;
-
-
         public RelayCommand AddCommand 
             => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(_category));
         public RelayCommand<СardQuestion> TapCommand
-           => new(async (learnQuestion) => await _navigationService.NavigateByPage<SettingsPage>(learnQuestion));
+           => new(async (question) => await _navigationService.NavigateByPage<SettingsPage>(question));
 
-        public RelayCommand<СardQuestion> DeleteCommand => new((learnQuestion) =>
+        public RelayCommand<СardQuestion> DeleteCommand => new((question) =>
         {
-            if (learnQuestion is not null)
+            if (question is not null)
             {
-                _category.RemoveQuestion(learnQuestion);
-                _localDbService.Delete(learnQuestion);
+                _category.RemoveQuestion(question);
+                _localDbService.Delete(question);
             }
         });
 

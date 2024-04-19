@@ -45,7 +45,7 @@ namespace LearnApplication.Model
         public void AddCategorie(Category learnCategory)
         {
             if (learnCategory is not null)
-                LearnCategories.Add(learnCategory);
+                LearnCategories.Insert(0,learnCategory);
         }
 
         public void Delete(Category learnCategory)

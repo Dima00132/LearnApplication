@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
+using LearnApplication.Model.Web;
 using LearnApplication.Navigation;
 using LearnApplication.Service;
 using LearnApplication.View;
@@ -39,9 +40,6 @@ namespace LearnApplication.ViewModel
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
-            //Question = string.Empty;
-            //Answer = string.Empty;
-            //Hyperlink = string.Empty;
         }
 
 
@@ -61,17 +59,23 @@ namespace LearnApplication.ViewModel
         [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
         public void SaveCange()
         {
+            if (!CheckNet.IsNullOrEmpty(Hyperlink) && !CheckNet.IsFormedUriString(Hyperlink))
+            {
+                Application.Current?.MainPage?.DisplayAlert("Connection error!", "Неверно указала ссылка на материал! Проверьте правильность ссылки.", "Ok");
+                return;
+            }
 
             _learnQuestion.Change(Question, Answer, Hyperlink);
-            //_localDbService.Update(_learnQuestion);
             _navigationService.NavigateBackUpdate();  
         }
+        public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);
+
         public override Task OnUpdateDbService()
         {
             _localDbService.Update(_learnQuestion);
             return base.OnUpdateDbService();
         }
 
-        public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);
+        
     }
 }

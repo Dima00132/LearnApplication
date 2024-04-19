@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
+using LearnApplication.Model.Web;
 using LearnApplication.Navigation;
 using LearnApplication.Service;
 using LearnApplication.View;
@@ -17,10 +18,10 @@ namespace LearnApplication.ViewModel
 {
     public sealed partial class AddQuestionViewModel:ViewModelBase
     {
-        private Category _learnCategory;
+        private Category _category;
 
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AddLearnQuestionCommand))]
+        [NotifyCanExecuteChangedFor(nameof(AddQuestionCommand))]
         private string _question = string.Empty;
 
         [ObservableProperty]
@@ -37,12 +38,18 @@ namespace LearnApplication.ViewModel
             _navigationService = navigationService;
             _localDbService = localDbService;
         }
-     
+
         [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
-        public async Task AddLearnQuestion()
+        public async Task AddQuestion()
         {
-            var question = new СardQuestion(Question, Answer,  Hyperlink);
-            _learnCategory.AddQuestion(question);       
+            if (!CheckNet.IsNullOrEmpty(Hyperlink) && !CheckNet.IsFormedUriString(Hyperlink))
+            {
+                Application.Current?.MainPage?.DisplayAlert("Connection error!", "Неверно указала ссылка на материал! Проверьте правильность ссылки.", "Ok");
+                return;
+            }
+
+            var question = new СardQuestion(Question, Answer, Hyperlink);
+            _category.AddQuestion(question);
             _localDbService.Create(question);
             await _navigationService.NavigateBackUpdate();
         }
@@ -52,13 +59,13 @@ namespace LearnApplication.ViewModel
         public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
             if (parameter is Category learnCategory)
-                _learnCategory = learnCategory;
+                _category = learnCategory;
             return base.OnNavigatingTo(parameter);
         }
 
         public override Task OnUpdateDbService()
         {
-            _localDbService.Update(_learnCategory);
+            _localDbService.Update(_category);
             return base.OnUpdateDbService();
         }
     }
