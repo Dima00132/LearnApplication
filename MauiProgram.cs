@@ -21,6 +21,10 @@ namespace LearnApplication
     {
         public static MauiAppBuilder ConfigureServices(this MauiAppBuilder builder)
         {
+            builder.Services.AddTransient<QuestionsViewModel>();
+
+            builder.Services.AddTransient<SettingsViewModel>();
+
             builder.Services.AddSingleton<ILocalDbService ,LocalDbService >();
 
             builder.Services.AddSingleton<INavigationService, NavigationService>();
@@ -30,10 +34,6 @@ namespace LearnApplication
             builder.Services.AddTransient<TabbedLearnPage>().AddTransient<TabbedLearnViewModel>();
 
             builder.Services.AddTransient<SubjectPage>().AddTransient<SubjectViewModel>();
-
-            builder.Services.AddTransient<QuestionsPage>().AddTransient<QuestionsViewModel>();
-
-            builder.Services.AddTransient<SettingsPage>().AddTransient<SettingsViewModel>();
 
             builder.Services.AddTransient<AddQuestionPage>().AddTransient<AddQuestionViewModel>();
 

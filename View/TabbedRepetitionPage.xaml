@@ -7,7 +7,8 @@
             NavigationPage.HasNavigationBar="True"
             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
             android:TabbedPage.ToolbarPlacement="Bottom"
-            x:DataType="viewModel:TabbedRepetitionViewModel">
+            x:DataType="viewModel:TabbedRepetitionViewModel"
+            BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
 
     <view:RepetitionPage   BindingContext="{Binding RepetitionOfEverythingViewModel}"  Title="Repetition of everything"/>
     <view:RepetitionPage  BindingContext="{Binding RepetitionOfUnknownsViewModel}" Title="Repetition of unknowns"/>

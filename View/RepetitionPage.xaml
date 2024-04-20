@@ -6,7 +6,8 @@
              xmlns:model ="clr-namespace:LearnApplication.Model"
              xmlns:local ="clr-namespace:LearnApplication.View"
              x:DataType="viewmodel:RepetitionViewModel"
-             NavigationPage.HasNavigationBar="True">
+             NavigationPage.HasNavigationBar="True"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
 
 
     <ContentPage.Resources>

@@ -74,7 +74,10 @@ namespace LearnApplication.ViewModel
 
         public override Task OnUpdate()
         {
-            InitializesFields();
+
+            LearnCount = Category.CountQuestion;
+            RepetitionsCount = Category.RepetitionsCount;
+            KnownCount = Category.KnownCountLearn;
             return base.OnUpdate();
         }
 
@@ -84,13 +87,13 @@ namespace LearnApplication.ViewModel
             return base.OnUpdateDbService();
         }
 
-        public void InitializesFields()
-        {
-            LearnCount = Category.CountQuestion;
-            RepetitionsCount = Category.RepetitionsCount;
-            KnownCount = Category.KnownCountLearn;
+        //public void InitializesFields()
+        //{
+        //    LearnCount = Category.CountQuestion;
+        //    RepetitionsCount = Category.RepetitionsCount;
+        //    KnownCount = Category.KnownCountLearn;
            
-        }
+        //}
 
         public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
@@ -100,7 +103,7 @@ namespace LearnApplication.ViewModel
                 //_primaryKeyId = id;
                 Category = category;
                // _category.TimerTick += Timer_Tick;
-                InitializesFields();
+               // InitializesFields();
             }
             return base.OnNavigatingTo(parameter);
         }

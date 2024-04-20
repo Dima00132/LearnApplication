@@ -7,7 +7,8 @@
             NavigationPage.HasNavigationBar="False"
             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
             android:TabbedPage.ToolbarPlacement="Bottom"
-            x:DataType="viewModel:TabbedLearnViewModel">
+            x:DataType="viewModel:TabbedLearnViewModel"
+            BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
 
     <view:SubjectPage   BindingContext="{Binding SubjectViewModel}"  Title="Subject"/>
     <view:QuestionsPage  BindingContext="{Binding QuestionsViewModel}" Title="Questions"/>

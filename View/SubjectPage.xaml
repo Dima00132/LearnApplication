@@ -4,6 +4,7 @@
             NavigationPage.HasNavigationBar="False"
              xmlns:viewModel = "clr-namespace:LearnApplication.ViewModel"
              x:Class="LearnApplication.View.SubjectPage"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }"
              >
 
     <Grid x:DataType="viewModel:SubjectViewModel" BackgroundColor="#1f1f1f">

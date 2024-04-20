@@ -4,7 +4,8 @@
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
              xmlns:model ="clr-namespace:LearnApplication.Model"
              x:Class="LearnApplication.View.SettingsPage" 
-             x:DataType="viewmodel:SettingsViewModel">
+             x:DataType="viewmodel:SettingsViewModel"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
     <StackLayout Orientation="Vertical" BackgroundColor="#1f1f1f" >
         <Frame>
             <Editor Text="{Binding Question}"

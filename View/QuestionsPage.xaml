@@ -4,7 +4,8 @@
              xmlns:model ="clr-namespace:LearnApplication.Model"
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
              x:Class="LearnApplication.View.QuestionsPage"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
     <!--<ContentPage.BindingContext>
         <viewmodel:QuestionsViewModel />
     </ContentPage.BindingContext>-->
