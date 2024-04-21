@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
-             xmlns:model ="clr-namespace:LearnApplication.Model"
-             x:Class="LearnApplication.View.SettingsPage" 
-             x:DataType="viewmodel:SettingsViewModel"
+             x:Class="LearnApplication.View.SettingsPage"
+             Title="Настройки"
              BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
-    <StackLayout Orientation="Vertical" BackgroundColor="#1f1f1f" >
-        <Frame>
-            <Editor Text="{Binding Question}"
-                    BackgroundColor="#1f1f1f" 
-                    TextColor="White" 
-                    PlaceholderColor="DarkGray" 
-                    Placeholder ="Введите вопрос"/>
-        </Frame>
-        <Frame>
-            <Editor Text="{Binding Answer}" 
-                    BackgroundColor="#1f1f1f" 
-                    TextColor="White" 
-                    PlaceholderColor="DarkGray" 
-                    Placeholder ="Введите ответ"/>
+    <VerticalStackLayout>
+        
+        <Frame  BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
+               BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+            <StackLayout>
+                <Label Text="Внешний вид" 
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                       FontSize="Header" 
+                       Padding="5"/>
+                <Button Text="{Binding Theme, StringFormat='Тема - {0}'}" 
+                        TextColor="{AppThemeBinding Light=Black, Dark=White}"  
+                        BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"
+                         HorizontalOptions="Fill"
+                        Command="{Binding ApplicationThemeCommand}"/>
+                <Grid ColumnDefinitions="*, 50">
+                    <Label Text="Анимация" 
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                    FontSize="Header"/>
+                    <Switch  IsToggled="{Binding IsAnimated}"/>
+                </Grid>
+                
+                
+            </StackLayout>
+            
         </Frame>
 
-        <Frame>
-            <Editor Text="{Binding Hyperlink}" 
-                    BackgroundColor="#1f1f1f"
-                    PlaceholderColor="DarkGray"  
-                    Placeholder ="Ссылка на дополнительнй материал"/>
-        </Frame>
-        
-        <Button Text="Добавить" 
-                BackgroundColor="Gray" 
-                TextColor="Green"  
-                Command="{Binding SaveCangeCommand}"  />
-    </StackLayout>
+  
+    </VerticalStackLayout>
 </ContentPage>

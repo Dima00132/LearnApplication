@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
 using LearnApplication.Navigation;
-using LearnApplication.Service;
+using LearnApplication.Service.Interface;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
 using Microsoft.Maui.Animations;
@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace LearnApplication.ViewModel
-{ 
+{
     public sealed partial class QuestionsViewModel : ViewModelBase
     {
         private readonly INavigationService _navigationService;
@@ -39,7 +39,7 @@ namespace LearnApplication.ViewModel
         public RelayCommand AddCommand 
             => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(_category));
         public RelayCommand<СardQuestion> TapCommand
-           => new(async (question) => await _navigationService.NavigateByPage<SettingsPage>(question));
+           => new(async (question) => await _navigationService.NavigateByPage<QuestionEditorPage>(question));
 
         public RelayCommand<СardQuestion> DeleteCommand => new((question) =>
         {

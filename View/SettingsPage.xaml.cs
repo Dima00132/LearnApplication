@@ -9,13 +9,12 @@ public partial class SettingsPage : ContentPage
     public SettingsPage(SettingsViewModel settingsViewModel)
 	{
 		InitializeComponent();
-		BindingContext = _settingsViewModel= settingsViewModel;
-        
+        BindingContext = _settingsViewModel = settingsViewModel;
     }
 
-    protected override void OnDisappearing()
-    {
-        _settingsViewModel.OnUpdateDbService();
-        base.OnDisappearing();
-    }
+    //protected override void OnDisappearing()
+    //{
+    //    _settingsViewModel.OnUpdateDbService();
+    //    base.OnDisappearing();
+    //}
 }

@@ -1,6 +1,7 @@
 ﻿
 
 using LearnApplication.Model;
+using LearnApplication.Service.Interface;
 using SQLite;
 
 using SQLiteNetExtensions.Extensions;

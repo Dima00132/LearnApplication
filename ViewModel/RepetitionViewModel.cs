@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
 using LearnApplication.Model.Web;
 using LearnApplication.Navigation;
-using LearnApplication.Service;
+using LearnApplication.Service.Interface;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
 using Microsoft.Maui.Controls;
@@ -35,7 +35,7 @@ namespace LearnApplication.ViewModel
            _localDbService = localDbService;
         }
 
-        public RelayCommand<СardQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<SettingsPage>(learnQuestion));
+        public RelayCommand<СardQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<QuestionEditorPage>(learnQuestion));
 
 
         public RelayCommand<СardQuestion> DontKnowCommand => new((learnQuestion) =>
@@ -67,7 +67,7 @@ namespace LearnApplication.ViewModel
         public RelayCommand<СardQuestion> LinkToAdditionalMaterialCommand => new((question) => 
         {
 
-            var urlWeb = question.GetUrlWebView();
+            var urlWeb = question?.GetUrlWebView();
             if (!urlWeb.IsUrlValid)
             {
                 Application.Current?.MainPage?.DisplayAlert("Connection error!", "Неверно указала ссылка на материал! Проверьте правильность ссылки.", "Ok");

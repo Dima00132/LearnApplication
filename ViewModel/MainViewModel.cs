@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using LearnApplication;
 using LearnApplication.Navigation;
 using LearnApplication.ViewModel.Base;
-using LearnApplication.Service;
+using LearnApplication.Service.Interface;
 
 
 
@@ -47,12 +47,9 @@ namespace LearnApplication.ViewModel
             _localDbService.Create(learnCategory);
         });
 
-        public RelayCommand DeleteFileDataCommand => new(async () =>
+        public RelayCommand SettingsCommand => new(async () =>
         {
-            var subject = await Application.Current?.MainPage?.DisplayAlert("Предупреждение", "Удалить файл данных ?", "Да", "Нет");
-            if (!subject)
-                return;
-            _localDbService.DeleteFileData();
+            await _navigationService.NavigateByViewModel<SettingsViewModel>();
         });
 
         public RelayCommand<Category> DeleteCommand => new((category) =>

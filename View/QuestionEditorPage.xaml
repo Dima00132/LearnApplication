@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
+             xmlns:model ="clr-namespace:LearnApplication.Model"
+             x:Class="LearnApplication.View.QuestionEditorPage" 
+             x:DataType="viewmodel:QuestionEditorViewModel"
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+    <StackLayout Orientation="Vertical" BackgroundColor="#1f1f1f" >
+        <Frame>
+            <Editor Text="{Binding Question}"
+                    BackgroundColor="#1f1f1f" 
+                    TextColor="White" 
+                    PlaceholderColor="DarkGray" 
+                    Placeholder ="Введите вопрос"/>
+        </Frame>
+        <Frame>
+            <Editor Text="{Binding Answer}" 
+                    BackgroundColor="#1f1f1f" 
+                    TextColor="White" 
+                    PlaceholderColor="DarkGray" 
+                    Placeholder ="Введите ответ"/>
+        </Frame>
+
+        <Frame>
+            <Editor Text="{Binding Hyperlink}" 
+                    BackgroundColor="#1f1f1f"
+                    PlaceholderColor="DarkGray"  
+                    Placeholder ="Ссылка на дополнительнй материал"/>
+        </Frame>
+        
+        <Button Text="Добавить" 
+                BackgroundColor="Gray" 
+                TextColor="Green"  
+                Command="{Binding SaveCangeCommand}"  />
+    </StackLayout>
+</ContentPage>

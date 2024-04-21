@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
 using LearnApplication.Navigation;
-using LearnApplication.Service;
+using LearnApplication.Service.Interface;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
 using System;

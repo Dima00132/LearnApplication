@@ -13,6 +13,7 @@ using Microsoft.Maui;
 using CommunityToolkit.Mvvm;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Storage;
+using LearnApplication.Service.Interface;
 
 namespace LearnApplication
 {
@@ -22,8 +23,13 @@ namespace LearnApplication
         public static MauiAppBuilder ConfigureServices(this MauiAppBuilder builder)
         {
             builder.Services.AddTransient<QuestionsViewModel>();
+            builder.Services.AddTransient<SubjectViewModel>();
 
-            builder.Services.AddTransient<SettingsViewModel>();
+            builder.Services.AddTransient<SettingsPage>().AddTransient<SettingsViewModel>();
+
+            builder.Services.AddTransient<QuestionEditorPage>().AddTransient<QuestionEditorViewModel>();
+
+            builder.Services.AddSingleton<IDataService,DataService>();
 
             builder.Services.AddSingleton<ILocalDbService ,LocalDbService >();
 

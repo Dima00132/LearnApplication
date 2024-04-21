@@ -15,12 +15,14 @@ namespace LearnApplication.Navigation
             {typeof(AddQuestionViewModel),typeof(AddQuestionPage)},
             {typeof(QuestionsViewModel),typeof(QuestionsPage)},
             {typeof(RepetitionViewModel),typeof(RepetitionPage)},
-            {typeof(SettingsViewModel),typeof(SettingsPage)},
+            {typeof(QuestionEditorViewModel),typeof(QuestionEditorPage)},
             {typeof(SubjectViewModel),typeof(SubjectPage)},
             {typeof(TabbedLearnViewModel),typeof(TabbedLearnPage)},
-            {typeof(TabbedRepetitionViewModel),typeof(TabbedRepetitionPage)}
+            {typeof(TabbedRepetitionViewModel),typeof(TabbedRepetitionPage)},
+            {typeof(SettingsViewModel),typeof(SettingsPage)} 
         };
 
+       
 
         private readonly IServiceProvider _services;
         public INavigation Navigation
@@ -37,7 +39,8 @@ namespace LearnApplication.Navigation
                     throw new Exception();
                 }
             }
-        }
+        } 
+        public bool IsAnimated { get; set; }
         public NavigationService(IServiceProvider services)=> _services = services;
 
         public Task NavigateToMainPage(object? parameter = null)
@@ -79,7 +82,7 @@ namespace LearnApplication.Navigation
                 var toViewModel = GetPageViewModelBase(toPage);
                 if (toViewModel is not null)
                     await toViewModel.OnNavigatingTo(parameter, parameterSecond);
-                await Navigation.PushAsync(toPage, true);
+                await Navigation.PushAsync(toPage, IsAnimated);
                 toPage.NavigatedFrom += Page_NavigatedFromAsync;
             }
             else
@@ -142,7 +145,7 @@ namespace LearnApplication.Navigation
         {
             if (Navigation.NavigationStack.Count > 1)
             {
-                return Navigation.PopAsync();
+                return Navigation.PopAsync(IsAnimated);
             }
             throw new InvalidOperationException("No pages to navigate back to!");
         }
@@ -154,7 +157,7 @@ namespace LearnApplication.Navigation
                 var page = Navigation.NavigationStack[^2];
                 if (page?.BindingContext is ViewModelBase viewModel)
                     viewModel.OnUpdate();
-                return Navigation.PopAsync();
+                return Navigation.PopAsync(IsAnimated);
             }
             throw new InvalidOperationException("No pages to navigate back to!");
         }

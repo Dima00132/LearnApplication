@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LearnApplication.Navigation;
-using LearnApplication.Service;
+using LearnApplication.Service.Interface;
 using LearnApplication.ViewModel.Base;
 using System;
 using System.Collections.Generic;

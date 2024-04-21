@@ -16,7 +16,7 @@
 
         <ImageButton/>
 
-        <Button Text="Удалить все" Grid.Row="0"  Command="{Binding DeleteFileDataCommand}" 
+        <Button Text="Настройки" Grid.Row="0"  Command="{Binding SettingsCommand}" 
    SemanticProperties.Hint="Counts the number of times you click" HorizontalOptions="Fill" />
         <Button Text="Добавить" Grid.Row="1"  Command="{Binding AddCommand}" 
    SemanticProperties.Hint="Counts the number of times you click" HorizontalOptions="Fill" />

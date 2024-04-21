@@ -1,8 +1,6 @@
-﻿
+﻿using LearnApplication.Model;
 
-using LearnApplication.Model;
-
-namespace LearnApplication.Service
+namespace LearnApplication.Service.Interface
 {
     public interface ILocalDbService
     {

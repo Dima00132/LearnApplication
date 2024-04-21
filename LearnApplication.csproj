@@ -102,8 +102,8 @@
 	  <Compile Update="View\TabbedRepetitionPage.xaml.cs">
 	    <DependentUpon>TabbedRepetitionPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\SettingsPage.xaml.cs">
-	    <DependentUpon>SettingsPage.xaml</DependentUpon>
+	  <Compile Update="View\QuestionEditorPage.xaml.cs">
+	    <DependentUpon>QuestionEditorPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="View\TabbedLearnPage.xaml.cs">
 	    <DependentUpon>TabbedLearnPage.xaml</DependentUpon>
@@ -123,10 +123,13 @@
 	  <MauiXaml Update="View\RepetitionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\TabbedRepetitionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\SettingsPage.xaml">
+	  <MauiXaml Update="View\QuestionEditorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\SubjectPage.xaml">

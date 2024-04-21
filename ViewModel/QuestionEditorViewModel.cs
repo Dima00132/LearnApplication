@@ -6,22 +6,24 @@ using LearnApplication.Navigation;
 using LearnApplication.Service.Interface;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
+using Microsoft.Maui.Animations;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace LearnApplication.ViewModel
 {
-    public sealed partial class AddQuestionViewModel:ViewModelBase
+    public sealed partial class QuestionEditorViewModel :ViewModelBase
     {
-        private Category _category;
+    
+        private СardQuestion _learnQuestion;
 
         [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(AddQuestionCommand))]
+        [NotifyCanExecuteChangedFor(nameof(SaveCangeCommand))]
         private string _question = string.Empty;
 
         [ObservableProperty]
@@ -30,17 +32,32 @@ namespace LearnApplication.ViewModel
         [ObservableProperty]
         private string _hyperlink = string.Empty;
 
-        private readonly INavigationService _navigationService;
-        public readonly ILocalDbService _localDbService;
 
-        public AddQuestionViewModel(INavigationService navigationService, ILocalDbService localDbService)
+        private readonly INavigationService _navigationService;
+        private readonly ILocalDbService _localDbService;
+
+        public QuestionEditorViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
         }
 
+
+        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
+        {
+            if (parameter is СardQuestion learnQuestion)
+            {
+                _learnQuestion = learnQuestion;
+               Question = _learnQuestion.Question;
+                Answer = _learnQuestion.Answer;
+                Hyperlink = _learnQuestion.Hyperlink;
+            }
+            return base.OnNavigatingTo(parameter);
+        }
+
+
         [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
-        public async Task AddQuestion()
+        public void SaveCange()
         {
             if (!CheckNet.IsNullOrEmpty(Hyperlink) && !CheckNet.IsFormedUriString(Hyperlink))
             {
@@ -48,25 +65,17 @@ namespace LearnApplication.ViewModel
                 return;
             }
 
-            var question = new СardQuestion(Question, Answer, Hyperlink);
-            _category.AddQuestion(question);
-            _localDbService.Create(question);
-            await _navigationService.NavigateBackUpdate();
+            _learnQuestion.Change(Question, Answer, Hyperlink);
+            _navigationService.NavigateBackUpdate();  
         }
-
         public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);
-
-        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
-        {
-            if (parameter is Category learnCategory)
-                _category = learnCategory;
-            return base.OnNavigatingTo(parameter);
-        }
 
         public override Task OnUpdateDbService()
         {
-            _localDbService.Update(_category);
+            _localDbService.Update(_learnQuestion);
             return base.OnUpdateDbService();
         }
+
+        
     }
 }
