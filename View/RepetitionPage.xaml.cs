@@ -14,9 +14,4 @@ public partial class RepetitionPage : ContentPage
 	{
 		BindingContext = viewModel;    
     }
-    protected override void OnAppearing()
-    {
-        var g = 0;
-        base.OnAppearing();
-    }
 }

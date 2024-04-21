@@ -6,22 +6,39 @@
              xmlns:model ="clr-namespace:LearnApplication.Model"
              x:Class="LearnApplication.MainPage"
              x:DataType="viewmodel:MainViewModel"
+             NavigationPage.HasNavigationBar="False"
              BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ImageButton/>
+        <Label Text="Learn" 
+               Grid.Row="0" 
+               HorizontalOptions="Center" 
+               VerticalOptions="Center" 
+               TextTransform="Default" 
+               FontSize="Title" 
+               TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
 
-        <Button Text="Настройки" Grid.Row="0"  Command="{Binding SettingsCommand}" 
-   SemanticProperties.Hint="Counts the number of times you click" HorizontalOptions="Fill" />
-        <Button Text="Добавить" Grid.Row="1"  Command="{Binding AddCommand}" 
-   SemanticProperties.Hint="Counts the number of times you click" HorizontalOptions="Fill" />
 
-        <CollectionView   Grid.Row="2" ItemsSource="{Binding CategoryUnderStudys}" SelectionMode="None" >
+        <ImageButton Source="image_settings.png" 
+                     Grid.Row="1"  
+                     HorizontalOptions="End"  
+                     VerticalOptions="Center" 
+                     BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
+                     Command="{Binding SettingsCommand}"/>
+
+
+
+
+
+        <ImageButton Source="image_add.png" Grid.Row="2"  Command="{Binding AddCommand}" HorizontalOptions="Fill" />
+
+        <CollectionView   Grid.Row="3" ItemsSource="{Binding CategoryUnderStudys}" SelectionMode="None" >
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Category}">

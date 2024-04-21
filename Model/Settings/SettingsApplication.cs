@@ -30,7 +30,11 @@ namespace LearnApplication.Model.Settings
 
         public static string GetApplicationTheme()
         {
-            return Application.Current.UserAppTheme.ToString();
+            var currentTheme = Application.Current.UserAppTheme.ToString();
+            var theme = AppTheme.Unspecified.ToString();
+            if (_nameTheme.ContainsValue(currentTheme))
+                return _nameTheme.Where(x => x.Value == currentTheme).FirstOrDefault().Key;
+            return theme;
         }
 
 

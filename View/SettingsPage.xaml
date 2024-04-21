@@ -8,7 +8,7 @@
         
         <Frame  BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
                BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
-            <StackLayout>
+            <StackLayout Spacing="5">
                 <Label Text="Внешний вид" 
                        TextColor="{AppThemeBinding Light=Black, Dark=White}" 
                        FontSize="Header" 
@@ -18,14 +18,26 @@
                         BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"
                          HorizontalOptions="Fill"
                         Command="{Binding ApplicationThemeCommand}"/>
-                <Grid ColumnDefinitions="*, 50">
-                    <Label Text="Анимация" 
-                    TextColor="{AppThemeBinding Light=Black, Dark=White}" 
-                    FontSize="Header"/>
-                    <Switch  IsToggled="{Binding IsAnimated}"/>
-                </Grid>
-                
-                
+                <Frame Padding="0" 
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
+                        BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+                    <Grid ColumnDefinitions="*,*" >
+
+                        <Label Grid.Column="0" 
+                               VerticalTextAlignment="Center"
+                               Text="Анимация" 
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                               BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"
+                               FontSize="Header"
+                               Padding="5"/>
+                        <Switch Grid.Column="1" 
+                                ThumbColor="{AppThemeBinding Light=Green, Dark=White}"
+                                OnColor="{AppThemeBinding Light=White, Dark=Gray}"
+                                BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" 
+                                IsToggled="{Binding IsAnimated}"/>
+                    </Grid>
+                </Frame>
+             
             </StackLayout>
             
         </Frame>

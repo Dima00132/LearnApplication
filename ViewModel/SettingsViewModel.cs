@@ -66,11 +66,5 @@ namespace LearnApplication.ViewModel
             _dataService?.Save(AddressesForSavingSettings.Theme, theme); 
         });
 
-        //public override Task OnUpdateDbService()
-        //{
-        //    SettingsApplication.SetNavigationAnimated(_navigationService, IsAnimated);
-        //    _dataService?.Save(AddressesForSavingSettings.Animated, IsAnimated);
-        //    return base.OnUpdateDbService();
-        //}
     }
 }

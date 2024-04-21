@@ -72,6 +72,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\Image_add.png" />
+	  <None Remove="Resources\Images\image_clock.png" />
+	  <None Remove="Resources\Images\image_database.png" />
+	  <None Remove="Resources\Images\image_edit.png" />
+	  <None Remove="Resources\Images\image_error.png" />
+	  <None Remove="Resources\Images\image_folder.png" />
+	  <None Remove="Resources\Images\image_plus.png" />
+	  <None Remove="Resources\Images\Image_settings.png" />
+	  <None Remove="Resources\Images\Image_success.png" />
 	  <None Remove="Resources\Images\klipartz.com (2).png" />
 	  <None Remove="Resources\Images\klipartz.com.png" />
 	</ItemGroup>
