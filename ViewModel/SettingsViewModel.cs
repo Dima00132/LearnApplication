@@ -55,6 +55,11 @@ namespace LearnApplication.ViewModel
             IsAnimated = navigationService.IsAnimated;
         }
 
+        public RelayCommand ApplicationLanguageCommand => new(async () =>
+        {
+            await Application.Current?.MainPage?.
+            DisplayAlert("Уведомление", "На данном этапе развития приложения добавлент только Русский язык! В будущем возможно будут доступны другие языки.", "ОK");
+        });
         public RelayCommand ApplicationThemeCommand => new (async () =>
         {
             var theme = await Application.Current?.MainPage?.DisplayActionSheet("Выберите тему", null, null, _unspecified, _light, _dark);

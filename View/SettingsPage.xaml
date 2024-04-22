@@ -2,42 +2,102 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LearnApplication.View.SettingsPage"
+             xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
              Title="Настройки"
              BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
     <VerticalStackLayout>
         
         <Frame  BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
                BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
-            <StackLayout Spacing="5">
+            <StackLayout Spacing="5" >
                 <Label Text="Внешний вид" 
                        TextColor="{AppThemeBinding Light=Black, Dark=White}" 
                        FontSize="Header" 
                        Padding="5"/>
-                <Button Text="{Binding Theme, StringFormat='Тема - {0}'}" 
-                        TextColor="{AppThemeBinding Light=Black, Dark=White}"  
-                        BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"
-                         HorizontalOptions="Fill"
-                        Command="{Binding ApplicationThemeCommand}"/>
-                <Frame Padding="0" 
-                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
-                        BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
-                    <Grid ColumnDefinitions="*,*" >
 
-                        <Label Grid.Column="0" 
+                <Frame Padding="0" 
+                       HeightRequest="50" 
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
+                       BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}} , Path=ApplicationThemeCommand}"/>
+                    </Frame.GestureRecognizers>
+                    <Grid ColumnDefinitions="30,*" 
+                          BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" >
+                        <Image Grid.Column="0"  
+                               WidthRequest="20" 
+                               HorizontalOptions="Start" 
+                               Margin="5"
+                               Source="{AppThemeBinding Light=image_themes_black.png, Dark=image_themes_white.png}"/>
+                        <Label Grid.Column="1" 
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Start"
+                                Text="{Binding Theme,StringFormat='Тема - {0}'}" 
+                                TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                                FontSize="Header"
+                                Padding="5"/>
+                    </Grid>
+                </Frame>
+
+
+                <Frame Padding="0" 
+                       HeightRequest="50" 
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
+                       BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+                    <Grid ColumnDefinitions="30,*,*" BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" >
+                        <Image Grid.Column="0"  
+                               WidthRequest="20" 
+                               HorizontalOptions="Start" 
+                               Margin="5"
+                               
+                               Source="{AppThemeBinding Light=image_animation_black.png, Dark=image_animation_white.png}"/>
+                        <Label Grid.Column="1" 
                                VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Start"
                                Text="Анимация" 
                                TextColor="{AppThemeBinding Light=Black, Dark=White}" 
                                BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"
                                FontSize="Header"
                                Padding="5"/>
-                        <Switch Grid.Column="1" 
+                        <Switch Grid.Column="2" 
                                 ThumbColor="{AppThemeBinding Light=Green, Dark=White}"
                                 OnColor="{AppThemeBinding Light=White, Dark=Gray}"
                                 BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" 
                                 IsToggled="{Binding IsAnimated}"/>
                     </Grid>
                 </Frame>
-             
+
+                <Frame Padding="0" 
+                       HeightRequest="50" 
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
+                       BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}} , Path=ApplicationLanguageCommand}"/>
+                    </Frame.GestureRecognizers>
+                    <Grid ColumnDefinitions="30,*" 
+                          BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" >
+                        <Image Grid.Column="0"  
+                               WidthRequest="20" 
+                               HorizontalOptions="Start" 
+                               Margin="5"
+                               Source="{AppThemeBinding Light=image_language_black.png, Dark=image_language_white.png}"/>
+                        <Label Grid.Column="1" 
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Start"
+                                Text="Язык" 
+                                TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                                FontSize="Header"
+                                Padding="5"/>
+                    </Grid>
+                </Frame>
+
+                <Label Text="Уведомлени" 
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                       FontSize="Header" 
+                       Padding="5,20,0,0"/>
+
             </StackLayout>
             
         </Frame>

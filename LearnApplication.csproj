@@ -72,15 +72,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\Image_add.png" />
+	  <None Remove="Resources\Images\image_add_black.png" />
+	  <None Remove="Resources\Images\image_add_white.png" />
+	  <None Remove="Resources\Images\image_animation_black.png" />
+	  <None Remove="Resources\Images\image_animation_white.png" />
 	  <None Remove="Resources\Images\image_clock.png" />
 	  <None Remove="Resources\Images\image_database.png" />
 	  <None Remove="Resources\Images\image_edit.png" />
 	  <None Remove="Resources\Images\image_error.png" />
 	  <None Remove="Resources\Images\image_folder.png" />
+	  <None Remove="Resources\Images\image_language_black.png" />
+	  <None Remove="Resources\Images\image_language_white.png" />
+	  <None Remove="Resources\Images\image_logo_black.png" />
+	  <None Remove="Resources\Images\image_logo_white.png" />
 	  <None Remove="Resources\Images\image_plus.png" />
-	  <None Remove="Resources\Images\Image_settings.png" />
+	  <None Remove="Resources\Images\image_settings_black.png" />
+	  <None Remove="Resources\Images\image_settings_white.png" />
 	  <None Remove="Resources\Images\Image_success.png" />
+	  <None Remove="Resources\Images\image_themes_black.png" />
+	  <None Remove="Resources\Images\image_themes_white.png" />
 	  <None Remove="Resources\Images\klipartz.com (2).png" />
 	  <None Remove="Resources\Images\klipartz.com.png" />
 	</ItemGroup>

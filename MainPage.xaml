@@ -8,37 +8,32 @@
              x:DataType="viewmodel:MainViewModel"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" >
-    <Grid>
+    <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
-        <Label Text="Learn" 
-               Grid.Row="0" 
-               HorizontalOptions="Center" 
-               VerticalOptions="Center" 
-               TextTransform="Default" 
-               FontSize="Title" 
-               TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+        <Image Grid.Row="0" BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"  Source="{AppThemeBinding Light=image_logo_black.png, Dark=image_logo_white.png}"/>
+       
 
-
-        <ImageButton Source="image_settings.png" 
+        <ImageButton Source="{AppThemeBinding Light=image_settings_black.png, Dark=image_settings_white.png}" 
                      Grid.Row="1"  
                      HorizontalOptions="End"  
-                     VerticalOptions="Center" 
+                     VerticalOptions="Start" 
+                     Margin="0,13,-40,0"
+                     
                      BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
                      Command="{Binding SettingsCommand}"/>
 
+        
+        <ImageButton   VerticalOptions="Start" Padding="0,0,0,0"
+         Source="{AppThemeBinding Light=image_add_black.png, Dark=image_add_white.png}" Grid.Row="4"   Command="{Binding AddCommand}" HorizontalOptions="Center"/>
 
-
-
-
-        <ImageButton Source="image_add.png" Grid.Row="2"  Command="{Binding AddCommand}" HorizontalOptions="Fill" />
-
-        <CollectionView   Grid.Row="3" ItemsSource="{Binding CategoryUnderStudys}" SelectionMode="None" >
+        <CollectionView  AbsoluteLayout.LayoutFlags="All"  Grid.Row="3" BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" ItemsSource="{Binding CategoryUnderStudys}" SelectionMode="None" >
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:Category}">
@@ -50,23 +45,23 @@
                    CommandParameter="{Binding .}"/>
                             </SwipeItems>
                         </SwipeView.RightItems>
-                        <Frame >
+                        <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" >
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer
            Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}} , Path=TapCommand}"
            CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
-                            
+
                             <StackLayout>
-                                <Grid>
+                                <Grid >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="60"/>
                                     </Grid.ColumnDefinitions>
-
+                                    
                                     <Label Grid.Column="1" TextColor="Green" FontSize="Subtitle"  Text="{Binding MemorizationPercentage, StringFormat='{0}%',Mode=TwoWay}" />
                                     <!--<Label Text="{Binding TestCountDontKnown , Mode=TwoWay}" TextColor="Black" />-->
-                                    <Label Grid.Column="0" Text="{Binding  Subject , Mode=TwoWay}" TextColor="Black"/>
+                                    <Label Grid.Column="0" Text="{Binding  Subject , Mode=TwoWay}" TextColor="{AppThemeBinding Light=Black, Dark=White }"/>
                                 </Grid>
                             </StackLayout>
                         </Frame>
