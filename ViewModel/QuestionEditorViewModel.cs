@@ -4,16 +4,8 @@ using LearnApplication.Model;
 using LearnApplication.Model.Web;
 using LearnApplication.Navigation;
 using LearnApplication.Service.Interface;
-using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
-using Microsoft.Maui.Animations;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace LearnApplication.ViewModel
 {
@@ -50,7 +42,7 @@ namespace LearnApplication.ViewModel
                 _learnQuestion = learnQuestion;
                Question = _learnQuestion.Question;
                 Answer = _learnQuestion.Answer;
-                Hyperlink = _learnQuestion.Hyperlink;
+                Hyperlink = _learnQuestion.Hyperlink.Url;
             }
             return base.OnNavigatingTo(parameter);
         }
@@ -72,6 +64,7 @@ namespace LearnApplication.ViewModel
 
         public override Task OnUpdateDbService()
         {
+            _localDbService.Update(_learnQuestion.Hyperlink);
             _localDbService.Update(_learnQuestion);
             return base.OnUpdateDbService();
         }

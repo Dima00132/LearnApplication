@@ -23,8 +23,15 @@ namespace LearnApplication.Model
         [ObservableProperty]
         private string _answer;
 
-        [ObservableProperty]
-        private string _hyperlink;
+        private UrlWebValid _hyperlink;
+
+        [Column("Hyper_link")]
+        [OneToOne(CascadeOperations = CascadeOperation.All)]
+        public UrlWebValid Hyperlink
+        {
+            get => _hyperlink;
+            set => SetProperty(ref _hyperlink, value);
+        }
 
         [ObservableProperty]
         private bool _isKnown;
@@ -51,9 +58,10 @@ namespace LearnApplication.Model
         {
             Question = question;
             Answer = answer;
-            Hyperlink = hyperlink;
+            Hyperlink = new UrlWebValid(hyperlink.Replace(" ", string.Empty));
             DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
         }
+
 
         public double GetLearningProgress()
         {
@@ -110,17 +118,9 @@ namespace LearnApplication.Model
         { 
             Question = question;
             Answer = answer;
-            Hyperlink = hyperlink;
+            Hyperlink.Change(hyperlink.Replace(" ", string.Empty));    
         }
 
-        public UrlWebValid GetUrlWebView()
-        {
-            var url = new UrlWebViewSource()
-            {
-                Url = Hyperlink 
-            };
-            return new UrlWebValid(url);
-        }
         private void Timer_Tick(object? sender, EventArgs e)
         {
             MainThread.BeginInvokeOnMainThread(() =>

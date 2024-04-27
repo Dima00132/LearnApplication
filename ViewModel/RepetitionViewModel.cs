@@ -9,6 +9,7 @@ using LearnApplication.ViewModel.Base;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Controls.Internals;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,7 +24,13 @@ namespace LearnApplication.ViewModel
     public sealed partial class RepetitionViewModel : ViewModelBase
     {   
         [ObservableProperty]
-        private ReviewQuestion _reviewQuestion; 
+        private ReviewQuestion _reviewQuestion;
+
+        [ObservableProperty]
+        private bool _isVisibleLink;
+        //[ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(ChecksLinkCommand))]
+        //private string _isWorkingLinkImage;
 
         private INavigationService _navigationService;
         private Category _learnCategory;
@@ -37,6 +44,7 @@ namespace LearnApplication.ViewModel
 
         public RelayCommand<СardQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<QuestionEditorPage>(learnQuestion));
 
+        
 
         public RelayCommand<СardQuestion> DontKnowCommand => new((learnQuestion) =>
         {
@@ -60,23 +68,76 @@ namespace LearnApplication.ViewModel
             {
                ReviewQuestion.DeleteQuestion(question);
                
-               _localDbService.Update(question);
+               //_localDbService.Update(question);
             }
         });
 
-        public RelayCommand<СardQuestion> LinkToAdditionalMaterialCommand => new((question) => 
-        {
 
-            var urlWeb = question?.GetUrlWebView();
-            if (!urlWeb.IsUrlValid)
-            {
+
+
+
+
+
+
+        [RelayCommand()]
+        public void ChecksLink(СardQuestion question)
+        {
+            if (question.Hyperlink.IsNullOrEmpty)
+            { 
+                IsVisibleLink = false;
+                return;
+            }
+            IsVisibleLink = true;
+        }
+
+
+
+        [RelayCommand]
+        public void LinkToAdditionalMaterial(СardQuestion question)
+        {
+            if (!question.Hyperlink.IsUrlValid) 
+            { 
                 Application.Current?.MainPage?.DisplayAlert("Connection error!", "Неверно указала ссылка на материал! Проверьте правильность ссылки.", "Ok");
                 return;
             }
-            _navigationService.NavigateByPage<WebPage>(urlWeb.GetUrl());
-        },(question) => !CheckNet.IsNullOrEmpty(question.Hyperlink));
+            _navigationService.NavigateByPage<WebPage>(question.Hyperlink.GetUrlWebViewSource());
+        }
 
+        //public bool IsCurentLink(СardQuestion question)
+        //{
 
+        //    if (string.IsNullOrEmpty(question?.Hyperlink.Url))
+        //    {
+        //        IsVisibleLink = false;
+        //    }
+        //    return true;
+        //}
+
+        //public RelayCommand<СardQuestion> LinkToAdditionalMaterialCommand => new((question) => 
+        //{
+
+        //    var urlWeb = question?.GetUrlWebView();
+        //    //if (!urlWeb.IsUrlValid)
+        //    //{
+        //    //    Application.Current?.MainPage?.DisplayAlert("Connection error!", "Неверно указала ссылка на материал! Проверьте правильность ссылки.", "Ok");
+        //    //    return;
+        //    //}
+        //    _navigationService.NavigateByPage<WebPage>(urlWeb.GetUrlWebViewSource());
+        //},
+        //    (question) => 
+        //{
+        //    var urlWeb = question?.GetUrlWebView();
+
+        //    if (!urlWeb.IsUrlValid)
+        //        IsWorkingLinkImage = "image_not_working_link.png";
+        //    IsWorkingLinkImage = "image_working_link.png";
+
+        //     var f = !CheckNet.IsNullOrEmpty(question.Hyperlink);
+
+        //    return urlWeb.IsUrlValid;
+        //});
+
+        
         public override Task OnNavigatingTo(object? parameterFirst, object? parameterSecond)
         {
             if(parameterFirst is Category learnCategory)

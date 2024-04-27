@@ -1,6 +1,6 @@
-﻿
+﻿using LearnApplication.Model;
 
-using LearnApplication.Model;
+using LearnApplication.Model.Web;
 using LearnApplication.Service.Interface;
 using SQLite;
 
@@ -16,7 +16,7 @@ namespace LearnApplication.Service
 
     public sealed class LocalDbService: ILocalDbService
     {
-        private const string DB_NAME = "data_learn_save_18.db3";
+        private const string DB_NAME = "data_learn_save_20.db3";
         private SQLiteConnection _connection;
         private const SQLiteOpenFlags Flags =
             SQLiteOpenFlags.ReadWrite |
@@ -29,9 +29,20 @@ namespace LearnApplication.Service
             if (_connection is not null)
                 return;
             _connection = new SQLiteConnection(Path.Combine(FileSystem.AppDataDirectory, DB_NAME), Flags);
-            _ = _connection.CreateTable<Learn>();
-            _ = _connection.CreateTable<Category>();
-            _ = _connection.CreateTable<СardQuestion>();
+
+            try
+            {
+                _ = _connection.CreateTable<Learn>();
+                _ = _connection.CreateTable<Category>();
+                _ = _connection.CreateTable<UrlWebValid>();
+                _ = _connection.CreateTable<СardQuestion>();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+            
         }
 
         public Learn GetLearn()

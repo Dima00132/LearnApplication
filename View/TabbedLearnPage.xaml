@@ -10,6 +10,9 @@
             x:DataType="viewModel:TabbedLearnViewModel"
             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
 
-    <view:SubjectPage   BindingContext="{Binding SubjectViewModel}"  Title="Subject"/>
-    <view:QuestionsPage  BindingContext="{Binding QuestionsViewModel}" Title="Questions"/>
+    <view:SubjectPage IconImageSource="{AppThemeBinding Light=image_statistic_black.png, Dark=image_statistic_white.png }"   
+                      BindingContext="{Binding SubjectViewModel}"  
+                      Title="Статистика"/>
+    <view:QuestionsPage IconImageSource="{AppThemeBinding Light=image_list_black.png, Dark=image_list_white.png }" 
+                        BindingContext="{Binding QuestionsViewModel}" Title="Вопросы"/>
 </TabbedPage>

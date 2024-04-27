@@ -8,8 +8,13 @@
             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
             android:TabbedPage.ToolbarPlacement="Bottom"
             x:DataType="viewModel:TabbedRepetitionViewModel"
-            BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+            BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }"
+            android:TabbedPage.IsSwipePagingEnabled="False">
 
-    <view:RepetitionPage   BindingContext="{Binding RepetitionOfEverythingViewModel}"  Title="Repetition of everything"/>
-    <view:RepetitionPage  BindingContext="{Binding RepetitionOfUnknownsViewModel}" Title="Repetition of unknowns"/>
+    <view:RepetitionPage IconImageSource="{AppThemeBinding Light=White, Dark=#1f1f1f }"  
+                         BindingContext="{Binding RepetitionOfEverythingViewModel}"  
+                         Title="Repetition of everything"/>
+    <view:RepetitionPage IconImageSource="{AppThemeBinding Light=White, Dark=#1f1f1f }"  
+                         BindingContext="{Binding RepetitionOfUnknownsViewModel}" 
+                         Title="Repetition of unknowns"/>
 </TabbedPage>

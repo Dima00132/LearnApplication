@@ -62,7 +62,6 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -73,39 +72,47 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\image_add_black.png" />
+	  <None Remove="Resources\Images\image_add_question_black.png" />
+	  <None Remove="Resources\Images\image_add_question_white.png" />
 	  <None Remove="Resources\Images\image_add_white.png" />
+	  <None Remove="Resources\Images\image_all_repeat_black.png" />
+	  <None Remove="Resources\Images\image_all_repeat_white.png" />
 	  <None Remove="Resources\Images\image_animation_black.png" />
 	  <None Remove="Resources\Images\image_animation_white.png" />
-	  <None Remove="Resources\Images\image_clock.png" />
-	  <None Remove="Resources\Images\image_database.png" />
-	  <None Remove="Resources\Images\image_edit.png" />
-	  <None Remove="Resources\Images\image_error.png" />
-	  <None Remove="Resources\Images\image_folder.png" />
+	  <None Remove="Resources\Images\image_ellipsis_black.png" />
+	  <None Remove="Resources\Images\image_ellipsis_white.png" />
 	  <None Remove="Resources\Images\image_language_black.png" />
 	  <None Remove="Resources\Images\image_language_white.png" />
+	  <None Remove="Resources\Images\image_list_black.png" />
+	  <None Remove="Resources\Images\image_list_white.png" />
 	  <None Remove="Resources\Images\image_logo_black.png" />
 	  <None Remove="Resources\Images\image_logo_white.png" />
-	  <None Remove="Resources\Images\image_plus.png" />
+	  <None Remove="Resources\Images\image_repeat_orange.png" />
+	  <None Remove="Resources\Images\image_scroll_black.png" />
+	  <None Remove="Resources\Images\image_scroll_white.png" />
 	  <None Remove="Resources\Images\image_settings_black.png" />
 	  <None Remove="Resources\Images\image_settings_white.png" />
-	  <None Remove="Resources\Images\Image_success.png" />
+	  <None Remove="Resources\Images\image_statistic_black.png" />
+	  <None Remove="Resources\Images\image_statistic_white.png" />
 	  <None Remove="Resources\Images\image_themes_black.png" />
 	  <None Remove="Resources\Images\image_themes_white.png" />
+	  <None Remove="Resources\Images\image_working_link.png" />
 	  <None Remove="Resources\Images\klipartz.com (2).png" />
 	  <None Remove="Resources\Images\klipartz.com.png" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.7" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.7" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.21" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.21" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
 		<PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.8" />
-		<PackageReference Include="Syncfusion.Maui.NavigationDrawer" Version="24.2.9" />
+		<PackageReference Include="Syncfusion.Maui.NavigationDrawer" Version="25.1.41" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -55,7 +55,7 @@
                 <DataTemplate>
 
                     <SwipeView Threshold="150">
-                        <SwipeView.RightItems>
+                        <!--<SwipeView.RightItems>
                             <SwipeItems Mode="Execute" >
                                 <SwipeItem Text="Знаю"  
                                        BackgroundColor="#1f1f1f"
@@ -72,7 +72,7 @@
                                        Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=DontKnowCommand}"
                                        CommandParameter="{Binding .}"/>
                             </SwipeItems>
-                        </SwipeView.LeftItems>
+                        </SwipeView.LeftItems>-->
 
 
                         <!--<VerticalStackLayout Background="Red" >
@@ -82,7 +82,7 @@
                     </VerticalStackLayout>-->
 
 
-                        <Border BackgroundColor="#1f1f1f" x:DataType="model:СardQuestion">
+                        <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" x:DataType="model:СardQuestion">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="20" />
                             </Border.StrokeShape>
@@ -94,18 +94,11 @@
                                     <RowDefinition Height="50"/>
                                 </Grid.RowDefinitions>
 
-                                <Border Grid.Row="0">
+                                <!--<Border Grid.Row="0">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="20" />
-                                    </Border.StrokeShape>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-
-
+                                    </Border.StrokeShape>-->
+                                    <Grid Grid.Row="0" ColumnDefinitions ="*,*">
                                         <!--<BoxView Grid.Column="0" CornerRadius="20"
                                              WidthRequest="20"
                                              HeightRequest="20"
@@ -114,36 +107,40 @@
                                              Margin="20,0,0,0"
                                              BackgroundColor="Red" />-->
 
-                                        <!--<Label Grid.Column="0" 
+                                        <Label Grid.Column="0" 
                                                Margin="20,0,0,0" 
-                                               TextColor="Green"
-                                               HorizontalOptions="Center"
-                                               Text="{Binding ReviewQuestion.NumberOfRepetitions, StringFormat='Повтор - {0}', Mode=TwoWay}"/>-->
+                                               TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="Center"
+                                               Text="{Binding NumberOfRepetitions, StringFormat='Повтор - {0}', Mode=TwoWay}"/>
 
                                         <ImageButton Grid.Column="2"
-                                              Margin="50,0,0,0" 
-                                              Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=SettingsCommand}" 
-                                              CommandParameter="{Binding .}"
-                                              Source="ellipsis.png" />
+                                                     Padding="6"
+                                                     Margin="0,0,-20,0"
+                                                     Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=SettingsCommand}" 
+                                                     CommandParameter="{Binding .}"
+                                                     HorizontalOptions="End"
+                                                     Source="{AppThemeBinding Light=image_ellipsis_black.png, Dark=image_ellipsis_white.png}" />
                                     </Grid>
-                                </Border>
+                                <!--</Border>-->
 
 
-                                <Border Grid.Row="1" 
-                                   Margin="5">
-                                    <Border.StrokeShape>
+                                <Border Grid.Row="1"
+                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+                                    <!--<Border.StrokeShape>
                                         <RoundRectangle CornerRadius="20" />
-                                    </Border.StrokeShape>
+                                    </Border.StrokeShape>-->
                                     <ScrollView>
                                         <Label  Style="{StaticResource LabelStyle}"
-                                            Text="{Binding Question ,Mode =TwoWay}"/>
+                                            Text="{Binding Question ,Mode =TwoWay}"
+                                                TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
                                     </ScrollView>
                                 </Border>
 
-                                <Border x:Name="borderAnswerAndHyperlink" Grid.Row="2">
-                                    <Border.StrokeShape>
+                                <Border x:Name="borderAnswerAndHyperlink" Grid.Row="2" BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+                                    <!--<Border.StrokeShape>
                                         <RoundRectangle CornerRadius="20" />
-                                    </Border.StrokeShape>
+                                    </Border.StrokeShape>-->
 
 
 
@@ -156,18 +153,51 @@
                                     </DataTrigger>
                                 </Border.Triggers>-->
 
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="50"/>
-                                        </Grid.RowDefinitions>
-
+                                    <Grid RowDefinitions ="*,70" BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
                                         <ScrollView Grid.Row="0">
                                             <Label Style="{StaticResource LabelStyle}"
-                                               Text="{Binding Answer ,Mode =TwoWay}"/>
+                                               Text="{Binding Answer ,Mode =TwoWay}"
+                                                   TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
                                         </ScrollView>
 
-                                        <Border Grid.Row="1"
+
+
+                                        <StackLayout Grid.Row="1" 
+                                                     Padding="0"
+                                                     IsVisible="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}} , Path= IsVisibleLink}">
+                                            <Label TextColor="{AppThemeBinding Light=Black, Dark=White}"  
+                                                   Padding="5" 
+                                                   Text="Дополниетльный материал" />
+                                            <Frame Padding="0">
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}} , Path=LinkToAdditionalMaterialCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Frame.GestureRecognizers>
+                                                <Grid ColumnDefinitions="*,50">
+
+                                                    <Label Grid.Column="0" 
+                                                           TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                                                           Padding="5" 
+                                                           HorizontalTextAlignment="Center" 
+                                                           VerticalTextAlignment="Center"
+                                                           FontSize="Medium" 
+                                                           TextDecorations="Underline" 
+                                                           Text="{Binding Hyperlink.Url}" 
+                                                           LineBreakMode="MiddleTruncation"/>
+
+                                                    
+                                                    <!--<ImageButton Grid.Column="1"
+                                                                 Padding="8"
+                                                                     Source="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}} , Path= IsWorkingLinkImage}"
+                                                                     Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}} , Path=NotifiesAboutLinkStatusCommand}"
+                                                                     CommandParameter="{Binding .}"/>-->
+                                                </Grid>
+                                            </Frame>
+                                        </StackLayout>
+                               
+
+                                        <!--<Border Grid.Row="1"
                                             BackgroundColor="#1f1f1f">
                                             <Border.StrokeShape>
                                                 <RoundRectangle CornerRadius="20" />
@@ -177,19 +207,19 @@
                                                     Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path= LinkToAdditionalMaterialCommand}"
                                                     CommandParameter="{Binding .}"/>
                                           
-                                            <!--<Label  Style="{StaticResource LabelStyle}"
-                                                Text="{Binding Hyperlink ,Mode =TwoWay}"/>-->
-                                        </Border>
+                                            --><!--<Label  Style="{StaticResource LabelStyle}"
+                                                Text="{Binding Hyperlink ,Mode =TwoWay}"/>--><!--
+                                        </Border>-->
 
 
                                     </Grid>
                                 </Border>
 
 
-                                <Border x:Name="borderIsHidden"  BackgroundColor="#1f1f1f"  Grid.Row="2">
-                                    <Border.StrokeShape>
+                                <Border x:Name="borderIsHidden"  BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }"  Grid.Row="2">
+                                    <!--<Border.StrokeShape>
                                         <RoundRectangle CornerRadius="20" />
-                                    </Border.StrokeShape>
+                                    </Border.StrokeShape>-->
 
                                     <Border.Triggers>
                                         <DataTrigger TargetType="Border"
@@ -203,23 +233,50 @@
 
 
                                     <ImageButton x:Name="imageButton"
-                                             BorderColor="Gray" 
+                                             BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
                                              HorizontalOptions="Center" 
                                              Margin="100,115,100,115" 
                                              VerticalOptions="Center"  
-                                             BorderWidth="1"  
+                                              
                                              CornerRadius="30" 
-                                             Source="question.png"/>
+                                             Source="question.png"
+                                             Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}} , Path=ChecksLinkCommand}"
+                                             CommandParameter="{Binding .}"    />
 
                                 </Border>
 
                                 <Grid Grid.Row="3">
-                                    <Grid.ColumnDefinitions>
+                                    <!--<Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                                    </Grid.ColumnDefinitions>-->
 
-                                    <Button TextColor="Green" 
+
+                                    <SwipeView Threshold="150">
+                                        <SwipeView.RightItems>
+                                            <SwipeItems Mode="Execute" >
+
+                                            <SwipeItem Text="Не знаю"
+                                                       BackgroundColor="#e61919"
+                                                       Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=DontKnowCommand}"
+                                                       CommandParameter="{Binding .}"/>
+                                            </SwipeItems>
+                                        </SwipeView.RightItems>
+
+                                        <SwipeView.LeftItems>
+                                            <SwipeItems Mode="Execute">
+                                                <SwipeItem Text="Знаю"  
+                                                           BackgroundColor="#32CD32"
+                                                           Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=KnowCommand}"
+                                                           CommandParameter="{Binding .}"/>
+                                            </SwipeItems>
+                                        </SwipeView.LeftItems>
+
+                                        <Frame BackgroundColor="Gray" CornerRadius="0" >
+                                            <Image Source="{AppThemeBinding Light=image_scroll_black.png, Dark=image_scroll_white.png }" Margin="-15"/>
+                                        </Frame>
+
+                                        <!--<Button TextColor="Green" 
                                         Grid.Column="0"  
                                         Text="Помню" 
                                         Style="{StaticResource ButtonStyle}"
@@ -231,7 +288,8 @@
                                         Text="Не помню" 
                                         Style="{StaticResource ButtonStyle}"
                                         Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}}, Path=DontKnowCommand}"
-                                        CommandParameter="{Binding .}"/>
+                                        CommandParameter="{Binding .}"/>-->
+                                    </SwipeView>
                                 </Grid>
 
                             </Grid>

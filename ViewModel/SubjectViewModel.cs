@@ -64,6 +64,8 @@ namespace LearnApplication.ViewModel
         public bool CheckRepetitionsCount() => Category?.RepetitionsCount != 0;
 
 
+        public RelayCommand AddQuestionCommand 
+            => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(Category));
 
 
         public SubjectViewModel(INavigationService navigationService, ILocalDbService localDbService)

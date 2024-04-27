@@ -1,21 +1,51 @@
-﻿namespace LearnApplication.Model.Web
-{
-    public sealed class UrlWebValid
-    {
-        private readonly UrlWebViewSource _urlWebViewSource;
-        public readonly bool IsUrlValid;
+﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-        public UrlWebValid(UrlWebViewSource urlWebViewSource)
+namespace LearnApplication.Model.Web
+{
+    [Table("url_web_valid")]
+    public sealed partial class UrlWebValid: ObservableObject
+    {
+        [PrimaryKey, AutoIncrement]
+        [Column("Id")]
+        public int Id { get; set; }
+
+        [Column("СardQuestion_id")]
+        [ForeignKey(typeof(СardQuestion))]
+        public int СardQuestionId { get; set; }
+
+
+        [ObservableProperty]
+        private string _url;
+ 
+        [ObservableProperty]
+        private bool _isUrlValid;
+
+        public bool IsNullOrEmpty => string.IsNullOrEmpty(Url);
+       
+
+        public UrlWebValid(string url)
         {
-            IsUrlValid = CheckNet.CheckAll(urlWebViewSource.Url);
-            _urlWebViewSource = urlWebViewSource;
+            IsUrlValid = CheckNet.CheckAll(url);
+            Url = url;
         }
 
-        public UrlWebViewSource GetUrl()
+        public UrlWebValid()
         {
-            if (!IsUrlValid)
-                _urlWebViewSource.Url = "https://www.exai.com/blog/400-bad-request-error";
-            return _urlWebViewSource;
+        }
+
+        public void Change(string url)
+        {
+            IsUrlValid = CheckNet.CheckAll(url);
+            Url = url;
+        }
+
+        public UrlWebViewSource GetUrlWebViewSource(bool isLinkToErrorIfLinkIsEmpty = false)
+        {
+            if (!IsUrlValid & isLinkToErrorIfLinkIsEmpty)
+                Url = "https://www.exai.com/blog/400-bad-request-error";
+            return new UrlWebViewSource() { Url = Url};
         }
     }
 }
