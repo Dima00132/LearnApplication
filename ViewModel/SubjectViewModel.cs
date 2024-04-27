@@ -52,7 +52,7 @@ namespace LearnApplication.ViewModel
 
         [RelayCommand(CanExecute = nameof(CheckCountQuestion))]
         public void RepeatAllQuestions()
-            => _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, true);
+            => _navigationService.NavigateByPage<RepetitionPage>(Category, true);
         public bool CheckCountQuestion() => Category?.CountQuestion != 0;
 
 
@@ -60,7 +60,7 @@ namespace LearnApplication.ViewModel
 
         [RelayCommand(CanExecute = nameof(CheckRepetitionsCount))]
         public void RepeatDontKnownQuestions()
-            => _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, false);
+            => _navigationService.NavigateByPage<RepetitionPage>(Category, false);
         public bool CheckRepetitionsCount() => Category?.RepetitionsCount != 0;
 
 

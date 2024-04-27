@@ -7,7 +7,22 @@
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
              BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }"
              >
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="labelStyle" TargetType="Label">
+                
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="frameStyle" TargetType="Frame">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White, Dark=#1f1f1f }"/>
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light=White, Dark=#1f1f1f }"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <!--<Grid x:DataType="viewModel:SubjectViewModel" BackgroundColor="#1f1f1f">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -26,12 +41,9 @@
                 <Label Text="Повторение" 
                        TextColor="{AppThemeBinding Light=Black, Dark=White}"
                        FontSize="Header"
-                       Padding="5"/>
-                
-                <Frame Padding="0" 
-                       HeightRequest="50" 
-                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
-                       BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+                       Padding="0,50,0,0"/>
+
+                <Frame Style="{StaticResource frameStyle}">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer
                             Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:SubjectViewModel}} , Path=AddQuestionCommand}"/>
@@ -42,18 +54,14 @@
                                HorizontalOptions="Start"
                                Margin="5" 
                                Grid.Column="0"/>
-                        <Label Text="Добавить вопрос" 
-                               Padding="8"  
+                        <Label Text="Добавить вопрос"  
+                               Style="{StaticResource labelStyle}" 
                                TextColor="{AppThemeBinding Light=Black, Dark=White}" 
-                               Grid.Column="1" 
-                               HorizontalTextAlignment="Start" 
-                               VerticalTextAlignment="Center"/>
+                               Padding="7"
+                               Grid.Column="1"/>
                     </Grid>
                 </Frame>
-                <Frame Padding="0" 
-                       HeightRequest="50" 
-                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
-                       BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+                <Frame Style="{StaticResource frameStyle}">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer
                             Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:SubjectViewModel}} , Path=RepeatDontKnownQuestionsCommand}"/>
@@ -70,18 +78,13 @@
                                    HorizontalTextAlignment="Start"
                                    VerticalTextAlignment="Center"/>
                             <Label Text="{Binding RepetitionsCount, StringFormat='На поатор {0}'}"
-                                   
                                    TextColor="#ffa500"
-                                   HorizontalTextAlignment="Start" 
-                                   VerticalTextAlignment="Center"/>
+                                   Style="{StaticResource labelStyle}"/>
                         </StackLayout>
                         
                     </Grid>
                 </Frame>
-                <Frame Padding="0"
-                       HeightRequest="50" 
-                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
-                       BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+                <Frame Style="{StaticResource frameStyle}">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer
              Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:SubjectViewModel}} , Path=RepeatAllQuestionsCommand}"/>
@@ -99,10 +102,52 @@
                                    VerticalTextAlignment="Center"/>
                             <Label Text="{Binding  LearnCount, StringFormat='Количество вопрсов {0}'}"
                                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
-                                   HorizontalTextAlignment="Start"
-                                   VerticalTextAlignment="Center"/>
+                                   Style="{StaticResource labelStyle}"/>
                         </StackLayout>
 
+                    </Grid>
+                </Frame>
+
+                <Label Text="Статистика" 
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                       FontSize="Header"
+                       Padding="0,50,0,0"/>
+
+                <Frame Style="{StaticResource frameStyle}">
+
+                    <Grid  BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}">
+                        <Label Text="{Binding LearnCount, StringFormat='Количество вопросов  -  {0}'}" 
+                               Padding="8"  
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                               Grid.Column="1" 
+                               Style="{StaticResource labelStyle}"/>
+                    </Grid>
+                </Frame>
+                <Frame Padding="0" 
+                       HeightRequest="50" 
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
+                       BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+
+                    <Grid  BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}">
+                        <Label Text="{Binding KnownCount, StringFormat='Изучено вопросов  -  {0}'}" 
+                               Padding="8"  
+                               TextColor="Green" 
+                               Grid.Column="1" 
+                               Style="{StaticResource labelStyle}"/>
+                    </Grid>
+                </Frame>
+                <Frame Padding="0" 
+                       HeightRequest="50" 
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
+                       BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+
+                    <Grid  BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}">
+                        <Label Text="{Binding RepetitionsCount, StringFormat='На повтор  -  {0}'}"  
+                               TextColor="Orange"
+                               Padding="8"
+                               Grid.Column="1"
+                               HorizontalTextAlignment="Start"
+                               VerticalTextAlignment="Center"/>
                     </Grid>
                 </Frame>
 
@@ -112,7 +157,7 @@
 
 
 
-        <StackLayout Padding="20" Grid.Row="2" BackgroundColor="#1f1f1f" >
+        <!--<StackLayout Padding="20" Grid.Row="2" BackgroundColor="#1f1f1f" >
             <Label Text="Выучено" />
             <Frame>
                 <Label TextColor="Gray" Text="{Binding LearnCount, StringFormat='Количество вопросов  -  {0}'}" />
@@ -143,7 +188,7 @@
                     Grid.Column="1"  
                     BackgroundColor="Gray"/>
 
-        </Grid>
+        </Grid>-->
     </VerticalStackLayout>
     <!--</Grid>-->
     
