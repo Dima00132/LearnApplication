@@ -5,11 +5,13 @@ using LearnApplication.Navigation;
 using LearnApplication.Service.Interface;
 using LearnApplication.View;
 using LearnApplication.ViewModel.Base;
+using Microsoft.Maui;
 using Microsoft.Maui.Animations;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Reflection.Metadata;
@@ -17,6 +19,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+
 
 namespace LearnApplication.ViewModel
 {
@@ -29,12 +32,35 @@ namespace LearnApplication.ViewModel
         [ObservableProperty]
         private ObservableCollection<СardQuestion> _learnQuestions = [];
 
+        
+
         public QuestionsViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
 
         }
+
+        private async Task OnSearchTextChangedAsync(object keyword)
+        {
+            var query = keyword as string;
+            if (string.IsNullOrEmpty(query))
+            {
+                LearnQuestions = _category.LearnQuestions;
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(query) && query.Length >= 1)
+            {
+                var data = await Task.FromResult( _category.FindsQuestionByRequest(query));
+                if (data is not null)
+                {
+                    LearnQuestions = new ObservableCollection<СardQuestion>(data);
+                }
+            }
+        }
+
+        public RelayCommand<string?> PerformSearchCommand => new(async(string? query) =>await OnSearchTextChangedAsync(query));
 
         public RelayCommand AddCommand 
             => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(_category));
@@ -47,6 +73,8 @@ namespace LearnApplication.ViewModel
             {
                 _category.RemoveQuestion(question);
                 _localDbService.Delete(question);
+
+                _localDbService.Update(_category);
             }
         });
 
@@ -60,10 +88,10 @@ namespace LearnApplication.ViewModel
             return base.OnNavigatingTo(parameter);
         }
 
-        public override Task OnUpdateDbService()
-        {
-            _localDbService.Update(_category);
-            return base.OnUpdateDbService();
-        }
+        //public override Task OnUpdateDbService()
+        //{
+        //    _localDbService.Update(_category);
+        //    return base.OnUpdateDbService();
+        //}
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model.Enum;
 using LearnApplication.Model.Web;
 using SQLite;
@@ -7,9 +8,9 @@ using SQLiteNetExtensions.Attributes;
 namespace LearnApplication.Model
 {
     [Table("learn_question")]
-    public partial class СardQuestion:ObservableObject
+    public partial class СardQuestion : ObservableObject
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         [Column("Id")]
         public int Id { get; set; }
 
@@ -37,27 +38,28 @@ namespace LearnApplication.Model
         private bool _isKnown;
 
         [ObservableProperty]
-        private bool _isRepetitions  = true;
+        private bool _isRepetitions = true;
 
         [ObservableProperty]
         public int _numberOfRepetitions;
 
         public readonly IDispatcherTimer DispatcherTimer;
-        public DateTime DateTime { get;set; }
 
-        private readonly NumberRepetition[] _repetitionTimes = 
+        public DateTime DateTime { get; set; }
+
+        private readonly NumberRepetition[] _repetitionTimes =
         [
-            NumberRepetition.Test,NumberRepetition.First,NumberRepetition.Second,NumberRepetition.Third
+            NumberRepetition.First,NumberRepetition.Second,NumberRepetition.Third,NumberRepetition.Fourth
         ];
 
-        public СardQuestion():this(string.Empty, string.Empty)
+        public СardQuestion() : this(string.Empty, string.Empty)
         {
         }
 
         public СardQuestion(string question, string answer = "", string hyperlink = "")
         {
-            Question = question;
-            Answer = answer;
+            Question = question.Trim();
+            Answer = answer.Trim();
             Hyperlink = new UrlWebValid(hyperlink.Replace(" ", string.Empty));
             DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
         }
@@ -70,7 +72,7 @@ namespace LearnApplication.Model
 
         public void RestartsTimer()
         {
-            if (IsRepetitions)
+            if (IsRepetitions || IsKnown)
                 return;
             var resald = DateTime.Now - DateTime;
             var timeHours = Convert.ToDouble(_repetitionTimes[NumberOfRepetitions]);
@@ -116,8 +118,8 @@ namespace LearnApplication.Model
 
         public void Change(string question,string answer = "", string hyperlink = "")
         { 
-            Question = question;
-            Answer = answer;
+            Question = question.Trim();
+            Answer = answer.Trim();
             Hyperlink.Change(hyperlink.Replace(" ", string.Empty));    
         }
 

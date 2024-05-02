@@ -3,53 +3,111 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model ="clr-namespace:LearnApplication.Model"
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
+             xmlns:sh="clr-namespace:LearnApplication.View"
              x:Class="LearnApplication.View.QuestionsPage"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
-    <!--<ContentPage.BindingContext>
-        <viewmodel:QuestionsViewModel />
-    </ContentPage.BindingContext>-->
+             BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
-
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Button Text="Добавить" 
-                Grid.Row="0"  
-                Command="{Binding AddCommand}"
-                HorizontalOptions="Fill" />
-        <StackLayout Grid.Row="1" 
-                        BindableLayout.ItemsSource="{Binding LearnQuestions}" 
-                        BackgroundColor="Black" >
-            <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:СardQuestion}" >
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems>
-                                <SwipeItem  Text="Удалить" 
+    <Grid RowDefinitions ="50,*">
+        <Frame  Grid.Row="0"
+                Margin="5"
+                Padding="0"
+                BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}">
+            <SearchBar x:Name="CompanySearch"
+                Placeholder="Поиск вопросов..."
+                PlaceholderColor="{AppThemeBinding Light=Black, Dark=White}"
+                CancelButtonColor="{AppThemeBinding Light=Black, Dark=White}"
+                BackgroundColor="{AppThemeBinding Light=#c4c4c4, Dark=#252525}"
+                TextColor="{AppThemeBinding Light=Black, Dark=White}">
+                <SearchBar.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="TextChanged"
+                        Command="{Binding PerformSearchCommand}"  
+                        CommandParameter="{Binding Text, Source={x:Reference CompanySearch}}"/>
+                </SearchBar.Behaviors>
+            </SearchBar>
+         </Frame>
+            
+        <Grid RowDefinitions="*,0" Grid.Row="2">
+            <ScrollView x:Name="scrollView" 
+                        Scrolled="scrollView_Scrolled"  
+                        Grid.Row="0" >
+                <StackLayout
+                     BindableLayout.ItemsSource="{Binding LearnQuestions}" 
+                     BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" >
+                    <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:СardQuestion}" >
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem  Text="Удалить" 
                                             BackgroundColor="Red" 
                                             Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:QuestionsViewModel}}, Path=DeleteCommand}"
                                             CommandParameter="{Binding .}"/>
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-                        <Frame Margin="5" Padding="5" >
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                    Command="{Binding Path=TapCommand, Source={RelativeSource AncestorType={x:Type viewmodel:QuestionsViewModel}}}"
-                                    CommandParameter="{Binding .}"/>
-                            </Frame.GestureRecognizers>
-                            <StackLayout  Orientation="Vertical" >
-                                <Label Text="{Binding Question ,Mode=TwoWay}" 
-                                       TextColor="Black"/>
-                            </StackLayout>
-                        </Frame>
-                    </SwipeView>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </StackLayout>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Frame Margin="5" Padding="15" BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" >
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Path=TapCommand, Source={RelativeSource AncestorType={x:Type viewmodel:QuestionsViewModel}}}"
+                                        CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                                    <Grid RowDefinitions="10,*" HorizontalOptions="Fill">
+                                        <Label Grid.Row="1" 
+                                       Padding="0,0,5,0"
+                                       FontSize="Small"
+                                       Text="{Binding Question ,Mode=TwoWay}"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines ="2"
+                                       VerticalTextAlignment="End"
+                                       TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+
+                                        <Label Grid.Row="0"  
+                                       FontSize="Small"
+                                       VerticalTextAlignment="Start"
+                                       HorizontalTextAlignment="Start"
+                                       Text="{Binding NumberOfRepetitions ,StringFormat='{0} из 4 повторений'}"
+                                        TextColor="#A9A9A9">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label"
+                                                     Binding="{Binding IsKnown, Mode=TwoWay}"
+                                                     Value="True">
+                                                    <Setter  Property="Text"
+                                                     Value="Вы знаете этот вопрос" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+            </ScrollView>
+
+            <Frame x:Name="addFrame"
+                   Grid.Row="1" 
+                   Margin="150,-65,150,10" 
+                   CornerRadius="20" 
+                   BackgroundColor="Gray">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer 
+                        Command="{Binding Path=AddCommand, Source={RelativeSource AncestorType={x:Type viewmodel:QuestionsViewModel}}}"
+                        CommandParameter="{Binding .}"/>
+                </Frame.GestureRecognizers>
+                <Grid ColumnDefinitions="10,*">
+                    <Image Grid.Column="0"
+                           Source="{AppThemeBinding Light=image_add_questions_black.png, Dark=image_add_questions_white.png}"
+                           HeightRequest="50"
+                           HorizontalOptions="Fill" />
+                    <Label Grid.Column="1" 
+                           Text="Добавить" 
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+                </Grid>
+            </Frame>
+        </Grid>
     </Grid>
 </ContentPage>

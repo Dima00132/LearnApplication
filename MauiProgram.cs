@@ -61,13 +61,13 @@ namespace LearnApplication
             var builder = MauiApp.CreateBuilder();
             builder
             .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
-                .ConfigureServices()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+            .UseMauiCommunityToolkit()
+            .ConfigureServices()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
 
 #if DEBUG
             builder.Logging.AddDebug();

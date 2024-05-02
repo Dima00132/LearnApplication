@@ -45,6 +45,8 @@ namespace LearnApplication
             InitializeComponent();
             MainPage = new NavigationPage();
             navigationService.NavigateToMainPage();
+
+            
         }
 
         protected override void OnStart()

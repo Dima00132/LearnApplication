@@ -72,6 +72,7 @@ namespace LearnApplication.ViewModel
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
+            
         }
 
         public override Task OnUpdate()

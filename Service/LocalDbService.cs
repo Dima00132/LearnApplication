@@ -7,6 +7,7 @@ using SQLite;
 using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace LearnApplication.Service
 
     public sealed class LocalDbService: ILocalDbService
     {
-        private const string DB_NAME = "data_learn_save_20.db3";
+        private const string DB_NAME = "data_learn_save_26.db3";
         private SQLiteConnection _connection;
         private const SQLiteOpenFlags Flags =
             SQLiteOpenFlags.ReadWrite |
@@ -55,6 +56,25 @@ namespace LearnApplication.Service
                 Create(learn);
             }
             return learn;
+        }
+
+        //public ObservableCollection<СardQuestion> GetById<T>(int id)
+        //{
+        //    Init();
+        //    var cardQuestion = _connection.GetAllWithChildren<T>(recursive: true).Where(x=> x.Id == id).FirstOrDefault();
+
+        //    return cardQuestion.LearnQuestions;
+        //}
+        public void DeleteAndUpdate<TD, TU>(TD valueDelete, TU valueUpdate)
+        {
+            Delete(valueDelete);
+            Update(valueUpdate);
+        }
+
+        public void CreateAndUpdate<TC,TU>(TC valueCreate, TU valueUpdate)
+        {
+            Create(valueCreate);
+            Update(valueUpdate);
         }
 
         public void Create<T>(T value)

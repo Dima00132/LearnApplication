@@ -72,6 +72,8 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\image_add_black.png" />
+	  <None Remove="Resources\Images\image_add_questions_black.png" />
+	  <None Remove="Resources\Images\image_add_questions_white.png" />
 	  <None Remove="Resources\Images\image_add_question_black.png" />
 	  <None Remove="Resources\Images\image_add_question_white.png" />
 	  <None Remove="Resources\Images\image_add_white.png" />
@@ -96,6 +98,8 @@
 	  <None Remove="Resources\Images\image_statistic_white.png" />
 	  <None Remove="Resources\Images\image_themes_black.png" />
 	  <None Remove="Resources\Images\image_themes_white.png" />
+	  <None Remove="Resources\Images\image_viewing_black.png" />
+	  <None Remove="Resources\Images\image_viewing_white.png" />
 	  <None Remove="Resources\Images\image_working_link.png" />
 	  <None Remove="Resources\Images\klipartz.com (2).png" />
 	  <None Remove="Resources\Images\klipartz.com.png" />

@@ -25,4 +25,11 @@ public partial class RepetitionPage : ContentPage
         _viewModel?.OnUpdateDbService();
         base.OnDisappearing();
     }
+
+    private void ImageButton_Released(object sender, EventArgs e)
+    {
+        var imageButton = sender as ImageButton;
+        imageButton.IsVisible = false;
+ 
+    }
 }

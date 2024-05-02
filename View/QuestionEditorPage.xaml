@@ -5,33 +5,59 @@
              xmlns:model ="clr-namespace:LearnApplication.Model"
              x:Class="LearnApplication.View.QuestionEditorPage" 
              x:DataType="viewmodel:QuestionEditorViewModel"
-             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
-    <StackLayout Orientation="Vertical" BackgroundColor="#1f1f1f" >
-        <Frame>
-            <Editor Text="{Binding Question}"
-                    BackgroundColor="#1f1f1f" 
-                    TextColor="White" 
-                    PlaceholderColor="DarkGray" 
-                    Placeholder ="Введите вопрос"/>
-        </Frame>
-        <Frame>
-            <Editor Text="{Binding Answer}" 
-                    BackgroundColor="#1f1f1f" 
-                    TextColor="White" 
-                    PlaceholderColor="DarkGray" 
-                    Placeholder ="Введите ответ"/>
-        </Frame>
+             Title="Редактор"
+             BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}">
 
-        <Frame>
-            <Editor Text="{Binding Hyperlink}" 
-                    BackgroundColor="#1f1f1f"
-                    PlaceholderColor="DarkGray"  
-                    Placeholder ="Ссылка на дополнительнй материал"/>
-        </Frame>
-        
-        <Button Text="Добавить" 
-                BackgroundColor="Gray" 
-                TextColor="Green"  
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="editorStyle" TargetType="Editor">
+                <Setter Property="AutoSize" Value="TextChanges"/>
+                <Setter Property="MaximumHeightRequest" Value="400"/>
+                <Setter Property="PlaceholderColor" Value="DarkGray" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}" />
+            </Style>
+            <Style x:Key="frameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White, Dark=#1f1f1f }"/>
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light=White, Dark=#1f1f1f }"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,0">
+        <ScrollView Grid.Row="0" Scrolled="ScrollView_Scrolled" x:Name="scrollView" >
+            <StackLayout 
+                     Orientation="Vertical" 
+                     BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"
+                    Spacing="15"
+                    Padding="5">
+
+                <Frame Style="{StaticResource frameStyle}">
+                    <Editor Text="{Binding Question}"
+                    Style="{StaticResource editorStyle}"
+                 
+                    Placeholder ="Введите вопрос"/>
+                </Frame>
+                <Frame Style="{StaticResource frameStyle}">
+                    <Editor Text="{Binding Answer}" 
+                        Style="{StaticResource editorStyle}"
+                        Placeholder ="Введите ответ"/>
+                </Frame>
+
+                <Frame Style="{StaticResource frameStyle}">
+                    <Editor Text="{Binding Hyperlink}" 
+                        Style="{StaticResource editorStyle}"
+                        Placeholder ="Ссылка на дополнительнй материал"/>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="1"
+                x:Name="saveButton"
+                Text="Сохранить"
+                Margin="50,-55,50,10"
+                BackgroundColor="Gray"
+                FontSize="Large"
+                TextColor="Green"
                 Command="{Binding SaveCangeCommand}"  />
-    </StackLayout>
+    </Grid>
 </ContentPage>

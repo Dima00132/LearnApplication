@@ -19,5 +19,9 @@ namespace LearnApplication.ViewModel.Base
             => Task.CompletedTask;
         public virtual Task OnUpdateDbService()
           => Task.CompletedTask;
+        public virtual Task OnStart()
+            => Task.CompletedTask;
+
+
     }
 }

@@ -5,9 +5,12 @@ namespace LearnApplication.View;
 public partial class AddQuestionPage : ContentPage
 {
     private readonly AddQuestionViewModel _addQuestionViewModel;
+    private double _curentScrollY;
+
     public AddQuestionPage()
     {
         InitializeComponent();
+        _curentScrollY = scrollView.ScrollY;
     }
    
     public AddQuestionPage(AddQuestionViewModel viewModel):this()
@@ -21,5 +24,10 @@ public partial class AddQuestionPage : ContentPage
         base.OnDisappearing();
     }
 
-
+    private void ScrollView_Scrolled(object sender, ScrolledEventArgs e)
+    {
+        var newScrollY = e.ScrollY;
+        saveButton.IsVisible = newScrollY < _curentScrollY;
+        _curentScrollY = newScrollY;
+    }
 }

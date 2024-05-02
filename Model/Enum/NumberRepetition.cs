@@ -2,9 +2,9 @@
 {
     enum NumberRepetition
     {
-        Test = 20,
-        First = 2,
+        First = 4,
         Second = 24,
-        Third = 48
+        Third = 48,
+        Fourth = 72
     }
 }

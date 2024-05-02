@@ -51,6 +51,9 @@ namespace LearnApplication.ViewModel
             var question = new СardQuestion(Question, Answer, Hyperlink);
             _category.AddQuestion(question);
             _localDbService.Create(question);
+
+            _localDbService.Update(_category);
+
             await _navigationService.NavigateBackUpdate();
         }
 
@@ -63,10 +66,10 @@ namespace LearnApplication.ViewModel
             return base.OnNavigatingTo(parameter);
         }
 
-        public override Task OnUpdateDbService()
-        {
-            _localDbService.Update(_category);
-            return base.OnUpdateDbService();
-        }
+        //public override Task OnUpdateDbService()
+        //{
+        //    _localDbService.Update(_category);
+        //    return base.OnUpdateDbService();
+        //}
     }
 }

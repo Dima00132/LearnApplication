@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui.Converters;
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LearnApplication.Service;
 using SQLite;
@@ -32,10 +33,7 @@ namespace LearnApplication.Model
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public ObservableCollection<СardQuestion> LearnQuestions { get; set; } = [];
 
-        public DateTime LastEntrance { get; set; }
-
-        //[Column("progress_learn")]
-        //public ProgressLearn ProgressLearn { get; set; }
+        public DateTime LastActivity { get; set; }
 
         public Category():this(string.Empty)
         {}
@@ -66,11 +64,20 @@ namespace LearnApplication.Model
 
         public double RepetitionsCount => LearnQuestions.Count(x=>x.IsRepetitions & !x.IsKnown);
 
-        public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown & x.NumberOfRepetitions >= 3);
+        public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown & x.NumberOfRepetitions >= 4);
 
         public int CountQuestion => LearnQuestions.Count;
 
         public int CountDontKnown { get; private set; } = 0;
+
+        public IEnumerable<СardQuestion> FindsQuestionByRequest(string request)
+        {
+            var learnQuestions = LearnQuestions;
+            var result = learnQuestions
+                .Where(x => x.Question.Length >= request.Length)
+                .Where(x => String.Compare(x.Question, 0, request, 0, request.Length, StringComparison.OrdinalIgnoreCase) == 0);
+            return result;
+        }
 
         public ReviewQuestion GetReviewQuestions(bool allOrUnknown = true)
         {
@@ -90,11 +97,19 @@ namespace LearnApplication.Model
                 return;
             LearnQuestions.Remove(question);
         }
-
-        public void RestartsTheTimer()
+        
+        private void SortDescendingById()
         {
+            LearnQuestions = LearnQuestions.OrderByDescending(x => x.Id).ToObservableCollection();
+        }
+
+        public void RestartsTheTimer(bool sortById = true)
+        {
+            if (sortById)
+                SortDescendingById();
             foreach (var item in LearnQuestions)
-                item.RestartsTimer(); 
+                item.RestartsTimer();
+           
         }
     }
 }

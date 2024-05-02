@@ -22,10 +22,11 @@ namespace LearnApplication.ViewModel
         private readonly INavigationService _navigationService;
         private readonly ILocalDbService _localDbService;
 
-        private readonly Learn _learn;
-
         [ObservableProperty]
-        private ObservableCollection<Category> _categoryUnderStudys;
+        private  Learn _learn;
+        
+        //[ObservableProperty]
+        //private ObservableCollection<Category> _categoryUnderStudys;
 
         private bool _isStart = true;
 
@@ -33,18 +34,28 @@ namespace LearnApplication.ViewModel
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
-            _learn = localDbService.GetLearn();
+            Learn = localDbService.GetLearn();
+            Learn.SortedCategoriesByViewingTime(_isStart);
         }
 
+        //private void Current_PageAppearing(object? sender, Page e)
+        //{
+        //    Learn.SortedCategoriesByViewingTime(_isStart);
+        //    _isStart = false;
+        //}
 
         public RelayCommand AddCommand => new(async () =>
         {
             var subject = await Application.Current?.MainPage?.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
             if (string.IsNullOrEmpty(subject))
                 return;
-            var learnCategory = new Category(subject);
-            _learn.AddCategorie(learnCategory);
-            _localDbService.Create(learnCategory);
+            var category = new Category(subject) { LastActivity = DateTime.Now };
+            Learn.AddCategorie(category);
+
+            _localDbService.CreateAndUpdate(category, Learn);
+
+            //_localDbService.Create(learnCategory);
+            //_localDbService.Update(Learn);
         });
 
         public RelayCommand SettingsCommand => new(async () =>
@@ -56,28 +67,34 @@ namespace LearnApplication.ViewModel
         {
             if (category is not null)
             {
-                _learn.Delete(category);
-                _localDbService.Delete(category);
+                Learn.Delete(category);
+
+                _localDbService.DeleteAndUpdate(category, Learn);
+
+    
+
+                //_localDbService.Delete(category);
+                //_localDbService.Update(Learn);
             }
         });
 
         public RelayCommand<Category> TapCommand=> new(async (category)=>
         {
-            category.LastEntrance = DateTime.Now;
+            Learn.MoveToStartingPosition(category);
             await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(category);
         });
 
-        public override Task OnUpdateDbService()
-        {
-            _localDbService.Update(_learn);
-            return base.OnUpdateDbService();
-        }
+        //public override Task OnUpdateDbService()
+        //{
+        //   // _localDbService.Update(_learn);
+        //    return base.OnUpdateDbService();
+        //}
 
-        public override Task OnUpdate()
-        {
-            CategoryUnderStudys = _learn.GetSortedCategoriesByViewingTime(_isStart);
-            _isStart = false;
-            return base.OnUpdate();
-        }
+        //public override Task OnStart()
+        //{
+        //    Learn.SortedCategoriesByViewingTime(_isStart);
+        //    _isStart = false;
+        //    return base.OnStart();
+        //}
     }
 }

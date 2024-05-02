@@ -28,6 +28,8 @@ namespace LearnApplication.ViewModel
 
         [ObservableProperty]
         private bool _isVisibleLink;
+
+   
         //[ObservableProperty]
         //[NotifyCanExecuteChangedFor(nameof(ChecksLinkCommand))]
         //private string _isWorkingLinkImage;
@@ -40,6 +42,7 @@ namespace LearnApplication.ViewModel
         {
             _navigationService = navigationService;
            _localDbService = localDbService;
+          
         }
 
         public RelayCommand<СardQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<QuestionEditorPage>(learnQuestion));
@@ -52,13 +55,14 @@ namespace LearnApplication.ViewModel
             {
                 ReviewQuestion.MoveQuestionToEnd(learnQuestion);
             }
+     
         });
 
-        public override Task OnUpdateDbService()
-        {
-            _localDbService.Update(_learnCategory);
-            return base.OnUpdateDbService();
-        }
+        //public override Task OnUpdateDbService()
+        //{
+        //    _localDbService.Update(_learnCategory);
+        //    return base.OnUpdateDbService();
+        //}
 
         public RelayCommand<СardQuestion> KnowCommand => new((question) =>
         {
@@ -68,7 +72,8 @@ namespace LearnApplication.ViewModel
             {
                ReviewQuestion.DeleteQuestion(question);
                
-               //_localDbService.Update(question);
+               _localDbService.Update(question);
+                _localDbService.Update(_learnCategory);
             }
         });
 
@@ -82,12 +87,7 @@ namespace LearnApplication.ViewModel
         [RelayCommand()]
         public void ChecksLink(СardQuestion question)
         {
-            if (question.Hyperlink.IsNullOrEmpty)
-            { 
-                IsVisibleLink = false;
-                return;
-            }
-            IsVisibleLink = true;
+            IsVisibleLink = !question.Hyperlink.IsNullOrEmpty;
         }
 
 

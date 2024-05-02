@@ -1,4 +1,5 @@
 ﻿
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 
@@ -11,43 +12,81 @@ namespace LearnApplication.Model
         [ObservableProperty]
         public double _progress;
 
-        private readonly double _countQuestions;
-       // private readonly Category _category;
+        [ObservableProperty]
+        private  double _countQuestions;
+        // private readonly Category _category;
+
+        [ObservableProperty]
         private  double _knownQuestions;
+
+        //[ObservableProperty]
+        //private int _thereAreStillQuestions;
 
         public bool IsQuestions { get => ReviewQuestions.Count >1; }
 
-
+        private readonly Category _category;
         private readonly bool _isAllOrUnknown;
         public ReviewQuestion(Category learnCategory, bool allOrUnknown = true)
         {
-           // _category = learnCategory;
+            _category = learnCategory;
             _isAllOrUnknown = allOrUnknown;
-            var reviewQuestions = _isAllOrUnknown ? learnCategory.LearnQuestions : learnCategory.LearnQuestions.Where(x => x.IsRepetitions & !x.IsKnown);
-            ReviewQuestions = new ObservableCollection<СardQuestion>(reviewQuestions);
-            _countQuestions = ReviewQuestions.Count;
+            ReviewQuestions = _isAllOrUnknown ? learnCategory.LearnQuestions : learnCategory.LearnQuestions
+                .Where(x => x.IsRepetitions & !x.IsKnown)
+                .ToObservableCollection();
+           
+            CountQuestions = ReviewQuestions.Count;
             //Progress = allOrUnknown ? 0 : learnCategory.LearnQuestions.Count((x) => x.IsRepetitions) / _countQuestions;
             //Progress = 0;
-            //_knownQuestions = 0;
+            KnownQuestions = 0;
+        }
+
+        public void FindWordsOnRepeat()
+        {
+            
+            var questions = _category.LearnQuestions.Where(x => x.IsRepetitions & !x.IsKnown).ToObservableCollection();
+
+            var curentCount = ReviewQuestions.Count;
+            var newCount = questions.Count;
+
+            if (curentCount == newCount)
+                return;
+
+            var difference =  Math.Abs(newCount + curentCount);
+            CountQuestions +=  difference;
+            //ThereAreStillQuestions += difference;
+
+            ReviewQuestions = questions;
         }
 
         public void MoveQuestionToEnd(СardQuestion learnQuestion)
         {
-            ReviewQuestions.Remove(learnQuestion);
-            ReviewQuestions.Add(learnQuestion);
+
+            if (!_isAllOrUnknown)
+                FindWordsOnRepeat();
+            
+
+      
+           // ReviewQuestions.Insert(ReviewQuestions.Count-1, learnQuestion);
+            ReviewQuestions.Move(ReviewQuestions.IndexOf(learnQuestion), ReviewQuestions.Count - 1);
+   
+            //ReviewQuestions.Remove(learnQuestion);
+            //ReviewQuestions.Add(learnQuestion);
         }
 
         public void DeleteQuestion(СardQuestion learnQuestion)
         {
+
             if (!_isAllOrUnknown)
             {
+                FindWordsOnRepeat();
                 learnQuestion.SetQuestionAsAlreadyKnown();
-                //_knownQuestions++;
-                Progress = _knownQuestions++ / _countQuestions;
+
+                
+                Progress = ++KnownQuestions / CountQuestions;
             }
 
             ReviewQuestions.Remove(learnQuestion);
-            ReviewQuestions.Add(learnQuestion);     
+           // ReviewQuestions.Add(learnQuestion);     
         }
     }
 }
