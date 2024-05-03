@@ -87,14 +87,11 @@ namespace LearnApplication.Model
             if (!_isAllOrUnknown)
             {
                 FindWordsOnRepeat();
-                learnQuestion.SetQuestionAsAlreadyKnown();
-
-                
+                learnQuestion.SetQuestionAsAlreadyKnown(false);
                 Progress = ++KnownQuestions / CountQuestions;
             }
 
-            ReviewQuestions.Remove(learnQuestion);
-           // ReviewQuestions.Add(learnQuestion);     
+            ReviewQuestions.Remove(learnQuestion);  
         }
     }
 }

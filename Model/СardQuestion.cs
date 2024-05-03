@@ -67,7 +67,7 @@ namespace LearnApplication.Model
 
         public double GetLearningProgress()
         {
-            return NumberOfRepetitions / (double)_repetitionTimes.Length;
+            return NumberOfRepetitions / (_repetitionTimes.Length + 1.0);
         }
 
         public void RestartsTimer()
@@ -91,19 +91,21 @@ namespace LearnApplication.Model
 
         public void SetQuestionAsAlreadyKnown(bool isStartTimer = true)
         {
+            if (IsKnown)
+                return;
+
             IsRepetitions = false;
-            if (!isStartTimer | NumberOfRepetitions == 4)
+            if (!isStartTimer | NumberOfRepetitions >= _repetitionTimes.Length)
             {
                 IsKnown = true;
+                NumberOfRepetitions++;
                 return;
             }
             DateTime = DateTime.Now;
-       
             var timeHours = Convert.ToDouble(_repetitionTimes[NumberOfRepetitions]);
             //var timeSpan = TimeSpan.FromHours(timeHours);
             var timeSpan = TimeSpan.FromSeconds(timeHours);
             StartTimer(timeSpan);
-
         }
 
         private void StartTimer(TimeSpan timeSpan)

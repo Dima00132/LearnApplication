@@ -7,7 +7,8 @@
              xmlns:local ="clr-namespace:LearnApplication.View"
              x:DataType="viewmodel:RepetitionViewModel"
              NavigationPage.HasNavigationBar="True"
-             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }"
+             Title="Повторение">
 
 
     <ContentPage.Resources>
@@ -156,9 +157,9 @@
                                          Grid.Row="2"
                                          BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
                                          HorizontalOptions="Center" 
-                                         Margin="100,115,100,115" 
+                                         MaximumHeightRequest="200"
+                                         MaximumWidthRequest="150"
                                          VerticalOptions="Center"
-                                         CornerRadius="30" 
                                          IsVisible="True"
                                          Source="{AppThemeBinding Light=image_viewing_black.png, Dark=image_viewing_white.png }"
                                          Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}} , Path=ChecksLinkCommand}"
