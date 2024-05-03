@@ -164,8 +164,9 @@
                                          Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:RepetitionViewModel}} , Path=ChecksLinkCommand}"
                                          CommandParameter="{Binding .}"
                                          Released="ImageButton_Released"/>
+
                             <Grid Grid.Row="3">
-                                <SwipeView Threshold="150">
+                                <SwipeView x:Name="swipeView"  Threshold="150">
                                     <SwipeView.RightItems>
                                         <SwipeItems Mode="Execute" >
 

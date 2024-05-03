@@ -42,6 +42,8 @@ namespace LearnApplication.Model
 
         public void FindWordsOnRepeat()
         {
+
+           
             
             var questions = _category.LearnQuestions.Where(x => x.IsRepetitions & !x.IsKnown).ToObservableCollection();
 
@@ -49,27 +51,33 @@ namespace LearnApplication.Model
             var newCount = questions.Count;
 
             if (curentCount == newCount)
-                return;
+                return ;
 
             var difference =  Math.Abs(newCount + curentCount);
             CountQuestions +=  difference;
             //ThereAreStillQuestions += difference;
 
             ReviewQuestions = questions;
+     
         }
 
         public void MoveQuestionToEnd(СardQuestion learnQuestion)
         {
-
+   
             if (!_isAllOrUnknown)
                 FindWordsOnRepeat();
-            
+  
+            //if (isNewReviewQuestions)
+            //{
+            //    ReviewQuestions.Move(ReviewQuestions.IndexOf(learnQuestion), ReviewQuestions.Count);
+            //    return;
+            //}
 
-      
-           // ReviewQuestions.Insert(ReviewQuestions.Count-1, learnQuestion);
-            ReviewQuestions.Move(ReviewQuestions.IndexOf(learnQuestion), ReviewQuestions.Count - 1);
+            ReviewQuestions.Remove(learnQuestion);
+            ReviewQuestions.Insert(ReviewQuestions.Count, learnQuestion);
+           // ReviewQuestions.Move(ReviewQuestions.IndexOf(learnQuestion), ReviewQuestions.Count - 1);
    
-            //ReviewQuestions.Remove(learnQuestion);
+           
             //ReviewQuestions.Add(learnQuestion);
         }
 
