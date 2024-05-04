@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LearnApplication.ViewModel
 {
@@ -17,6 +18,7 @@ namespace LearnApplication.ViewModel
     {
         public const string Theme = "Settings_Theme";
         public const string Animated = "Settings_Animated";
+        //public const string Repetition = "Settings_Repetition";
     }
 
     public partial class SettingsViewModel:ViewModelBase
@@ -54,6 +56,12 @@ namespace LearnApplication.ViewModel
             Theme =  SettingsApplication.GetApplicationTheme();
             IsAnimated = navigationService.IsAnimated;
         }
+
+
+        public RelayCommand NumberOfRepetitionCommand => new( () =>
+        {
+            
+        });
 
         public RelayCommand ApplicationLanguageCommand => new(async () =>
         {

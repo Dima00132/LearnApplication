@@ -9,6 +9,7 @@
              BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
+
     <Grid RowDefinitions ="50,*">
         <Frame  Grid.Row="0"
                 Margin="5"
@@ -62,13 +63,18 @@
                                        MaxLines ="2"
                                        VerticalTextAlignment="End"
                                        TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
-
+                                        
                                         <Label Grid.Row="0"  
                                        FontSize="Small"
                                        VerticalTextAlignment="Start"
                                        HorizontalTextAlignment="Start"
-                                       Text="{Binding NumberOfRepetitions ,StringFormat='{0} из 4 повторений'}"
-                                        TextColor="#A9A9A9">
+                                               TextColor="#A9A9A9">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} из {1} повтрений">
+                                                    <Binding Path="NumberOfRepetitions" />
+                                                    <Binding Path="CountRepetitions" />
+                                                </MultiBinding>
+                                            </Label.Text>
                                             <Label.Triggers>
                                                 <DataTrigger TargetType="Label"
                                                      Binding="{Binding IsKnown, Mode=TwoWay}"

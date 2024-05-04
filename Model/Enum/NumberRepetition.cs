@@ -5,6 +5,8 @@
         First = 4,
         Second = 24,
         Third = 48,
-        Fourth = 72
+        Fourth = 96,
+        Fifth = 192,
+        Sixth = 384
     }
 }

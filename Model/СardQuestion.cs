@@ -47,11 +47,29 @@ namespace LearnApplication.Model
 
         public DateTime DateTime { get; set; }
 
+        private int _countRepetitions;
+        public int CountRepetitions 
+        {
+            get => _countRepetitions;
+            set
+            {
+                var maxCountRepetitions = _repetitionTimes.Length;
+                if ( value > maxCountRepetitions | value < 2)
+                {
+                    _countRepetitions = maxCountRepetitions;
+                    return;
+                }
+                _countRepetitions = value;
+                SetProperty(ref _countRepetitions, value);
+            }
+        }
+
         private readonly NumberRepetition[] _repetitionTimes =
         [
-            NumberRepetition.First,NumberRepetition.Second,NumberRepetition.Third,NumberRepetition.Fourth
+            NumberRepetition.First,NumberRepetition.Second,NumberRepetition.Third,
+            NumberRepetition.Fourth , NumberRepetition.Fifth , NumberRepetition.Sixth
         ];
-
+        
         public СardQuestion() : this(string.Empty, string.Empty)
         {
         }
@@ -62,12 +80,13 @@ namespace LearnApplication.Model
             Answer = answer.Trim();
             Hyperlink = new UrlWebValid(hyperlink.Replace(" ", string.Empty));
             DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
+            _countRepetitions = _repetitionTimes.Length;
         }
 
 
         public double GetLearningProgress()
         {
-            return NumberOfRepetitions / (_repetitionTimes.Length + 1.0);
+            return NumberOfRepetitions / (CountRepetitions + 1.0);
         }
 
         public void RestartsTimer()
@@ -89,16 +108,16 @@ namespace LearnApplication.Model
             StartTimer(newTimeSpan);
         }
 
-        public void SetQuestionAsAlreadyKnown(bool isStartTimer = true)
+        public void SetQuestionAsAlreadyKnown()
         {
             if (IsKnown)
                 return;
 
+            NumberOfRepetitions++;
             IsRepetitions = false;
-            if (!isStartTimer | NumberOfRepetitions >= _repetitionTimes.Length)
+            if (NumberOfRepetitions > CountRepetitions)
             {
                 IsKnown = true;
-                NumberOfRepetitions++;
                 return;
             }
             DateTime = DateTime.Now;

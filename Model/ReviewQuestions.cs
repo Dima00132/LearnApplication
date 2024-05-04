@@ -87,7 +87,7 @@ namespace LearnApplication.Model
             if (!_isAllOrUnknown)
             {
                 FindWordsOnRepeat();
-                learnQuestion.SetQuestionAsAlreadyKnown(false);
+                learnQuestion.SetQuestionAsAlreadyKnown();
                 Progress = ++KnownQuestions / CountQuestions;
             }
 

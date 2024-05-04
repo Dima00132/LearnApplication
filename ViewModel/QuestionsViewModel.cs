@@ -32,7 +32,7 @@ namespace LearnApplication.ViewModel
         [ObservableProperty]
         private ObservableCollection<СardQuestion> _learnQuestions = [];
 
-        
+     
 
         public QuestionsViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {
