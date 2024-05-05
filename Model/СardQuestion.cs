@@ -9,6 +9,7 @@ namespace LearnApplication.Model
 {
 
 
+
     [Table("learn_question")]
     public partial class СardQuestion : ObservableObject
     {
@@ -49,22 +50,24 @@ namespace LearnApplication.Model
 
         public DateTime DateTime { get; set; }
 
-        private int _countRepetitions;
-        public int CountRepetitions 
-        {
-            get => _countRepetitions;
-            set
-            {
-                var maxCountRepetitions = _repetitionTimes.Length;
-                if ( value > maxCountRepetitions | value < 2)
-                {
-                    _countRepetitions = maxCountRepetitions;
-                    return;
-                }
-                _countRepetitions = value;
-                SetProperty(ref _countRepetitions, value);
-            }
-        }
+        public static int CountRepetitions { get; set; }
+
+        //private int _countRepetitions;
+        //public  int CountRepetitions 
+        //{
+        //    get => _countRepetitions;
+        //    set
+        //    {
+        //        var maxCountRepetitions = _repetitionTimes.Length;
+        //        if ( value > maxCountRepetitions | value < 2)
+        //        {
+        //            _countRepetitions = maxCountRepetitions;
+        //            return;
+        //        }
+        //        _countRepetitions = value;
+        //        SetProperty(ref _countRepetitions, value);
+        //    }
+        //}
 
         private readonly NumberRepetition[] _repetitionTimes =
         [
@@ -72,17 +75,17 @@ namespace LearnApplication.Model
             NumberRepetition.Fourth , NumberRepetition.Fifth , NumberRepetition.Sixth
         ];
         
-        public СardQuestion() : this(string.Empty, string.Empty)
+        public СardQuestion() : this(string.Empty,4, string.Empty)
         {
         }
 
-        public СardQuestion(string question, string answer = "", string hyperlink = "")
+        public СardQuestion(string question,int countRepetition, string answer = "", string hyperlink = "" )
         {
             Question = question.Trim();
             Answer = answer.Trim();
             Hyperlink = new UrlWebValid(hyperlink.Replace(" ", string.Empty));
             DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
-            _countRepetitions = _repetitionTimes.Length;
+            //_countRepetitions = countRepetition;
         }
 
 

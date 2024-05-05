@@ -39,9 +39,9 @@ namespace LearnApplication
     {
 
         private readonly InitializingApplicationSettings  _initializing;
-        private readonly SettingsApplication _settingsApplication;
+        private readonly ISettingsApplication _settingsApplication;
 
-        public App(INavigationService navigationService, SettingsApplication settingsApplication)
+        public App(INavigationService navigationService, ISettingsApplication settingsApplication)
         {
            // _initializing = new InitializingApplicationSettings(navigationService, dataService);
             InitializeComponent();

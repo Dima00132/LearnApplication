@@ -30,7 +30,7 @@ namespace LearnApplication
 
             builder.Services.AddTransient<QuestionEditorPage>().AddTransient<QuestionEditorViewModel>();
 
-            builder.Services.AddScoped<ISettingsApplication, SettingsApplication>();
+            builder.Services.AddSingleton<ISettingsApplication, SettingsApplication>();
 
             builder.Services.AddSingleton<IDataService,DataService>();
 

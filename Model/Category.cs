@@ -62,8 +62,8 @@ namespace LearnApplication.Model
         }
 
 
-        //public double RepetitionsCount => LearnQuestions.Count(x=>x.IsRepetitions & !x.IsKnown);
-        public double RepetitionsCount => LearnQuestions.Count(x => x.IsRepetitions);
+        //public double RepetitionsQuestionsCount => LearnQuestions.Count(x=>x.IsRepetitions & !x.IsKnown);
+        public double RepetitionsQuestionsCount => LearnQuestions.Count(x => x.IsRepetitions);
         public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown);
 
         //public double KnownCountLearn => LearnQuestions.Count(x => x.IsKnown & x.NumberOfRepetitions > x.CountRepetitions);

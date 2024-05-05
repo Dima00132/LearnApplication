@@ -47,7 +47,7 @@ namespace LearnApplication.ViewModel
 
         //public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
         //   _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, false),
-        //   () => Category?.RepetitionsCount != 0);
+        //   () => Category?.RepetitionsQuestionsCount != 0);
 
 
         [RelayCommand(CanExecute = nameof(CheckCountQuestion))]
@@ -61,7 +61,7 @@ namespace LearnApplication.ViewModel
         [RelayCommand(CanExecute = nameof(CheckRepetitionsCount))]
         public void RepeatDontKnownQuestions()
             => _navigationService.NavigateByPage<RepetitionPage>(Category, false);
-        public bool CheckRepetitionsCount() => Category?.RepetitionsCount != 0;
+        public bool CheckRepetitionsCount() => Category?.RepetitionsQuestionsCount != 0;
 
 
         public RelayCommand AddQuestionCommand 
@@ -79,7 +79,7 @@ namespace LearnApplication.ViewModel
         {
 
             LearnCount = Category.CountQuestion;
-            RepetitionsCount = Category.RepetitionsCount;
+            RepetitionsCount = Category.RepetitionsQuestionsCount;
             KnownCount = Category.KnownCountLearn;
             return base.OnUpdate();
         }
@@ -93,7 +93,7 @@ namespace LearnApplication.ViewModel
         //public void InitializesFields()
         //{
         //    LearnCount = Category.CountQuestion;
-        //    RepetitionsCount = Category.RepetitionsCount;
+        //    RepetitionsQuestionsCount = Category.RepetitionsQuestionsCount;
         //    KnownCount = Category.KnownCountLearn;
            
         //}

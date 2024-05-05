@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
+using LearnApplication.Model.Settings;
 using LearnApplication.Model.Web;
 using LearnApplication.Navigation;
 using LearnApplication.Service.Interface;
@@ -32,11 +33,13 @@ namespace LearnApplication.ViewModel
 
         private readonly INavigationService _navigationService;
         public readonly ILocalDbService _localDbService;
+        private readonly ISettingsApplication _settingsApplication;
 
-        public AddQuestionViewModel(INavigationService navigationService, ILocalDbService localDbService)
+        public AddQuestionViewModel(INavigationService navigationService, ILocalDbService localDbService ,ISettingsApplication settingsApplication)
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
+            _settingsApplication = settingsApplication;
         }
 
         [RelayCommand(CanExecute = nameof(CheckQuestionEmpty))]
@@ -48,11 +51,12 @@ namespace LearnApplication.ViewModel
                 return;
             }
 
-            var question = new СardQuestion(Question, Answer, Hyperlink);
+            var question = new СardQuestion(Question, _settingsApplication.GetNumberOfRepetitions(), Answer, Hyperlink);
             _category.AddQuestion(question);
-            _localDbService.Create(question);
 
-            _localDbService.Update(_category);
+            _localDbService.CreateAndUpdate(question, _category);
+            //_localDbService.Create(question);
+            //_localDbService.Update(_category);
 
             await _navigationService.NavigateBackUpdate();
         }

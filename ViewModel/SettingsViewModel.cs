@@ -28,26 +28,27 @@ namespace LearnApplication.ViewModel
         private readonly string _light = "Светлая";
         private readonly string _dark = "Темная";
      
-        private readonly SettingsApplication _settingsApplication;
+        private readonly ISettingsApplication _settingsApplication;
         [ObservableProperty]
         private string _theme;
 
         [ObservableProperty]
         private int _numberOfRepetitions;
 
+        [ObservableProperty]
         private bool _isAnimated;
-        public bool IsAnimated
-        {
-            get => _isAnimated;
-            set
-            {
-                _settingsApplication.SetNavigationAnimated(value);
-                SetProperty(ref _isAnimated, value);
-            }
-        }
+        //public bool IsAnimated
+        //{
+        //    get => _isAnimated;
+        //    set
+        //    {
+        //        _settingsApplication.SetNavigationAnimated(value);
+        //        SetProperty(ref _isAnimated, value);
+        //    }
+        //}
 
 
-        public SettingsViewModel(SettingsApplication settingsApplication)
+        public SettingsViewModel(ISettingsApplication settingsApplication)
         {
             //_navigationService = navigationService;
             //_dataService = dataService;
@@ -66,7 +67,14 @@ namespace LearnApplication.ViewModel
             }
             return base.OnNavigatingTo(parameter, parameterSecond);
         }
-        public RelayCommand PerformSearchCommand => new( () =>
+
+
+        public RelayCommand<bool> SwitchAnimatedCommand => new((value) =>
+        {
+            _settingsApplication.SetNavigationAnimated(value);
+        });
+
+        public RelayCommand ChangesNumberOfRepeatsCommand => new( () =>
         {
             _settingsApplication.SetNumberOfRepetitions(_learm, NumberOfRepetitions);
         });

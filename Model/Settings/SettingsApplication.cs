@@ -96,7 +96,9 @@ namespace LearnApplication.Model.Settings
 
         public void SetNumberOfRepetitions(Learn learn, int numberOfRepetitions)
         {
+            CardQuestion.
             _dataService?.Save(Repetition, numberOfRepetitions);
+            
         }
     }
 }

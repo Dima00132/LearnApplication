@@ -61,11 +61,18 @@
                                BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}"
                                FontSize="Header"
                                Padding="5"/>
-                        <Switch Grid.Column="2" 
+                        <Switch x:Name="switch" Grid.Column="2" 
                                 ThumbColor="{AppThemeBinding Light=Green, Dark=White}"
                                 OnColor="{AppThemeBinding Light=White, Dark=Gray}"
                                 BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" 
-                                IsToggled="{Binding IsAnimated}"/>
+                                IsToggled="{Binding IsAnimated}">
+                            <Switch.Behaviors>
+                                <toolkit:EventToCommandBehavior
+                                    EventName="Toggled"
+                                    Command="{Binding SwitchAnimatedCommand}"
+                                    CommandParameter="{Binding IsToggled, Source={x:Reference switch}}"/>
+                            </Switch.Behaviors>
+                        </Switch>
                     </Grid>
                 </Frame>
 
@@ -103,23 +110,19 @@
                        HeightRequest="50" 
                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
                        BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
-                    <Grid RowDefinitions="30,*" 
+                    <Grid RowDefinitions="40,*" 
                           BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" >
                         <Label Grid.Column="0" 
-                               VerticalTextAlignment="Center"
+                               VerticalTextAlignment="Start"
                                HorizontalTextAlignment="Start"
-                               Text="Количество повторений" 
+                               Text="{Binding NumberOfRepetitions,StringFormat='Количество повторений - {0}'}" 
                                TextColor="{AppThemeBinding Light=Black, Dark=White}"
                                Padding="5"/>
-                        <Slider Grid.Column="1" Minimum ="2" Maximum="6" Value="4" 
-                                MinimumTrackColor="DeepPink"
-                                DragCompletedCommand ="{Binding PerformSearchCommand}"
-                                MaximumTrackColor="LightPink" ThumbColor="DeepPink">
-                            <!--<Slider.Behaviors>
-                                <toolkit:EventToCommandBehavior
-                                    EventName="ValueChanged"
-                                    Command="{Binding PerformSearchCommand}" />
-                            </Slider.Behaviors>-->
+                        <Slider Grid.Column="1" Minimum ="2" Maximum="6" Value="{Binding NumberOfRepetitions}" 
+                                MinimumTrackColor="Gray"
+                                DragCompletedCommand ="{Binding ChangesNumberOfRepeatsCommand}"
+                                MaximumTrackColor="Gray" ThumbColor="Black"
+                                VerticalOptions="End">
                         </Slider>
                     </Grid>
                 </Frame>
