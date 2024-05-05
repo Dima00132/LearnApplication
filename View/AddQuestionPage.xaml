@@ -60,30 +60,4 @@
              TextColor="{AppThemeBinding Light=Black, Dark=White}"
              Command="{Binding AddQuestionCommand}"  />
     </Grid>
-    
-    <!--<VerticalStackLayout>
-        <Frame>
-            <Editor Text="{Binding Question}" 
-                    TextColor="Black" 
-                    Placeholder ="Введите вопрос" 
-                    PlaceholderColor="DarkGray"/>
-        </Frame>
-        <Frame>
-            <Editor Text="{Binding Answer}" 
-                    TextColor="Black"  
-                    Placeholder ="Введите ответ" 
-                    PlaceholderColor="DarkGray"/>
-        </Frame>
-
-        <Frame>
-            <Editor Text="{Binding Hyperlink}" 
-                      
-                    TextColor="Black" 
-                    PlaceholderColor="DarkGray" 
-                    Placeholder ="Ссылка на дополнительнй материал"/>
-        </Frame>
-
-        <Button Text="Добавить"  
-                Command="{Binding AddQuestionCommand}"/>
-    </VerticalStackLayout>-->
 </ContentPage>

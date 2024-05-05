@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace LearnApplication.Model.Web
 {
+
     [Table("url_web_valid")]
     public sealed partial class UrlWebValid: ObservableObject
     {
@@ -18,7 +19,15 @@ namespace LearnApplication.Model.Web
 
         [ObservableProperty]
         private string _url;
- 
+
+        [ObservableProperty]
+        private string _shortUrl;
+
+        [ObservableProperty]
+        private string _longUrl;
+
+        
+
         [ObservableProperty]
         private bool _isUrlValid;
 
@@ -33,6 +42,11 @@ namespace LearnApplication.Model.Web
 
         public UrlWebValid()
         {
+        }
+
+        private string UrlParserFromLongToShort(string longUrl)
+        {
+            return "";
         }
 
         public void Change(string url)

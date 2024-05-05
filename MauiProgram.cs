@@ -14,6 +14,7 @@ using CommunityToolkit.Mvvm;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Storage;
 using LearnApplication.Service.Interface;
+using LearnApplication.Model.Settings;
 
 namespace LearnApplication
 {
@@ -28,6 +29,8 @@ namespace LearnApplication
             builder.Services.AddTransient<SettingsPage>().AddTransient<SettingsViewModel>();
 
             builder.Services.AddTransient<QuestionEditorPage>().AddTransient<QuestionEditorViewModel>();
+
+            builder.Services.AddScoped<ISettingsApplication, SettingsApplication>();
 
             builder.Services.AddSingleton<IDataService,DataService>();
 

@@ -7,6 +7,8 @@ using SQLiteNetExtensions.Attributes;
 
 namespace LearnApplication.Model
 {
+
+
     [Table("learn_question")]
     public partial class СardQuestion : ObservableObject
     {

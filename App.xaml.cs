@@ -14,24 +14,24 @@ namespace LearnApplication
 {
     public  class InitializingApplicationSettings(INavigationService navigationService,IDataService dataService)
     {
-        private readonly INavigationService _navigationService = navigationService;
-        private readonly IDataService _dataService = dataService;
-        public void Start()
-        {
-            SetsThemeSettings();
-            SetsAnimatedSettings();
-        }
-        private void SetsThemeSettings()
-        {
-            var theme = _dataService.Get(AddressesForSavingSettings.Theme, string.Empty).Result;
-            SettingsApplication.SetApplicationTheme(theme);
-        }
+        //private readonly INavigationService _navigationService = navigationService;
+        //private readonly IDataService _dataService = dataService;
+        //public void Start()
+        //{
+        //    SetsThemeSettings();
+        //    SetsAnimatedSettings();
+        //}
+        //private void SetsThemeSettings()
+        //{
+        //    var theme = _dataService.Get(AddressesForSavingSettings.Theme, string.Empty).Result;
+        //    SettingsApplication.SetApplicationTheme(theme);
+        //}
 
-        private void SetsAnimatedSettings()
-        {
-            var animated = _dataService.Get(AddressesForSavingSettings.Animated, false).Result;
-            _navigationService.IsAnimated = animated;
-        }
+        //private void SetsAnimatedSettings()
+        //{
+        //    var animated = _dataService.Get(AddressesForSavingSettings.Animated, false).Result;
+        //    _navigationService.IsAnimated = animated;
+        //}
     }
 
 
@@ -39,19 +39,21 @@ namespace LearnApplication
     {
 
         private readonly InitializingApplicationSettings  _initializing;
-        public App(INavigationService navigationService,IDataService dataService)
+        private readonly SettingsApplication _settingsApplication;
+
+        public App(INavigationService navigationService, SettingsApplication settingsApplication)
         {
-            _initializing = new InitializingApplicationSettings(navigationService, dataService);
+           // _initializing = new InitializingApplicationSettings(navigationService, dataService);
             InitializeComponent();
             MainPage = new NavigationPage();
             navigationService.NavigateToMainPage();
-
-            
+            _settingsApplication = settingsApplication;
         }
 
         protected override void OnStart()
         {
-            _initializing.Start();
+            _settingsApplication.InstallApplicationTheme();
+            _settingsApplication.InstallNavigationAnimated();
             base.OnStart();
         }
     }

@@ -4,7 +4,8 @@
              x:Class="LearnApplication.View.SettingsPage"
              xmlns:viewmodel ="clr-namespace:LearnApplication.ViewModel"
              Title="Настройки"
-             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
+             BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
     <VerticalStackLayout>
         
         <Frame  BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
@@ -97,28 +98,31 @@
                        TextColor="{AppThemeBinding Light=Black, Dark=White}" 
                        FontSize="Header" 
                        Padding="5,20,0,0"/>
-                
-                <!--<Frame Padding="0" 
+
+                <Frame Padding="0" 
                        HeightRequest="50" 
                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" 
                        BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding  Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}} , Path=ApplicationLanguageCommand}"/>
-                    </Frame.GestureRecognizers>
                     <Grid RowDefinitions="30,*" 
                           BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" >
-                        <Slider Minimum ="0" Maximum="50" Value="30" ValueChanged="OnSliderValueChanged"
-                                MinimumTrackColor="DeepPink" MaximumTrackColor="LightPink" ThumbColor="DeepPink"/>
-                        <Label Grid.Column="1" 
-                                VerticalTextAlignment="Center"
-                                HorizontalTextAlignment="Start"
-                                Text="Количество повторений" 
-                                TextColor="{AppThemeBinding Light=Black, Dark=White}" 
-                                FontSize="Header"
-                                Padding="5"/>
+                        <Label Grid.Column="0" 
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Start"
+                               Text="Количество повторений" 
+                               TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                               Padding="5"/>
+                        <Slider Grid.Column="1" Minimum ="2" Maximum="6" Value="4" 
+                                MinimumTrackColor="DeepPink"
+                                DragCompletedCommand ="{Binding PerformSearchCommand}"
+                                MaximumTrackColor="LightPink" ThumbColor="DeepPink">
+                            <!--<Slider.Behaviors>
+                                <toolkit:EventToCommandBehavior
+                                    EventName="ValueChanged"
+                                    Command="{Binding PerformSearchCommand}" />
+                            </Slider.Behaviors>-->
+                        </Slider>
                     </Grid>
-                </Frame>-->
+                </Frame>
 
                 <Label Text="Уведомлени" 
                        TextColor="{AppThemeBinding Light=Black, Dark=White}" 
