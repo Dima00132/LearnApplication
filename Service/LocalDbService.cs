@@ -36,7 +36,7 @@ namespace LearnApplication.Service
                 _ = _connection.CreateTable<Learn>();
                 _ = _connection.CreateTable<Category>();
                 _ = _connection.CreateTable<UrlWebValid>();
-                _ = _connection.CreateTable<СardQuestion>();
+                _ = _connection.CreateTable<CardQuestion>();
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace LearnApplication.Service
             return learn;
         }
 
-        //public ObservableCollection<СardQuestion> GetById<T>(int id)
+        //public ObservableCollection<CardQuestion> GetById<T>(int id)
         //{
         //    Init();
         //    var cardQuestion = _connection.GetAllWithChildren<T>(recursive: true).Where(x=> x.Id == id).FirstOrDefault();

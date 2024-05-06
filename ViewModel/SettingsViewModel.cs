@@ -46,7 +46,7 @@ namespace LearnApplication.ViewModel
         //        SetProperty(ref _isAnimated, value);
         //    }
         //}
-
+        private Learn _learn;
 
         public SettingsViewModel(ISettingsApplication settingsApplication)
         {
@@ -55,17 +55,8 @@ namespace LearnApplication.ViewModel
             Theme = settingsApplication.GetApplicationTheme();
             NumberOfRepetitions = settingsApplication.GetNumberOfRepetitions();
             IsAnimated = settingsApplication.GetNavigationAnimated();
+            NumberOfRepetitions = settingsApplication.GetNumberOfRepetitions();
             _settingsApplication = settingsApplication;
-        }
-        private Learn _learm;
-
-        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
-        {
-            if(parameter is Learn learn)
-            {
-                _learm = learn;
-            }
-            return base.OnNavigatingTo(parameter, parameterSecond);
         }
 
 
@@ -76,7 +67,7 @@ namespace LearnApplication.ViewModel
 
         public RelayCommand ChangesNumberOfRepeatsCommand => new( () =>
         {
-            _settingsApplication.SetNumberOfRepetitions(_learm, NumberOfRepetitions);
+            _settingsApplication.SetNumberOfRepetitions(_learn,NumberOfRepetitions);
         });
 
         public RelayCommand ApplicationLanguageCommand => new(async () =>
@@ -95,6 +86,13 @@ namespace LearnApplication.ViewModel
             
             //_dataService?.Save(AddressesForSavingSettings.Theme, theme); 
         });
+
+        public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
+        {
+            if (parameter is Learn learn)
+                _learn = learn;
+            return base.OnNavigatingTo(parameter, parameterSecond);
+        }
 
     }
 }

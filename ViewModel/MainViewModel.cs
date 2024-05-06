@@ -60,7 +60,7 @@ namespace LearnApplication.ViewModel
 
         public RelayCommand SettingsCommand => new(async () =>
         {
-            await _navigationService.NavigateByViewModel<SettingsViewModel>();
+            await _navigationService.NavigateByViewModel<SettingsViewModel>(Learn);
         });
 
         public RelayCommand<Category> DeleteCommand => new((category) =>

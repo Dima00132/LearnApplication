@@ -12,7 +12,7 @@ namespace LearnApplication.ViewModel
     public sealed partial class QuestionEditorViewModel :ViewModelBase
     {
     
-        private СardQuestion _learnQuestion;
+        private CardQuestion _learnQuestion;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCangeCommand))]
@@ -37,7 +37,7 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
-            if (parameter is СardQuestion learnQuestion)
+            if (parameter is CardQuestion learnQuestion)
             {
                 _learnQuestion = learnQuestion;
                Question = _learnQuestion.Question;

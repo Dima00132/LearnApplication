@@ -14,6 +14,6 @@ namespace LearnApplication.Service.Interface
         public void DeleteAndUpdate<TD, TU>(TD valueDelete, TU valueUpdate);
         public void CreateAndUpdate<TC, TU>(TC valueCreate, TU valueUpdate);
 
-        //public ObservableCollection<СardQuestion> GetById(int id);
+        //public ObservableCollection<CardQuestion> GetById(int id);
     }
 }

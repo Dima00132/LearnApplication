@@ -37,6 +37,9 @@ namespace LearnApplication
             addFrame.IsVisible = newScrollY < _curentScrollY;
             _curentScrollY = newScrollY;
         }
+
+
+
     }
 
 }

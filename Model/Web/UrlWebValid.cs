@@ -13,7 +13,7 @@ namespace LearnApplication.Model.Web
         public int Id { get; set; }
 
         [Column("СardQuestion_id")]
-        [ForeignKey(typeof(СardQuestion))]
+        [ForeignKey(typeof(CardQuestion))]
         public int СardQuestionId { get; set; }
 
 

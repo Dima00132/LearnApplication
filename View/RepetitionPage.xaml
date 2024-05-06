@@ -43,7 +43,7 @@
                    Margin="20,0,20,0"  
                    TextColor="Gray" 
                    HorizontalTextAlignment="Start" 
-                   Text="{Binding ReviewQuestion.KnownQuestions,Mode=TwoWay,StringFormat='Помню {0} вопросов'}" />
+                   Text="{Binding ReviewQuestion.KnownQuestions,StringFormat='Помню {0} вопросов'}" />
 
 
             <ProgressBar Grid.Row="1"
@@ -66,7 +66,7 @@
             <CarouselView.ItemTemplate>
 
                 <DataTemplate>
-                    <Border  BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" x:DataType="model:СardQuestion">
+                    <Border  BackgroundColor="{AppThemeBinding Light=White, Dark=#1f1f1f }" x:DataType="model:CardQuestion">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20" />
                         </Border.StrokeShape>
@@ -77,7 +77,7 @@
                                                TextColor="{AppThemeBinding Light=Black, Dark=White}"
                                                HorizontalOptions="Start"
                                                VerticalOptions="Center"
-                                               Text="{Binding NumberOfRepetitions, StringFormat='Повтор - {0}', Mode=TwoWay}"/>
+                                               Text="{Binding NumberOfRepetitions, StringFormat='Повтор - {0}'}"/>
                             </Grid>
      
                             <Border Grid.Row="1"

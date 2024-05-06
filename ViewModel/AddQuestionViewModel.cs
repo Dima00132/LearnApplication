@@ -33,9 +33,10 @@ namespace LearnApplication.ViewModel
 
         private readonly INavigationService _navigationService;
         public readonly ILocalDbService _localDbService;
-        private readonly ISettingsApplication _settingsApplication;
 
-        public AddQuestionViewModel(INavigationService navigationService, ILocalDbService localDbService ,ISettingsApplication settingsApplication)
+        public readonly ISettingsApplication _settingsApplication;
+
+        public AddQuestionViewModel(INavigationService navigationService, ILocalDbService localDbService,ISettingsApplication settingsApplication )
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
@@ -51,7 +52,7 @@ namespace LearnApplication.ViewModel
                 return;
             }
 
-            var question = new СardQuestion(Question, _settingsApplication.GetNumberOfRepetitions(), Answer, Hyperlink);
+            var question = new CardQuestion(Question, _settingsApplication.GetNumberOfRepetitions(), Answer, Hyperlink);
             _category.AddQuestion(question);
 
             _localDbService.CreateAndUpdate(question, _category);

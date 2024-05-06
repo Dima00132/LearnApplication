@@ -11,7 +11,7 @@ namespace LearnApplication.Model
 
 
     [Table("learn_question")]
-    public partial class СardQuestion : ObservableObject
+    public partial class CardQuestion : ObservableObject
     {
         [PrimaryKey, AutoIncrement]
         [Column("Id")]
@@ -50,24 +50,24 @@ namespace LearnApplication.Model
 
         public DateTime DateTime { get; set; }
 
-        public static int CountRepetitions { get; set; }
+        //public static int CountRepetitions { get; set; } = 4;
 
-        //private int _countRepetitions;
-        //public  int CountRepetitions 
-        //{
-        //    get => _countRepetitions;
-        //    set
-        //    {
-        //        var maxCountRepetitions = _repetitionTimes.Length;
-        //        if ( value > maxCountRepetitions | value < 2)
-        //        {
-        //            _countRepetitions = maxCountRepetitions;
-        //            return;
-        //        }
-        //        _countRepetitions = value;
-        //        SetProperty(ref _countRepetitions, value);
-        //    }
-        //}
+        private int _countRepetitions;
+        public int CountRepetitions
+        {
+            get => _countRepetitions;
+            set
+            {
+                var maxCountRepetitions = _repetitionTimes.Length;
+                if (value > maxCountRepetitions | value < 2)
+                {
+                    _countRepetitions = maxCountRepetitions;
+                    return;
+                }
+                _countRepetitions = value;
+                SetProperty(ref _countRepetitions, value);
+            }
+        }
 
         private readonly NumberRepetition[] _repetitionTimes =
         [
@@ -75,17 +75,17 @@ namespace LearnApplication.Model
             NumberRepetition.Fourth , NumberRepetition.Fifth , NumberRepetition.Sixth
         ];
         
-        public СardQuestion() : this(string.Empty,4, string.Empty)
+        public CardQuestion() : this(string.Empty,4, string.Empty)
         {
         }
 
-        public СardQuestion(string question,int countRepetition, string answer = "", string hyperlink = "" )
+        public CardQuestion(string question,int countRepetitions, string answer = "", string hyperlink = "" )
         {
             Question = question.Trim();
             Answer = answer.Trim();
             Hyperlink = new UrlWebValid(hyperlink.Replace(" ", string.Empty));
             DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
-            //_countRepetitions = countRepetition;
+            CountRepetitions = countRepetitions;
         }
 
 

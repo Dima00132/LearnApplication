@@ -30,7 +30,7 @@ namespace LearnApplication.ViewModel
         private Category _category;
 
         [ObservableProperty]
-        private ObservableCollection<СardQuestion> _learnQuestions = [];
+        private ObservableCollection<CardQuestion> _learnQuestions = [];
 
      
 
@@ -55,7 +55,7 @@ namespace LearnApplication.ViewModel
                 var data = await Task.FromResult( _category.FindsQuestionByRequest(query));
                 if (data is not null)
                 {
-                    LearnQuestions = new ObservableCollection<СardQuestion>(data);
+                    LearnQuestions = new ObservableCollection<CardQuestion>(data);
                 }
             }
         }
@@ -64,10 +64,10 @@ namespace LearnApplication.ViewModel
 
         public RelayCommand AddCommand 
             => new(async () => await _navigationService.NavigateByPage<AddQuestionPage>(_category));
-        public RelayCommand<СardQuestion> TapCommand
+        public RelayCommand<CardQuestion> TapCommand
            => new(async (question) => await _navigationService.NavigateByPage<QuestionEditorPage>(question));
 
-        public RelayCommand<СardQuestion> DeleteCommand => new((question) =>
+        public RelayCommand<CardQuestion> DeleteCommand => new((question) =>
         {
             if (question is not null)
             {

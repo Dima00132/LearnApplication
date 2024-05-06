@@ -38,7 +38,7 @@
                      BindableLayout.ItemsSource="{Binding LearnQuestions}" 
                      BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}" >
                     <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:СardQuestion}" >
+                        <DataTemplate x:DataType="{x:Type model:CardQuestion}" >
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItems>
@@ -72,7 +72,7 @@
                                             <Label.Text>
                                                 <MultiBinding StringFormat="{}{0} из {1} повтрений">
                                                     <Binding Path="NumberOfRepetitions" />
-                                                    <Binding Path="CountRepetitions" />
+                                                    <Binding Path="CountRepetitions"  />
                                                 </MultiBinding>
                                             </Label.Text>
                                             <Label.Triggers>

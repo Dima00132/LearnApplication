@@ -15,6 +15,7 @@ namespace LearnApplication.Model.Settings
         int GetNumberOfRepetitions();
         void InstallApplicationTheme();
         void InstallNavigationAnimated();
+       
         void SetApplicationTheme(string theme);
         void SetNavigationAnimated(bool animated);
         bool GetNavigationAnimated();
@@ -88,6 +89,12 @@ namespace LearnApplication.Model.Settings
             return _navigationService.IsAnimated;
         }
 
+        //public void InstallNumberOfRepetitions()
+        //{
+        //    var number = _dataService?.Get(Repetition, 4).Result;
+        //    CardQuestion.CountRepetitions = number.Value;
+        //}
+
         public int GetNumberOfRepetitions()
         {
             var number = _dataService?.Get(Repetition, 4).Result;
@@ -96,7 +103,10 @@ namespace LearnApplication.Model.Settings
 
         public void SetNumberOfRepetitions(Learn learn, int numberOfRepetitions)
         {
-            CardQuestion.
+            foreach (var item in learn.Categories.SelectMany(x => x.LearnQuestions))
+                item.CountRepetitions = numberOfRepetitions;
+            //learn.Categories.Select(x=>x.LearnQuestions)
+            //CardQuestion.CountRepetitions = numberOfRepetitions;
             _dataService?.Save(Repetition, numberOfRepetitions);
             
         }

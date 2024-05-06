@@ -45,11 +45,11 @@ namespace LearnApplication.ViewModel
           
         }
 
-        public RelayCommand<СardQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<QuestionEditorPage>(learnQuestion));
+        public RelayCommand<CardQuestion> SettingsCommand => new((learnQuestion) => _navigationService.NavigateByPage<QuestionEditorPage>(learnQuestion));
 
         
 
-        public RelayCommand<СardQuestion> DontKnowCommand => new((learnQuestion) =>
+        public RelayCommand<CardQuestion> DontKnowCommand => new((learnQuestion) =>
         {
             if (learnQuestion is not null)
             {
@@ -64,7 +64,7 @@ namespace LearnApplication.ViewModel
         //    return base.OnUpdateDbService();
         //}
 
-        public RelayCommand<СardQuestion> KnowCommand => new((question) =>
+        public RelayCommand<CardQuestion> KnowCommand => new((question) =>
         {
             if (!ReviewQuestion.IsQuestions)
                 _navigationService.NavigateBackUpdate();
@@ -85,7 +85,7 @@ namespace LearnApplication.ViewModel
 
 
         [RelayCommand()]
-        public void ChecksLink(СardQuestion question)
+        public void ChecksLink(CardQuestion question)
         {
             IsVisibleLink = !question.Hyperlink.IsNullOrEmpty;
         }
@@ -93,7 +93,7 @@ namespace LearnApplication.ViewModel
 
 
         [RelayCommand]
-        public void LinkToAdditionalMaterial(СardQuestion question)
+        public void LinkToAdditionalMaterial(CardQuestion question)
         {
             if (!question.Hyperlink.IsUrlValid) 
             { 
@@ -103,7 +103,7 @@ namespace LearnApplication.ViewModel
             _navigationService.NavigateByPage<WebPage>(question.Hyperlink.GetUrlWebViewSource());
         }
 
-        //public bool IsCurentLink(СardQuestion question)
+        //public bool IsCurentLink(CardQuestion question)
         //{
 
         //    if (string.IsNullOrEmpty(question?.Hyperlink.Url))
@@ -113,7 +113,7 @@ namespace LearnApplication.ViewModel
         //    return true;
         //}
 
-        //public RelayCommand<СardQuestion> LinkToAdditionalMaterialCommand => new((question) => 
+        //public RelayCommand<CardQuestion> LinkToAdditionalMaterialCommand => new((question) => 
         //{
 
         //    var urlWeb = question?.GetUrlWebView();

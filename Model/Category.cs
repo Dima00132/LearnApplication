@@ -31,7 +31,7 @@ namespace LearnApplication.Model
 
         [Column("count_dont_known")]
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public ObservableCollection<СardQuestion> LearnQuestions { get; set; } = [];
+        public ObservableCollection<CardQuestion> LearnQuestions { get; set; } = [];
 
         public DateTime LastActivity { get; set; }
 
@@ -72,7 +72,7 @@ namespace LearnApplication.Model
 
         public int CountDontKnown { get; private set; } = 0;
 
-        public IEnumerable<СardQuestion> FindsQuestionByRequest(string request)
+        public IEnumerable<CardQuestion> FindsQuestionByRequest(string request)
         {
             var learnQuestions = LearnQuestions;
             var result = learnQuestions
@@ -86,14 +86,14 @@ namespace LearnApplication.Model
             return new ReviewQuestion(this, allOrUnknown);
         }
 
-        public void AddQuestion(СardQuestion question)
+        public void AddQuestion(CardQuestion question)
         {
             if (question is null)
                 return;
             LearnQuestions.Insert(0,question);
         }
 
-        public void RemoveQuestion(СardQuestion question)
+        public void RemoveQuestion(CardQuestion question)
         {
             if (question is null)
                 return;

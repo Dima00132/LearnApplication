@@ -7,7 +7,7 @@ namespace LearnApplication.Model
 {
     public partial class ReviewQuestion:ObservableObject
     {
-        public ObservableCollection<СardQuestion> ReviewQuestions { get;set; }
+        public ObservableCollection<CardQuestion> ReviewQuestions { get;set; }
 
         [ObservableProperty]
         public double _progress;
@@ -61,7 +61,7 @@ namespace LearnApplication.Model
      
         }
 
-        public void MoveQuestionToEnd(СardQuestion learnQuestion)
+        public void MoveQuestionToEnd(CardQuestion learnQuestion)
         {
    
             if (!_isAllOrUnknown)
@@ -81,7 +81,7 @@ namespace LearnApplication.Model
             //ReviewQuestions.Add(learnQuestion);
         }
 
-        public void DeleteQuestion(СardQuestion learnQuestion)
+        public void DeleteQuestion(CardQuestion learnQuestion)
         {
 
             if (!_isAllOrUnknown)
