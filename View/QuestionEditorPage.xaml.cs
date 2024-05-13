@@ -16,11 +16,11 @@ public partial class QuestionEditorPage : ContentPage
         
     }
 
-    protected override void OnDisappearing()
-    {
-        _settingsViewModel.OnUpdateDbService();
-        base.OnDisappearing();
-    }
+    //protected override void OnDisappearing()
+    //{
+    //    _settingsViewModel.OnUpdateDbService();
+    //    base.OnDisappearing();
+    //}
 
     private void ScrollView_Scrolled(object sender, ScrolledEventArgs e)
     {

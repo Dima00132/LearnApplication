@@ -1,7 +1,7 @@
 ﻿using LearnApplication.Model;
-
 using LearnApplication.Model.Web;
 using LearnApplication.Service.Interface;
+using Microsoft.VisualBasic;
 using SQLite;
 
 using SQLiteNetExtensions.Extensions;
@@ -17,7 +17,7 @@ namespace LearnApplication.Service
 
     public sealed class LocalDbService: ILocalDbService
     {
-        private const string DB_NAME = "data_learn_save_26.db3";
+        private const string DB_NAME = "data_learn_save_47.db3";
         private SQLiteConnection _connection;
         private const SQLiteOpenFlags Flags =
             SQLiteOpenFlags.ReadWrite |
@@ -29,14 +29,15 @@ namespace LearnApplication.Service
         {
             if (_connection is not null)
                 return;
-            _connection = new SQLiteConnection(Path.Combine(FileSystem.AppDataDirectory, DB_NAME), Flags);
+            _connection = new SQLiteConnection(Path.Combine(Microsoft.Maui.Storage.FileSystem.AppDataDirectory, DB_NAME), Flags);
 
             try
             {
                 _ = _connection.CreateTable<Learn>();
-                _ = _connection.CreateTable<Category>();
+                _ = _connection.CreateTable<Subject>();
                 _ = _connection.CreateTable<UrlWebValid>();
                 _ = _connection.CreateTable<CardQuestion>();
+              
             }
             catch (Exception ex)
             {
@@ -58,29 +59,32 @@ namespace LearnApplication.Service
             return learn;
         }
 
-        //public ObservableCollection<CardQuestion> GetById<T>(int id)
-        //{
-        //    Init();
-        //    var cardQuestion = _connection.GetAllWithChildren<T>(recursive: true).Where(x=> x.Id == id).FirstOrDefault();
-
-        //    return cardQuestion.LearnQuestions;
-        //}
-        public void DeleteAndUpdate<TD, TU>(TD valueDelete, TU valueUpdate)
+        public void CreateAndUpdate<TCreate, TUpdate>(TCreate valueCreate, TUpdate valueUpdate)
+        {
+            Create(valueCreate);
+            Update(valueUpdate);
+        }
+        public void DeleteAndUpdate<TDelete, TUpdate>(TDelete valueDelete, TUpdate valueUpdate)
         {
             Delete(valueDelete);
             Update(valueUpdate);
         }
 
-        public void CreateAndUpdate<TC,TU>(TC valueCreate, TU valueUpdate)
-        {
-            Create(valueCreate);
-            Update(valueUpdate);
-        }
+  
 
         public void Create<T>(T value)
         {
-            Init();
-            _connection.InsertWithChildren(value, recursive: true);
+            try
+            {
+                Init(); 
+                _connection.InsertWithChildren(value, recursive: true);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public void Update<T>(T value)
@@ -95,7 +99,7 @@ namespace LearnApplication.Service
             try
             {
                 _connection.Dispose();
-                File.Delete(Path.Combine(FileSystem.AppDataDirectory, DB_NAME));
+                File.Delete(Path.Combine(Microsoft.Maui.Storage.FileSystem.AppDataDirectory, DB_NAME));
             }
             catch (Exception ex)
             {

@@ -1,6 +1,6 @@
 ﻿namespace LearnApplication.Model.Enum
 {
-    enum NumberRepetition
+    public enum NumberRepetition
     {
         First = 4,
         Second = 24,

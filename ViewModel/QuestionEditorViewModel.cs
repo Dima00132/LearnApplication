@@ -12,7 +12,7 @@ namespace LearnApplication.ViewModel
     public sealed partial class QuestionEditorViewModel :ViewModelBase
     {
     
-        private CardQuestion _learnQuestion;
+        private CardQuestion _cardQuestion;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCangeCommand))]
@@ -39,10 +39,10 @@ namespace LearnApplication.ViewModel
         {
             if (parameter is CardQuestion learnQuestion)
             {
-                _learnQuestion = learnQuestion;
-               Question = _learnQuestion.Question;
-                Answer = _learnQuestion.Answer;
-                Hyperlink = _learnQuestion.Hyperlink.Url;
+                _cardQuestion = learnQuestion;
+               Question = _cardQuestion.Question;
+                Answer = _cardQuestion.Answer;
+                Hyperlink = _cardQuestion.Hyperlink.Url;
             }
             return base.OnNavigatingTo(parameter);
         }
@@ -57,15 +57,21 @@ namespace LearnApplication.ViewModel
                 return;
             }
 
-            _learnQuestion.Change(Question, Answer, Hyperlink);
+            
+
+            _cardQuestion.ChangeQuestion(Question).ChangeAnswer(Answer).ChangeHyperlink(Hyperlink);
+
+            _localDbService.Update(_cardQuestion.Hyperlink);
+            _localDbService.Update(_cardQuestion);
+
             _navigationService.NavigateBackUpdate();  
         }
         public bool CheckQuestionEmpty() => !string.IsNullOrEmpty(Question);
 
         public override Task OnUpdateDbService()
         {
-            _localDbService.Update(_learnQuestion.Hyperlink);
-            _localDbService.Update(_learnQuestion);
+            //_localDbService.Update(_cardQuestion.Hyperlink);
+            //_localDbService.Update(_cardQuestion);
             return base.OnUpdateDbService();
         }
 

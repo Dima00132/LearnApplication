@@ -12,33 +12,33 @@ using System.Diagnostics;
 
 namespace LearnApplication
 {
-    public  class InitializingApplicationSettings(INavigationService navigationService,IDataService dataService)
-    {
-        //private readonly INavigationService _navigationService = navigationService;
-        //private readonly IDataService _dataService = dataService;
-        //public void Start()
-        //{
-        //    SetsThemeSettings();
-        //    SetsAnimatedSettings();
-        //}
-        //private void SetsThemeSettings()
-        //{
-        //    var theme = _dataService.Get(AddressesForSavingSettings.Theme, string.Empty).Result;
-        //    SettingsApplication.SetApplicationTheme(theme);
-        //}
+    //public  class InitializingApplicationSettings(INavigationService navigationService,IDataService dataService)
+    //{
+    //    //private readonly INavigationService _navigationService = navigationService;
+    //    //private readonly IDataService _dataService = dataService;
+    //    //public void Start()
+    //    //{
+    //    //    SetsThemeSettings();
+    //    //    SetsAnimatedSettings();
+    //    //}
+    //    //private void SetsThemeSettings()
+    //    //{
+    //    //    var theme = _dataService.Get(AddressesForSavingSettings.Theme, string.Empty).Result;
+    //    //    SettingsApplication.SetApplicationTheme(theme);
+    //    //}
 
-        //private void SetsAnimatedSettings()
-        //{
-        //    var animated = _dataService.Get(AddressesForSavingSettings.Animated, false).Result;
-        //    _navigationService.IsAnimated = animated;
-        //}
-    }
+    //    //private void SetsAnimatedSettings()
+    //    //{
+    //    //    var animated = _dataService.Get(AddressesForSavingSettings.Animated, false).Result;
+    //    //    _navigationService.IsAnimated = animated;
+    //    //}
+    //}
 
 
     public partial class App : Application
     {
 
-        private readonly InitializingApplicationSettings  _initializing;
+       
         private readonly ISettingsApplication _settingsApplication;
 
         public App(INavigationService navigationService, ISettingsApplication settingsApplication)

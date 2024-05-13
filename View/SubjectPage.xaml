@@ -77,7 +77,7 @@
                                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
                                    HorizontalTextAlignment="Start"
                                    VerticalTextAlignment="Center"/>
-                            <Label Text="{Binding RepetitionsCount, StringFormat='На поатор {0}'}"
+                            <Label Text="{Binding Category.RepetitionsQuestionsCount, StringFormat='На поатор {0}'}"
                                    TextColor="#ffa500"
                                    Style="{StaticResource labelStyle}"/>
                         </StackLayout>
@@ -100,7 +100,7 @@
                                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
                                    HorizontalTextAlignment="Start"
                                    VerticalTextAlignment="Center"/>
-                            <Label Text="{Binding  LearnCount, StringFormat='Количество вопрсов {0}'}"
+                            <Label Text="{Binding  Category.CountQuestion, StringFormat='Количество вопрсов {0}'}"
                                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
                                    Style="{StaticResource labelStyle}"/>
                         </StackLayout>
@@ -116,7 +116,7 @@
                 <Frame Style="{StaticResource frameStyle}">
 
                     <Grid  BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}">
-                        <Label Text="{Binding LearnCount, StringFormat='Количество вопросов  -  {0}'}" 
+                        <Label Text="{Binding Category.CountQuestion, StringFormat='Количество вопросов  -  {0}'}" 
                                Padding="8"  
                                TextColor="{AppThemeBinding Light=Black, Dark=White}" 
                                Grid.Column="1" 
@@ -129,7 +129,7 @@
                        BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
 
                     <Grid  BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}">
-                        <Label Text="{Binding KnownCount, StringFormat='Изучено вопросов  -  {0}'}" 
+                        <Label Text="{Binding Category.KnownCountLearn, StringFormat='Изучено вопросов  -  {0}'}" 
                                Padding="8"  
                                TextColor="Green" 
                                Grid.Column="1" 
@@ -142,7 +142,7 @@
                        BorderColor="{AppThemeBinding Light=White, Dark=#1f1f1f }">
 
                     <Grid  BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark=#191919}">
-                        <Label Text="{Binding RepetitionsCount, StringFormat='На повтор  -  {0}'}"  
+                        <Label Text="{Binding Category.RepetitionsQuestionsCount, StringFormat='На повтор  -  {0}'}"  
                                TextColor="Orange"
                                Padding="8"
                                Grid.Column="1"
@@ -157,38 +157,7 @@
 
 
 
-        <!--<StackLayout Padding="20" Grid.Row="2" BackgroundColor="#1f1f1f" >
-            <Label Text="Выучено" />
-            <Frame>
-                <Label TextColor="Gray" Text="{Binding LearnCount, StringFormat='Количество вопросов  -  {0}'}" />
-            </Frame>
-            <Frame>
-                <Label TextColor="Green" Text="{Binding KnownCount, StringFormat='Изучено вопросов  -  {0}'}" />
-            </Frame>
-            <Frame>
-                <Label TextColor="Red" Text="{Binding RepetitionsCount, StringFormat='На повтор  -  {0}'}" />
-            </Frame>
-        </StackLayout>
 
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Button Text="Повторить все" 
-                    Command="{Binding RepeatAllQuestionsCommand}" 
-                    Grid.Column="0" 
-                    BackgroundColor="Gray" 
-                    TextColor="Green"/>
-
-            <Button Text="{Binding RepetitionsCount, StringFormat='На повтор  {0}'}" 
-                    Command="{Binding RepeatDontKnownQuestionsCommand}"
-                    TextColor="Green"
-                    Grid.Column="1"  
-                    BackgroundColor="Gray"/>
-
-        </Grid>-->
     </VerticalStackLayout>
     <!--</Grid>-->
     

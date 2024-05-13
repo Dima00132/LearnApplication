@@ -9,10 +9,11 @@ namespace LearnApplication.Service.Interface
         public Learn GetLearn();
         public void Create<T>(T value);
         public void Update<T>(T value);
-        public void DeleteFileData();
+        //public void DeleteFileData();
         public void Delete<T>(T value);
-        public void DeleteAndUpdate<TD, TU>(TD valueDelete, TU valueUpdate);
-        public void CreateAndUpdate<TC, TU>(TC valueCreate, TU valueUpdate);
+        public void DeleteAndUpdate<TDelete, TUpdate>(TDelete valueDelete, TUpdate valueUpdate);
+        public void CreateAndUpdate<TCreate, TUpdate>(TCreate valueCreate, TUpdate valueUpdate);
+      
 
         //public ObservableCollection<CardQuestion> GetById(int id);
     }

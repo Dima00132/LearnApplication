@@ -27,7 +27,7 @@ namespace LearnApplication.ViewModel
     {
         private readonly INavigationService _navigationService;
         private readonly ILocalDbService _localDbService;
-        private Category _category;
+        private Subject _category;
 
         [ObservableProperty]
         private ObservableCollection<CardQuestion> _learnQuestions = [];
@@ -80,7 +80,7 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
-            if (parameter is Category learnCategory)
+            if (parameter is Subject learnCategory)
             {
                 _category = learnCategory;
                 LearnQuestions = _category.LearnQuestions;

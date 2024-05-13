@@ -33,7 +33,7 @@
                              BindableLayout.ItemsSource="{Binding Learn.Categories}"
                              Spacing="5">
                     <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="{x:Type model:Category}">
+                        <DataTemplate x:DataType="{x:Type model:Subject}">
                             <SwipeView>
                                 <SwipeView.RightItems>
                                     <SwipeItems>
@@ -60,8 +60,8 @@
                                                    TextColor="Green"
                                                    FontSize="Subtitle"  
                                                    
-                                                   Text="{Binding MemorizationPercentage, StringFormat='{0}%',Mode=TwoWay}" />
-                                            <Label Grid.Column="0" Text="{Binding  Subject , Mode=TwoWay}" TextColor="{AppThemeBinding Light=Black, Dark=White }"/>
+                                                   Text="{Binding MemorizationPercentage, StringFormat='{0}%'}" />
+                                            <Label Grid.Column="0" Text="{Binding  SubjectName , Mode=TwoWay}" TextColor="{AppThemeBinding Light=Black, Dark=White }"/>
                                         </Grid>
                                     </StackLayout>
                                 </Frame>

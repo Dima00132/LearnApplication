@@ -41,7 +41,7 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
-            if (parameter is Category learnCategory)
+            if (parameter is Subject learnCategory)
             {
                 RepetitionOfEverythingViewModel?.OnNavigatingTo(learnCategory, parameterSecond);
                 RepetitionOfUnknownsViewModel?.OnNavigatingTo(learnCategory, parameterSecond);

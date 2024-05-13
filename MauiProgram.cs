@@ -38,7 +38,7 @@ namespace LearnApplication
 
             builder.Services.AddSingleton<INavigationService, NavigationService>();
 
-            builder.Services.AddTransient<MainPage>().AddTransient<MainViewModel>();
+            builder.Services.AddSingleton<MainPage>().AddSingleton<MainViewModel>();
 
             builder.Services.AddTransient<TabbedLearnPage>().AddTransient<TabbedLearnViewModel>();
 

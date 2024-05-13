@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LearnApplication.Model;
+using LearnApplication.Model.Interface;
 using LearnApplication.Model.Web;
 using LearnApplication.Navigation;
 using LearnApplication.Service.Interface;
@@ -24,7 +25,7 @@ namespace LearnApplication.ViewModel
     public sealed partial class RepetitionViewModel : ViewModelBase
     {   
         [ObservableProperty]
-        private ReviewQuestion _reviewQuestion;
+        private IReviewCard _reviewQuestion;
 
         [ObservableProperty]
         private bool _isVisibleLink;
@@ -35,7 +36,7 @@ namespace LearnApplication.ViewModel
         //private string _isWorkingLinkImage;
 
         private INavigationService _navigationService;
-        private Category _learnCategory;
+        private Subject _subject;
         private readonly ILocalDbService _localDbService;
 
         public RepetitionViewModel(INavigationService navigationService, ILocalDbService localDbService)
@@ -53,14 +54,14 @@ namespace LearnApplication.ViewModel
         {
             if (learnQuestion is not null)
             {
-                ReviewQuestion.MoveQuestionToEnd(learnQuestion);
+                ReviewQuestion.MoveToEnd(learnQuestion);
             }
      
         });
 
         //public override Task OnUpdateDbService()
         //{
-        //    _localDbService.Update(_learnCategory);
+        //    _localDbService.Update(_subject);
         //    return base.OnUpdateDbService();
         //}
 
@@ -70,10 +71,10 @@ namespace LearnApplication.ViewModel
                 _navigationService.NavigateBackUpdate();
             if (question is not null)
             {
-               ReviewQuestion.DeleteQuestion(question);
+               ReviewQuestion.Delete(question);
                
                _localDbService.Update(question);
-                _localDbService.Update(_learnCategory);
+                _localDbService.Update(_subject);
             }
         });
 
@@ -140,11 +141,11 @@ namespace LearnApplication.ViewModel
         
         public override Task OnNavigatingTo(object? parameterFirst, object? parameterSecond)
         {
-            if(parameterFirst is Category learnCategory)
+            if(parameterFirst is Subject subject)
             {
-                _learnCategory = learnCategory;
+                _subject = subject;
                 if(parameterSecond is bool allOrUnknown)
-                    ReviewQuestion = learnCategory.GetReviewQuestions(allOrUnknown);
+                    ReviewQuestion = subject.GetReviewQuestions(allOrUnknown);
             }
             return base.OnNavigatingTo(parameterFirst, parameterSecond);
         }

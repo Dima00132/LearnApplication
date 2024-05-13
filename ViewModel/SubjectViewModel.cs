@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace LearnApplication.ViewModel
 {
 
@@ -24,30 +25,30 @@ namespace LearnApplication.ViewModel
         private readonly ILocalDbService _localDbService;
 
         [ObservableProperty]
-        private  Category _category;
+        private  Subject _category;
 
-        [ObservableProperty]
-        private double _progressLearn;
+
+        //[ObservableProperty]
+        //private double _progressLearn;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(RepeatAllQuestionsCommand))]
         public int _learnCount;
 
-        [ObservableProperty]
-        [NotifyCanExecuteChangedFor(nameof(RepeatDontKnownQuestionsCommand))]
-        private double _repetitionsCount;
+        //[ObservableProperty]
+        //[NotifyCanExecuteChangedFor(nameof(RepeatDontKnownQuestionsCommand))]
 
         [ObservableProperty]
         private double _knownCount;
 
 
         //public RelayCommand RepeatAllQuestionsCommand => new(() =>
-        //    _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, true),
-        //    () => Category?.CountQuestion != 0);
+        //    _navigationService.NavigateByPage<TabbedRepetitionPage>(Subject, true),
+        //    () => Subject?.CountQuestion != 0);
 
         //public RelayCommand RepeatDontKnownQuestionsCommand => new(() =>
-        //   _navigationService.NavigateByPage<TabbedRepetitionPage>(Category, false),
-        //   () => Category?.RepetitionsQuestionsCount != 0);
+        //   _navigationService.NavigateByPage<TabbedRepetitionPage>(Subject, false),
+        //   () => Subject?.RepetitionsQuestionsCount != 0);
 
 
         [RelayCommand(CanExecute = nameof(CheckCountQuestion))]
@@ -78,9 +79,9 @@ namespace LearnApplication.ViewModel
         public override Task OnUpdate()
         {
 
-            LearnCount = Category.CountQuestion;
-            RepetitionsCount = Category.RepetitionsQuestionsCount;
-            KnownCount = Category.KnownCountLearn;
+            //LearnCount = Subject.CountQuestion;
+            //RepetitionsCount = Subject.RepetitionsQuestionsCount;
+            //KnownCount = Subject.KnownCountLearn;
             return base.OnUpdate();
         }
 
@@ -92,19 +93,21 @@ namespace LearnApplication.ViewModel
 
         //public void InitializesFields()
         //{
-        //    LearnCount = Category.CountQuestion;
-        //    RepetitionsQuestionsCount = Category.RepetitionsQuestionsCount;
-        //    KnownCount = Category.KnownCountLearn;
+        //    LearnCount = Subject.CountQuestion;
+        //    RepetitionsQuestionsCount = Subject.RepetitionsQuestionsCount;
+        //    KnownCount = Subject.KnownCountLearn;
            
         //}
 
         public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
 
-            if (parameter is Category category)
+            if (parameter is Subject category)
             {
                 //_primaryKeyId = id;
                 Category = category;
+               // RepetitionsCount = category.RepetitionsQuestionsCount;
+
                // _category.TimerTick += Timer_Tick;
                // InitializesFields();
             }

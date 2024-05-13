@@ -1,51 +1,81 @@
 ﻿
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using LearnApplication.Model.Interface;
+using System;
 using System.Collections.ObjectModel;
+
 
 namespace LearnApplication.Model
 {
-    public partial class ReviewQuestion:ObservableObject
+
+    public partial class ReviewQuestion:ObservableObject, IReviewCard
     {
-        public ObservableCollection<CardQuestion> ReviewQuestions { get;set; }
+        //public ObservableCollection<CardQuestion> ReviewQuestions { get;set; }
 
-        [ObservableProperty]
-        public double _progress;
 
-        [ObservableProperty]
+        private ObservableCollection<ICardQuestion> _reviewQuestions;
+        public ObservableCollection<ICardQuestion> ReviewQuestions
+        {
+            get => _reviewQuestions;
+            set => SetProperty(ref _reviewQuestions, value);
+
+        }
+
+        private double _progress;
+        public double Progress
+        {
+            get => _progress;
+            set => SetProperty(ref _progress, value);
+        }
+
         private  double _countQuestions;
-        // private readonly Category _category;
+        public double CountQuestions
+        {
+            get => _countQuestions;
+            set => SetProperty(ref _countQuestions, value);
+        }
 
-        [ObservableProperty]
         private  double _knownQuestions;
-
-        //[ObservableProperty]
-        //private int _thereAreStillQuestions;
+        public double KnownQuestions
+        {
+            get => _knownQuestions;
+            set => SetProperty(ref _knownQuestions, value);
+        }
 
         public bool IsQuestions { get => ReviewQuestions.Count >1; }
 
-        private readonly Category _category;
+        //private readonly Subject _subject;
         private readonly bool _isAllOrUnknown;
-        public ReviewQuestion(Category learnCategory, bool allOrUnknown = true)
+        private readonly ObservableCollection<ICardQuestion> source = [];
+        public ReviewQuestion(ObservableCollection<ICardQuestion> questions, bool allOrUnknown = true)
         {
-            _category = learnCategory;
+            source = questions;
             _isAllOrUnknown = allOrUnknown;
-            ReviewQuestions = _isAllOrUnknown ? learnCategory.LearnQuestions : learnCategory.LearnQuestions
-                .Where(x => x.IsRepetitions & !x.IsKnown)
-                .ToObservableCollection();
-           
+            //ReviewQuestions = _isAllOrUnknown ? subject.LearnQuestions : subject.LearnQuestions
+            //    .Where(x => x.OnRepetition & !x.Known)
+            //    .ToObservableCollection();
+
+            ReviewQuestions = _isAllOrUnknown ? questions : GetReviewQuestions();
             CountQuestions = ReviewQuestions.Count;
-            //Progress = allOrUnknown ? 0 : learnCategory.LearnQuestions.Count((x) => x.IsRepetitions) / _countQuestions;
-            //Progress = 0;
             KnownQuestions = 0;
         }
 
-        public void FindWordsOnRepeat()
+        private ObservableCollection<ICardQuestion> GetReviewQuestions()
+        {
+            var random = new Random();
+            return source
+                .Where(x => x.IsRepetitions)
+                .ToObservableCollection();
+        }
+
+        private void FindWordsOnRepeat()
         {
 
-           
-            
-            var questions = _category.LearnQuestions.Where(x => x.IsRepetitions & !x.IsKnown).ToObservableCollection();
+
+
+            // questions = _subject.LearnQuestions.Where(x => x.OnRepetition & !x.Known).ToObservableCollection();
+            var questions = GetReviewQuestions();
 
             var curentCount = ReviewQuestions.Count;
             var newCount = questions.Count;
@@ -61,7 +91,7 @@ namespace LearnApplication.Model
      
         }
 
-        public void MoveQuestionToEnd(CardQuestion learnQuestion)
+        public void MoveToEnd(ICardQuestion learnQuestion)
         {
    
             if (!_isAllOrUnknown)
@@ -81,13 +111,13 @@ namespace LearnApplication.Model
             //ReviewQuestions.Add(learnQuestion);
         }
 
-        public void DeleteQuestion(CardQuestion learnQuestion)
+        public void Delete(ICardQuestion learnQuestion)
         {
 
             if (!_isAllOrUnknown)
             {
                 FindWordsOnRepeat();
-                learnQuestion.SetQuestionAsAlreadyKnown();
+                learnQuestion.SetAsRepeated();
                 Progress = ++KnownQuestions / CountQuestions;
             }
 

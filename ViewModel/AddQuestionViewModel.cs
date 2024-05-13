@@ -19,7 +19,7 @@ namespace LearnApplication.ViewModel
 {
     public sealed partial class AddQuestionViewModel:ViewModelBase
     {
-        private Category _category;
+        private Subject _category;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AddQuestionCommand))]
@@ -66,7 +66,7 @@ namespace LearnApplication.ViewModel
 
         public override Task OnNavigatingTo(object? parameter, object? parameterSecond = null)
         {
-            if (parameter is Category learnCategory)
+            if (parameter is Subject learnCategory)
                 _category = learnCategory;
             return base.OnNavigatingTo(parameter);
         }

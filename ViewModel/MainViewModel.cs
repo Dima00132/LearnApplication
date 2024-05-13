@@ -26,21 +26,35 @@ namespace LearnApplication.ViewModel
         private  Learn _learn;
         
         //[ObservableProperty]
-        //private ObservableCollection<Category> _categoryUnderStudys;
+        //private ObservableCollection<Subject> _categoryUnderStudys;
 
-        private bool _isStart = true;
+
 
         public MainViewModel(INavigationService navigationService, ILocalDbService localDbService)
         {
             _navigationService = navigationService;
             _localDbService = localDbService;
             Learn = localDbService.GetLearn();
-            Learn.SortedCategoriesByViewingTime(_isStart);
+
+            Learn.Categories.SetUpdateDbEvent(OnEventHandlerLearn)
+                .SortedCategories((x) => x.LastActivity)
+                .SetSubjectObservableCollection(Learn);
+            //Learn.SortedCategories((x)=> x.LastActivity);
+            //Learn.SetUpdateDbEvent(OnEventHandlerLearn);
+       
+            //Learn.SortedCategories((x) => x.LastActivity);
+        }
+
+        private void OnEventHandlerLearn(object? obj,EventArgs eventArgs)
+        {
+            if(obj is CardQuestion subject)
+                _localDbService.Update(subject);
+           
         }
 
         //private void Current_PageAppearing(object? sender, Page e)
         //{
-        //    Learn.SortedCategoriesByViewingTime(_isStart);
+        //    Learn.SortedCategories(_isStart);
         //    _isStart = false;
         //}
 
@@ -49,9 +63,9 @@ namespace LearnApplication.ViewModel
             var subject = await Application.Current?.MainPage?.DisplayPromptAsync("Тема", "Введите Название:", "OK", "Отмена");
             if (string.IsNullOrEmpty(subject))
                 return;
-            var category = new Category(subject) { LastActivity = DateTime.Now };
-            Learn.AddCategorie(category);
-
+            var category = new Subject(subject) { LastActivity = DateTime.Now,UpdateDbEvent = OnEventHandlerLearn };
+   
+            Learn.Add(category);
             _localDbService.CreateAndUpdate(category, Learn);
 
             //_localDbService.Create(learnCategory);
@@ -63,25 +77,26 @@ namespace LearnApplication.ViewModel
             await _navigationService.NavigateByViewModel<SettingsViewModel>(Learn);
         });
 
-        public RelayCommand<Category> DeleteCommand => new((category) =>
+        public RelayCommand<Subject> DeleteCommand => new((subject) =>
         {
-            if (category is not null)
+            if (subject is not null)
             {
-                Learn.Delete(category);
+                subject.UpdateDbEvent -= OnEventHandlerLearn;
+                Learn.Remove(subject);
 
-                _localDbService.DeleteAndUpdate(category, Learn);
+                _localDbService.DeleteAndUpdate(subject, Learn);
 
     
 
-                //_localDbService.Delete(category);
+                //_localDbService.RemoveQuestion(category);
                 //_localDbService.Update(Learn);
             }
         });
 
-        public RelayCommand<Category> TapCommand=> new(async (category)=>
+        public RelayCommand<Subject> TapCommand=> new(async (subject) =>
         {
-            Learn.MoveToStartingPosition(category);
-            await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(category);
+            Learn.MoveToStartingPosition(subject);
+            await _navigationService.NavigateByViewModel<TabbedLearnViewModel>(subject);
         });
 
         //public override Task OnUpdateDbService()
@@ -92,7 +107,7 @@ namespace LearnApplication.ViewModel
 
         //public override Task OnStart()
         //{
-        //    Learn.SortedCategoriesByViewingTime(_isStart);
+        //    Learn.SortedCategories(_isStart);
         //    _isStart = false;
         //    return base.OnStart();
         //}
