@@ -80,7 +80,7 @@ namespace LearnApplication.Model.Web
                 return;
 
 
-            var g =  WebEncoders.Base64UrlEncode(BitConverter.GetBytes(url.GetHashCode()));
+            //var g =  WebEncoders.Base64UrlEncode(BitConverter.GetBytes(url.GetHashCode()));
             //var g = AbstractShrinkStrategy.ConvertValueToAcceptableCharsString(url.GetHashCode());
 
 
