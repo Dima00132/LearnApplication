@@ -1,4 +1,4 @@
-﻿using LearnApplication.Model.Interface;
+﻿using LearnApplication.Model.Command.Interface;
 
 namespace LearnApplication.Model.Command
 {

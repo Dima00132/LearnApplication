@@ -52,7 +52,7 @@ namespace LearnApplication.ViewModel
                 return;
             }
 
-            var question = new CardQuestion(Question, _settingsApplication.GetNumberOfRepetitions(), Answer, Hyperlink);
+            var question = new CardQuestion(Question, Answer, Hyperlink);
             _category.AddQuestion(question);
 
             _localDbService.CreateAndUpdate(question, _category);

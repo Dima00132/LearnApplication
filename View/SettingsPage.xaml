@@ -101,7 +101,7 @@
                     </Grid>
                 </Frame>
 
-                <Label Text="Повторение" 
+                <!--<Label Text="Повторение" 
                        TextColor="{AppThemeBinding Light=Black, Dark=White}" 
                        FontSize="Header" 
                        Padding="5,20,0,0"/>
@@ -125,11 +125,19 @@
                                 VerticalOptions="End">
                         </Slider>
                     </Grid>
-                </Frame>
+                </Frame>-->
+                <Label Text="Данные"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                       FontSize="Header" 
+                       Padding="5,20,0,0"/>
 
                 <Label Text="Уведомлени" 
                        TextColor="{AppThemeBinding Light=Black, Dark=White}" 
                        FontSize="Header" 
+                       Padding="5,20,0,0"/>
+                
+                <Label Text="Цель приложения"
+                       TextColor="{AppThemeBinding Light=Black, Dark=White}"
                        Padding="5,20,0,0"/>
 
             </StackLayout>

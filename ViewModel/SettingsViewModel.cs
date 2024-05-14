@@ -53,9 +53,12 @@ namespace LearnApplication.ViewModel
             //_navigationService = navigationService;
             //_dataService = dataService;
             Theme = settingsApplication.GetApplicationTheme();
-            NumberOfRepetitions = settingsApplication.GetNumberOfRepetitions();
+
+           // NumberOfRepetitions = settingsApplication.GetNumberOfRepetitions();
             IsAnimated = settingsApplication.GetNavigationAnimated();
-            NumberOfRepetitions = settingsApplication.GetNumberOfRepetitions();
+
+            //NumberOfRepetitions = settingsApplication.GetNumberOfRepetitions();
+
             _settingsApplication = settingsApplication;
         }
 
@@ -65,10 +68,10 @@ namespace LearnApplication.ViewModel
             _settingsApplication.SetNavigationAnimated(value);
         });
 
-        public RelayCommand ChangesNumberOfRepeatsCommand => new( () =>
-        {
-            _settingsApplication.SetNumberOfRepetitions(_learn,NumberOfRepetitions);
-        });
+        //public RelayCommand ChangesNumberOfRepeatsCommand => new( () =>
+        //{
+        //    _settingsApplication.SetNumberOfRepetitions(_learn,NumberOfRepetitions);
+        //});
 
         public RelayCommand ApplicationLanguageCommand => new(async () =>
         {

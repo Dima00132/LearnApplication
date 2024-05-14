@@ -95,16 +95,8 @@ namespace LearnApplication.Model
 
         public DateTime DateTime { get; set; }
 
-        private int _currentCountRepetitions;
-        public int CurrentCountRepetitions
-        {
-            get => _currentCountRepetitions;
-            set
-            {
-                SetProperty(ref _currentCountRepetitions, value);
-                OnPropertyChanged(nameof(NamePropertyCommand.CountRepetitions));
-            }
-        }
+        public int CurrentCountRepetitions => 6;
+
         public Dictionary<int, NumberRepetition> RepetitionTimesDictionary { get; } = new()
         {
             [1] = NumberRepetition.First,[2] = NumberRepetition.Second,[3] = NumberRepetition.Third,
@@ -113,14 +105,11 @@ namespace LearnApplication.Model
 
         public CardQuestion(){}
 
-        public CardQuestion(string question,int countRepetitions, string answer = "", string hyperlink = "" )
+        public CardQuestion(string question, string answer = "", string hyperlink = "" )
         {
             Question = question.Trim();
             Answer = answer.Trim();
             Hyperlink = new UrlWebValid(hyperlink.Replace(" ", string.Empty));
-            //DispatcherTimer = Application.Current?.Dispatcher.CreateTimer();
-            CurrentCountRepetitions = countRepetitions;
-            _isRepetitions = true;
         }
 
         public CardQuestion ChangeQuestion(string question)
@@ -187,7 +176,7 @@ namespace LearnApplication.Model
 
         public void SetAsRepeated()
         {
-            if (IsKnown)return;
+           // if (IsKnown)return;
             NumberOfRepetitions++;
             IsRepetitions = false;
             if (CheckingCompletionOfTraining(NumberOfRepetitions, CurrentCountRepetitions))
@@ -217,15 +206,8 @@ namespace LearnApplication.Model
             {
                 DateTime = DateTime.Now;
                 IsRepetitions = true;
-                IsKnown = false;
                 DispatcherTimer.Tick -= Timer_Tick;
             });
-        }
-        public void ChangeNumberOfRepetitions(int numberOfRepetitions)
-        { 
-            CurrentCountRepetitions = numberOfRepetitions;
-            if (CurrentCountRepetitions < NumberOfRepetitions)
-                NumberOfRepetitions = CurrentCountRepetitions;
         }
     }  
 }

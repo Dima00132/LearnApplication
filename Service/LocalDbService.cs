@@ -17,7 +17,7 @@ namespace LearnApplication.Service
 
     public sealed class LocalDbService: ILocalDbService
     {
-        private const string DB_NAME = "data_learn_save_47.db3";
+        private const string DB_NAME = "data_learn_save_49.db3";
         private SQLiteConnection _connection;
         private const SQLiteOpenFlags Flags =
             SQLiteOpenFlags.ReadWrite |

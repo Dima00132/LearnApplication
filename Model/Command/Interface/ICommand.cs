@@ -1,4 +1,4 @@
-﻿namespace LearnApplication.Model.Interface
+﻿namespace LearnApplication.Model.Command.Interface
 {
     public interface ICommand
     {

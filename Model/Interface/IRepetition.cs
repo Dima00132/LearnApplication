@@ -7,9 +7,8 @@ namespace LearnApplication.Model.Interface
         bool IsKnown { get; set; }
         bool IsRepetitions { get; set; }
         int NumberOfRepetitions { get; set; }
-        int CurrentCountRepetitions { get; set; }
+        int CurrentCountRepetitions { get; }
         Dictionary<int, NumberRepetition> RepetitionTimesDictionary { get; }
-        void ChangeNumberOfRepetitions(int numberOfRepetitions);
         void SetAsRepeated();
         double GetStudyProgress();
     }

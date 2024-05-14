@@ -12,14 +12,16 @@ namespace LearnApplication.Model.Settings
     public interface ISettingsApplication
     {
         string GetApplicationTheme();
-        int GetNumberOfRepetitions();
+        //[Obsolete]
+        //int GetNumberOfRepetitions();
         void InstallApplicationTheme();
         void InstallNavigationAnimated();
        
         void SetApplicationTheme(string theme);
         void SetNavigationAnimated(bool animated);
         bool GetNavigationAnimated();
-        void SetNumberOfRepetitions(Learn learn, int numberOfRepetitions);
+        //[Obsolete]
+        //void SetNumberOfRepetitions(Learn learn, int numberOfRepetitions);
     }
 
     public class SettingsApplication : ISettingsApplication
@@ -95,18 +97,20 @@ namespace LearnApplication.Model.Settings
         //    CardQuestion.CountRepetitions = number.Value;
         //}
 
-        public int GetNumberOfRepetitions()
-        {
-            var number = _dataService?.Get(Repetition, 4).Result;
-            return number.Value;
-        }
+        //[Obsolete]
+        //public int GetNumberOfRepetitions()
+        //{
+        //    var number = _dataService?.Get(Repetition, 4).Result;
+        //    return number.Value;
+        //}
 
-        public void SetNumberOfRepetitions(Learn learn, int numberOfRepetitions)
-        {
-            foreach (var item in learn.Categories.SelectMany(x => x.LearnQuestions))
-                item.ChangeNumberOfRepetitions(numberOfRepetitions);
-            _dataService?.Save(Repetition, numberOfRepetitions);
+        //[Obsolete]
+        //public void SetNumberOfRepetitions(Learn learn, int numberOfRepetitions)
+        //{
+        //    foreach (var item in learn.Categories.SelectMany(x => x.LearnQuestions))
+        //        item.ChangeNumberOfRepetitions(numberOfRepetitions);
+        //    _dataService?.Save(Repetition, numberOfRepetitions);
             
-        }
+        //}
     }
 }

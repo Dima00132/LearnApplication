@@ -1,4 +1,5 @@
-﻿using LearnApplication.Model.Interface;
+﻿using LearnApplication.Model.Command.Interface;
+using LearnApplication.Model.Interface;
 using System.Linq;
 
 namespace LearnApplication.Model.Command
